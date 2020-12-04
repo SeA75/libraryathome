@@ -1,0 +1,537 @@
+[{
+  "_id": {
+    "$oid": "5fa2a16a628767101373aaa4"
+  },
+  "File": "C:\\Personal\\library\\books\\ebooks\\Pattern Oriented Software Architecture - Vol 1 - A System Of Patterns.pdf",
+  "Title": "Pattern-Oriented Software Architecture, A System of Patterns",
+  "Authors": [
+    "Frank Buschmann",
+    "Douglas C. Schmidt",
+    "Regine Meunier",
+    "Hans Rohnert",
+    "Michael Stal",
+    "Peter Sommerlad"
+  ],
+  "Publisher": "John Wiley & Sons Incorporated",
+  "PublishedDate": {
+    "$date": "1996-08-15T00:00:00Z"
+  },
+  "Description": "Guide to the reader. Patherns. Architectural Patterns. Design Patterns. Idioms. Pattern Systems. Patterns and software architecture. The pattern community. Where will patterns go?",
+  "Isbn": "PSU:000054186286",
+  "PageCount": 0,
+  "Categories": [
+    "Computers"
+  ],
+  "Language": "en",
+  "Format": "pdf",
+  "BookReliability": "High"
+},{
+  "_id": {
+    "$oid": "5fa2a16a628767101373aaa6"
+  },
+  "File": "C:\\Personal\\library\\books\\ebooks\\Cross-Platform_Development_in_C++.pdf",
+  "Title": "Cross-platform Development in C++",
+  "Authors": [
+    "Syd Logan"
+  ],
+  "Publisher": "Addison-Wesley Professional",
+  "PublishedDate": {
+    "$date": "2007-12-31T00:00:00Z"
+  },
+  "Description": "Develop software that works on all platforms without compromising features, usability, or quality.",
+  "Isbn": "9780321246424",
+  "PageCount": 0,
+  "Categories": [
+    "Computers"
+  ],
+  "Language": "en",
+  "Format": "pdf",
+  "BookReliability": "High"
+},{
+  "_id": {
+    "$oid": "5fa2a16a628767101373aaa8"
+  },
+  "File": "C:\\Personal\\library\\books\\ebooks\\Advanced.NET.Debugging.pdf",
+  "Title": "Advanced .NET Debugging",
+  "Authors": [
+    "Mario Hewardt"
+  ],
+  "Publisher": "Addison-Wesley Professional",
+  "PublishedDate": {
+    "$date": "2009-10-31T00:00:00Z"
+  },
+  "Description": "The only complete, pragmatic guide to the advanced CLR debugging techniques developers need to find and fix the toughest .NET software bugs. • •By Mario Hewardt, co-author of the best-selling, widely-praised Advanced Windows Debugging.. •Shows how to use .NET's powerful native CLR debugging tools to track down challenging bugs far more quickly. •Includes the best coverage of .NET memory debugging available anywhere. •Illuminates the debugging implications of the latest .NET 4.0 runtime changes. Advanced .NET Debugging is the definitive guide to tracking down the most complex and challenging bugs in today's .NET application code. Authored by Mario Hewardt, co-author of the widely-praised Advanced Windows Debugging this is the only book to focus entirely on .NET's immensely powerful native debuggers: the Debugging Tools for Windows, including WinDBG and SoS. Using this book, experienced .NET programmers will be able to analyze problematic code and identify the root causes of problems far more quickly than they ever could with visual tools. Hewardt begins by introducing the essential concepts developers must master in order to debug code with the native debuggers, including the tools available, the core fundamentals of the .NET CLR runtime, and essential debugging tasks. Next, he turns to sophisticated debugging techniques, teaching through real-world examples that demonstrate a broad spectrum of common C# programming errors. Hewardt thoroughly covers postmortem debugging without access to the physical machine; PowerDBG and other .NET debugging 'power tools'; and, finally, the debugging implications of the brandnew .NET CLR 4.0.",
+  "Isbn": "9780321578891",
+  "PageCount": 0,
+  "Categories": [
+    "Computers"
+  ],
+  "Language": "en",
+  "Format": "pdf",
+  "BookReliability": "High"
+},{
+  "_id": {
+    "$oid": "5fa2a16a628767101373aaae"
+  },
+  "File": "C:\\Personal\\library\\books\\ebooks\\C++ GUI Programming with Qt4 - Jasmin Blanchette.pdf",
+  "Title": "C/C++ Users Journal",
+  "Authors": null,
+  "Publisher": null,
+  "PublishedDate": {
+    "$date": "2003-12-31T00:00:00Z"
+  },
+  "Description": null,
+  "Isbn": "UOM:39015058893929",
+  "PageCount": 0,
+  "Categories": [
+    "C (Computer program language)"
+  ],
+  "Language": "en",
+  "Format": "pdf",
+  "BookReliability": "High"
+},{
+  "_id": {
+    "$oid": "5fa2a16a628767101373aab0"
+  },
+  "File": "C:\\Personal\\library\\books\\ebooks\\An Introduction to Design Patterns in C++ with Qt - Alan Ezust; Paul Ezust.pdf",
+  "Title": "An Introduction to Design Patterns in C++ with Qt",
+  "Authors": [
+    "Alan Ezust",
+    "Paul Ezust"
+  ],
+  "Publisher": null,
+  "PublishedDate": {
+    "$date": "2011-09-15T00:00:00Z"
+  },
+  "Description": "Master C++ 'The Qt Way,' with an emphasis on design patterns - and learn how to state-of-the-art cross-platform visual applications * *A tutorial, reference guide, and textbook rolled into one: learn to write elegant crossplatform GUI applications that maximize code reuse. *Thoroughly updated to teach more design patterns and highly-efficient new techniques based on new Nokia Qt 4.7/4.6 classes. *Assumes no prior knowledge of C, C++, or objects: teaches best practices 'from the ground up'. This fully updated book teaches C++ 'The Qt way,' with an emphasis on design patterns, and the efficient reuse of open source libraries and tools. Readers will master both the C++ language and Nokia Qt 4/7/4.6 libraries, as well the design patterns used in developing software with well defined layers of code and simple, reusable classes and functions. Every chapter of this Second Edition has been improved with new content, better organization, or both. Notably, readers will find extensively revised coverage of Widgets, MainWindows, Models and Views, Databases, and Dynamic Forms. This edition adds coverage of the powerful new Qt Creator IDE; presents new multimedia development techniques; and offers extended coverage of Qt Designer. Reflecting extensive classroom feedback, this edition is restructured to allow readers to begin writing simple applications sooner. By teaching file streams earlier, it also enables students to build more robust software more quickly. This edition introduces more design patterns, providing implementations or identifying Qt classes that rely on each. Many new quiz questions and labs have been added, and the text presents more efficient solutions that leverage Qt's 4.7/4.6's newest capabilities.",
+  "Isbn": "9780132826457",
+  "PageCount": 0,
+  "Categories": [
+    "Computers"
+  ],
+  "Language": "en",
+  "Format": "pdf",
+  "BookReliability": "High"
+},{
+  "_id": {
+    "$oid": "5fa2a16a628767101373aab2"
+  },
+  "File": "C:\\Personal\\library\\books\\ebooks\\Pattern Oriented Software Architecture - Vol 2 - Patterns For Concurrent And Networked Objects.pdf",
+  "Title": "Pattern-Oriented Software Architecture, Patterns for Concurrent and Networked Objects",
+  "Authors": [
+    "Douglas C. Schmidt",
+    "Michael Stal",
+    "Frank Buschmann",
+    "Hans Rohnert"
+  ],
+  "Publisher": "John Wiley & Sons Incorporated",
+  "PublishedDate": {
+    "$date": "2000-10-02T00:00:00Z"
+  },
+  "Description": "Designing application software to run in distributed and concurrent environments is a challenge facing software developers. These patterns form the basis of a pattern language that address issues of distribution, concurrency and networking.",
+  "Isbn": "UCSD:31822028759850",
+  "PageCount": 0,
+  "Categories": [
+    "Computers"
+  ],
+  "Language": "en",
+  "Format": "pdf",
+  "BookReliability": "High"
+},{
+  "_id": {
+    "$oid": "5fa2a16d628767101373aab8"
+  },
+  "File": "C:\\Personal\\library\\books\\ebooks\\Pattern Oriented Software Architecture - Vol 5 - On Patterns and Pattern Languages.pdf",
+  "Title": "Pattern-Oriented Software Architecture, On Patterns and Pattern Languages",
+  "Authors": [
+    "Frank Buschmann",
+    "Kevin Henney",
+    "Douglas C. Schmidt"
+  ],
+  "Publisher": "John Wiley & Sons",
+  "PublishedDate": {
+    "$date": "2007-04-29T00:00:00Z"
+  },
+  "Description": "Software patterns have revolutionized the way developers think about how software is designed, built, and documented, and this unique book offers an in-depth look of what patterns are, what they are not, and how to use them successfully The only book to attempt to develop a comprehensive language that integrates patterns from key literature, it also serves as a reference manual for all pattern-oriented software architecture (POSA) patterns Addresses the question of what a pattern language is and compares various pattern paradigms Developers and programmers operating in an object-oriented environment will find this book to be an invaluable resource",
+  "Isbn": "9780470512579",
+  "PageCount": 0,
+  "Categories": [
+    "Computers"
+  ],
+  "Language": "en",
+  "Format": "pdf",
+  "BookReliability": "Low"
+},{
+  "_id": {
+    "$oid": "5fa2a16e628767101373aac9"
+  },
+  "File": "C:\\Personal\\library\\books\\ebooks\\Python.rtf",
+  "Title": "Python 3",
+  "Authors": [
+    "Steffan Kaminski"
+  ],
+  "Publisher": "Walter de Gruyter GmbH & Co KG",
+  "PublishedDate": {
+    "$date": "2016-06-19T00:00:00Z"
+  },
+  "Description": "Python ist eine universelle, objektorientierte Programmiersprache. Der Interpreter ermöglicht einen spielerischen Einstieg in die Programmierung und Python ist auf vielen Plattformen verfügbar. Die klare Syntax, kombiniert mit den mächtigen Erweiterungen in der Standardbibliothek, ermöglicht kurze, gut lesbare Programme. Das Buch führt in die Anweisungen und Syntax von Python 3 ein, um dann Module aus der Standardbibliothek und deren Anwendung an Hand von einfachen Beispielen vorzustellen. Behandelt werden unter anderem der Umgang mit Dateien, Arbeiten mit Datum und Uhrzeit, Verarbeitung von Kommandozeilenparametern, Netzwerkprogrammierung mit Sockets, die Nutzung von verschiedenen Internetprotokollen (HTTP, SMTP, POP3), Multithreading und Multitasking. Eingegangen wird ebenso auf dateibasierte Datenbanken mit SQLite, die Datenbanken PostgreSQL und MySQL, reguläre Ausdrücke, Zufallszahlen und mathematische Funktionen, Umgang mit Binärdaten, Serialisierung von Python-Typen und Daten sowie das Testen von Programmen. Der Leser wird dadurch in die Lage versetzt, die verschiedensten Aufgaben aus der täglichen Programmierpraxis zu lösen.",
+  "Isbn": "311047400X",
+  "PageCount": 0,
+  "Categories": [
+    "Computers"
+  ],
+  "Language": "de",
+  "Format": "rtf",
+  "BookReliability": "Medium"
+},{
+  "_id": {
+    "$oid": "5fa2a17b628767101373ab22"
+  },
+  "File": "C:\\Personal\\library\\books\\ebooks\\1000 E-Book In Italiano\\Crichton Michael - Sol Levante.pdf",
+  "Title": "Sol Levante",
+  "Authors": [
+    "Jacqueline Publishing"
+  ],
+  "Publisher": null,
+  "PublishedDate": {
+    "$date": "2020-04-29T00:00:00Z"
+  },
+  "Description": "Notebook Rule Lined Notebook Journal for Student Kid Girl Personal Daily Notebook 6in x 9in x 100 Pages, perfect gift for adults and kids for any gift giving occasion FEATURES: 6\" x 9\" letter size Premium Matte Soft Cover Perfect Paperback Binding 100 college-ruled lined pages",
+  "Isbn": "9798642148068",
+  "PageCount": 0,
+  "Categories": null,
+  "Language": "en",
+  "Format": "pdf",
+  "BookReliability": "Medium"
+},{
+  "_id": {
+    "$oid": "5fa2a17c628767101373ab24"
+  },
+  "File": "C:\\Personal\\library\\books\\ebooks\\1000 E-Book In Italiano\\Il grande nulla - James Ellroy.epub",
+  "Title": "Oltre il nulla",
+  "Authors": [
+    "Antonio Cecchini"
+  ],
+  "Publisher": "Città Nuova",
+  "PublishedDate": {
+    "$date": "2003-12-31T00:00:00Z"
+  },
+  "Description": null,
+  "Isbn": "9788831132763",
+  "PageCount": 0,
+  "Categories": [
+    "Philosophy"
+  ],
+  "Language": "it",
+  "Format": "epub",
+  "BookReliability": "Low"
+},{
+  "_id": {
+    "$oid": "5fa2a17f628767101373ab2e"
+  },
+  "File": "C:\\Personal\\library\\books\\ebooks\\1000 E-Book In Italiano\\Un oscuro scrutare - Philip Dick.epub",
+  "Title": "Un oscuro scrutare",
+  "Authors": [
+    "Philip K. Dick"
+  ],
+  "Publisher": "Fanucci Editore",
+  "PublishedDate": {
+    "$date": "2014-02-03T00:00:00Z"
+  },
+  "Description": "Los Angeles, 1994: una droga misteriosa, la sostanza M, invade il mercato seminando follia e morte. La sua origine è ignota come la sua composizione e l’organizzazione che la diffonde. Bob Arctor, agente della sezione narcotici, si infiltra fra i tossici che ne fanno uso, per scoprire chi dirige le fila del traffico illegale: un abito speciale nasconde ai colleghi la sua identità e una sofisticata apparecchiatura elettronica gli consente addirittura di spiare sé stesso nella sua nuova condizione di drogato. Bob giungerà alla verità solo dopo essere sprofondato nel buio e nella disperazione della dipendenza. Un romanzo di straordinaria potenza emotiva, dedicato idealmente a quella generazione che dopo aver sognato un mondo diverso ha scoperto il baratro delle droghe, della dipendenza, dell’annullamento di sé. Canto del cigno di una generazione, Un oscuro scrutare è una vetta amara e lirica dell’opera di Philip K. Dick, e allo stesso tempo un romanzo sospeso tra giallo e fantascienza, ambientato in un futuro dominato dalla tecnologia e dalla manipolazione sociale.",
+  "Isbn": "8834721705",
+  "PageCount": 0,
+  "Categories": [
+    "Fiction"
+  ],
+  "Language": "it",
+  "Format": "epub",
+  "BookReliability": "Medium"
+},{
+  "_id": {
+    "$oid": "5fa2a17f628767101373ab32"
+  },
+  "File": "C:\\Personal\\library\\books\\ebooks\\1000 E-Book In Italiano\\Mehta_ Zubin - La partitura della mia vita.pdf",
+  "Title": "La partitura della mia vita",
+  "Authors": [
+    "Zubin Mehta"
+  ],
+  "Publisher": null,
+  "PublishedDate": {
+    "$date": "2006-12-31T00:00:00Z"
+  },
+  "Description": null,
+  "Isbn": "9788861580077",
+  "PageCount": 0,
+  "Categories": [
+    "Biography & Autobiography"
+  ],
+  "Language": "en",
+  "Format": "pdf",
+  "BookReliability": "High"
+},{
+  "_id": {
+    "$oid": "5fa2a17f628767101373ab3c"
+  },
+  "File": "C:\\Personal\\library\\books\\ebooks\\1000 E-Book In Italiano\\Laurie_ Hugh - Il venditore di armi.pdf",
+  "Title": "Il venditore di armi",
+  "Authors": [
+    "Hugh Laurie"
+  ],
+  "Publisher": null,
+  "PublishedDate": {
+    "$date": "2011-12-31T00:00:00Z"
+  },
+  "Description": null,
+  "Isbn": "9788831711340",
+  "PageCount": 0,
+  "Categories": [
+    "Fiction"
+  ],
+  "Language": "it",
+  "Format": "pdf",
+  "BookReliability": "Medium"
+},{
+  "_id": {
+    "$oid": "5fa2a183628767101373ab6f"
+  },
+  "File": "C:\\Personal\\library\\books\\ebooks\\1000 E-Book In Italiano\\Vieni_via_con_me.epub",
+  "Title": "Vieni via con me",
+  "Authors": [
+    "Roberto Saviano"
+  ],
+  "Publisher": "Feltrinelli Editore",
+  "PublishedDate": {
+    "$date": "2013-01-02T00:00:00Z"
+  },
+  "Description": "Il mancato riconoscimento del valore dell'Unità nazionale, il subdolo meccanismo della macchina del fango, l'espansione della criminalità organizzata al Nord, l'infinita emergenza rifiuti a Napoli, le troppe tragedie annunciate. Accanto alla denuncia c'è anche il racconto – commosso e ammirato – di vite vissute con onestà e coraggio: la sfida senz'armi di don Giacomo Panizza alla 'ndrangheta calabrese, la lotta di Piergiorgio Welby in nome della vita e del diritto, la difesa della Costituzione di Piero Calamandrei. Esempi su cui possiamo ancora contare per risollevarci e costruire un'Italia diversa.Ideato e condotto da Roberto Saviano e Fabio Fazio, Vieni via con me è stato l'evento televisivo dell'anno, più seguito delle partite di Champions League e dei reality show. Ora Vieni via con me è un libro che rende di nuovo accessibili al pubblico queste storie in una forma ampiamente rivista e arricchita. Facendole diventare, ancora una volta, storie di tutti.Vai al sito ufficiale del libro e invia a Roberto la tua lista di cose per cui vale la pena vivereIl booktrailer da You Tube",
+  "Isbn": "8858810058",
+  "PageCount": 0,
+  "Categories": [
+    "Political Science"
+  ],
+  "Language": "it",
+  "Format": "epub",
+  "BookReliability": "Medium"
+},{
+  "_id": {
+    "$oid": "5fa2a184628767101373ab77"
+  },
+  "File": "C:\\Personal\\library\\books\\ebooks\\1000 E-Book In Italiano\\Michael Connelly - L_uomo di paglia.epub",
+  "Title": "L'uomo di paglia di Pietro Germi",
+  "Authors": [
+    "Pietro Germi"
+  ],
+  "Publisher": null,
+  "PublishedDate": {
+    "$date": {
+      "$numberLong": "-378694800000"
+    }
+  },
+  "Description": null,
+  "Isbn": "STANFORD:36105047828475",
+  "PageCount": 0,
+  "Categories": [
+    "L'uomo di paglia (Motion picture)"
+  ],
+  "Language": "it",
+  "Format": "epub",
+  "BookReliability": "Medium"
+},{
+  "_id": {
+    "$oid": "5fa2a184628767101373ab79"
+  },
+  "File": "C:\\Personal\\library\\books\\ebooks\\1000 E-Book In Italiano\\sophie kinsella - I Love Shopping in Bianco (ita libro).pdf",
+  "Title": "I love shopping in bianco",
+  "Authors": [
+    "Sophie Kinsella"
+  ],
+  "Publisher": "Edizioni Mondadori",
+  "PublishedDate": {
+    "$date": "2010-10-06T00:00:00Z"
+  },
+  "Description": "Luke ha chiesto a Becky di sposarlo. Nell'attesa di decidere il luogo delle nozze Becky si diverte a provare abiti da sposa, assaggiare torte e preparare liste di nozze. Ma il tempo vola, la sposa è una e i matrimoni organizzati sono ormai due. In due continenti diversi. Lo stesso giorno...",
+  "Isbn": "8852010440",
+  "PageCount": 0,
+  "Categories": [
+    "Family & Relationships"
+  ],
+  "Language": "it",
+  "Format": "pdf",
+  "BookReliability": "Medium"
+},{
+  "_id": {
+    "$oid": "5fa2a184628767101373ab7b"
+  },
+  "File": "C:\\Personal\\library\\books\\ebooks\\1000 E-Book In Italiano\\Martin George R. R. Dozois Gardner R. Abraham Daniel - Fuga impossibile.pdf",
+  "Title": "La Fuga Impossibile",
+  "Authors": [
+    "Maria Di Giovanna"
+  ],
+  "Publisher": null,
+  "PublishedDate": {
+    "$date": "1988-12-31T00:00:00Z"
+  },
+  "Description": null,
+  "Isbn": "OCLC:1113772535",
+  "PageCount": 0,
+  "Categories": null,
+  "Language": "en",
+  "Format": "pdf",
+  "BookReliability": "Medium"
+},{
+  "_id": {
+    "$oid": "5fa2a187628767101373ab86"
+  },
+  "File": "C:\\Personal\\library\\books\\ebooks\\Isaac Asimov\\Il ciclo della fondazione\\Preludio alla fondazione .rtf",
+  "Title": "Preludio alla fondazione",
+  "Authors": [
+    "Isaac Asimov"
+  ],
+  "Publisher": null,
+  "PublishedDate": {
+    "$date": "1994-12-31T00:00:00Z"
+  },
+  "Description": null,
+  "Isbn": "9788804401841",
+  "PageCount": 0,
+  "Categories": [
+    "Fiction"
+  ],
+  "Language": "en",
+  "Format": "rtf",
+  "BookReliability": "Medium"
+},{
+  "_id": {
+    "$oid": "5fa2a187628767101373ab88"
+  },
+  "File": "C:\\Personal\\library\\books\\ebooks\\1000 E-Book In Italiano\\Vonnegut Kurt - Le Sirene Di Titano.epub",
+  "Title": "Le sirene di Titano",
+  "Authors": [
+    "Kurt Vonnegut"
+  ],
+  "Publisher": "Feltrinelli Editore",
+  "PublishedDate": {
+    "$date": "2005-12-31T00:00:00Z"
+  },
+  "Description": null,
+  "Isbn": "9788807017032",
+  "PageCount": 0,
+  "Categories": [
+    "Fiction"
+  ],
+  "Language": "it",
+  "Format": "epub",
+  "BookReliability": "Medium"
+},{
+  "_id": {
+    "$oid": "5fa2a187628767101373ab8a"
+  },
+  "File": "C:\\Personal\\library\\books\\ebooks\\Isaac Asimov\\Il ciclo della fondazione\\Fondazione e impero .rtf",
+  "Title": "Fondazione e impero. Crossed + Cento",
+  "Authors": [
+    "Alan Moore",
+    "Gabriel Andrade"
+  ],
+  "Publisher": null,
+  "PublishedDate": {
+    "$date": "2014-12-31T00:00:00Z"
+  },
+  "Description": null,
+  "Isbn": "9788891216885",
+  "PageCount": 0,
+  "Categories": [
+    "Comics & Graphic Novels"
+  ],
+  "Language": "it",
+  "Format": "rtf",
+  "BookReliability": "Medium"
+},{
+  "_id": {
+    "$oid": "5fa2a187628767101373ab8c"
+  },
+  "File": "C:\\Personal\\library\\books\\ebooks\\Isaac Asimov\\Il ciclo della fondazione\\Seconda fondazione .rtf",
+  "Title": "Il sigillo. Gaia II. La seconda fondazione",
+  "Authors": [
+    "Michele Biundo"
+  ],
+  "Publisher": null,
+  "PublishedDate": {
+    "$date": "2014-12-31T00:00:00Z"
+  },
+  "Description": null,
+  "Isbn": "9788891190413",
+  "PageCount": 0,
+  "Categories": [
+    "Fiction"
+  ],
+  "Language": "it",
+  "Format": "rtf",
+  "BookReliability": "Medium"
+},{
+  "_id": {
+    "$oid": "5fa2a187628767101373ab90"
+  },
+  "File": "C:\\Personal\\library\\books\\ebooks\\Isaac Asimov\\Romanzi\\Nemesis .rtf",
+  "Title": "Nemesis oder des Schicksals Rache",
+  "Authors": null,
+  "Publisher": null,
+  "PublishedDate": {
+    "$date": {
+      "$numberLong": "-4386445200000"
+    }
+  },
+  "Description": null,
+  "Isbn": "BSB:BSB10070610",
+  "PageCount": 0,
+  "Categories": null,
+  "Language": "de",
+  "Format": "rtf",
+  "BookReliability": "Medium"
+},{
+  "_id": {
+    "$oid": "5fa2a189628767101373ab9e"
+  },
+  "File": "C:\\Personal\\library\\books\\ebooks\\Isaac Asimov\\Il ciclo della fondazione\\Fondazione e terra .rtf",
+  "Title": "Fondazione e terra",
+  "Authors": [
+    "Isaac Asimov"
+  ],
+  "Publisher": null,
+  "PublishedDate": {
+    "$date": "1988-12-31T00:00:00Z"
+  },
+  "Description": null,
+  "Isbn": "9788804403029",
+  "PageCount": 0,
+  "Categories": [
+    "Fiction"
+  ],
+  "Language": "en",
+  "Format": "rtf",
+  "BookReliability": "Medium"
+},{
+  "_id": {
+    "$oid": "5fa2a18b628767101373abc4"
+  },
+  "File": "C:\\Personal\\library\\books\\ebooks\\Isaac Asimov\\Cavalieri cosmici .rtf",
+  "Title": "Cavalieri cosmici",
+  "Authors": [
+    "Martin H. Greenberg",
+    "Isaac Asimov",
+    "Charles G. Waugh"
+  ],
+  "Publisher": null,
+  "PublishedDate": {
+    "$date": "1987-12-31T00:00:00Z"
+  },
+  "Description": null,
+  "Isbn": "9788834700563",
+  "PageCount": 0,
+  "Categories": [
+    "Fiction"
+  ],
+  "Language": "en",
+  "Format": "rtf",
+  "BookReliability": "Medium"
+}]

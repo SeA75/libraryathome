@@ -1,0 +1,17 @@
+{
+  "ebookformat": [
+    "rtf",
+    "pdf",
+    "doc",
+    "epub",
+    "txt"
+  ],
+  "ebookdirectory": "C:\\Personal\\library\\books\\ebooks",
+  "statisticdirectory": "C:\\Users\\vgh8no\\source\\repos\\BooksParser\\TestResults",
+  //   "ebookdirectory": "C:\\Temp\\eee",  
+  "libraryContext": {
+    "jsonlibraryfile": "C:\\Users\\vgh8no\\source\\repos\\BooksParser\\TestResults\\mylibrary.json",
+    "databasename": "testlibraryathome",
+    "connectionstring": "mongodb://localhost:27017/"
+  },
+}

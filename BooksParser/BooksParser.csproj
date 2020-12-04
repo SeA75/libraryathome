@@ -1,0 +1,87 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Platforms>AnyCPU;x64</Platforms>
+    <ApplicationIcon />
+    <StartupObject />
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="BookatHome.cs" />
+    <Compile Remove="BooksCollectedDataMapper.cs" />
+    <Compile Remove="BooksProvider.cs" />
+    <Compile Remove="BookToBeReviewed.cs" />
+    <Compile Remove="BookToBeReviewedDataMapper.cs" />
+    <Compile Remove="ConsoleBookParserTrace.cs" />
+    <Compile Remove="FileBookParserTrace.cs" />
+    <Compile Remove="GoogleBookProvider.cs" />
+    <Compile Remove="GoogleBookToJsonDeserilization.cs" />
+    <Compile Remove="IBookDataMapper.cs" />
+    <Compile Remove="IBookParserTrace.cs" />
+    <Compile Remove="IMongodbConnection.cs" />
+    <Compile Remove="LibraryStatistics.cs" />
+    <Compile Remove="LibraryStatisticsDataMapper.cs" />
+    <Compile Remove="MongodbConnection.cs" />
+    <Compile Remove="MongodbDataMapper.cs" />
+    <Compile Remove="MongodbDataMapperException.cs" />
+    <Compile Remove="ParserStatistics.cs" />
+    <Compile Remove="PocoBook.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <COMReference Include="DSOFile.dll">
+      <Guid>58968145-cf00-4341-995f-2ee093f6aba3</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>1</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>false</Isolated>
+    </COMReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EpubSharp.dll" Version="1.1.5" />
+    <PackageReference Include="Google.Apis.Books.v1" Version="1.49.0.2094" />
+    <PackageReference Include="Google.Apis.Discovery.v1" Version="1.49.0" />
+    <PackageReference Include="itext7" Version="7.1.12" />
+    <PackageReference Include="Microsoft.CodeQuality.Analyzers" Version="3.3.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.NetCore.Analyzers" Version="3.3.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.NetFramework.Analyzers" Version="3.3.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="nrtftree-library" Version="0.4.0" />
+    <PackageReference Include="PdfSharp" Version="1.50.5147" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BookAtHomeTracer\BookAtHomeTracer.csproj" />
+    <ProjectReference Include="..\BookProvider\BookatHomeProvider.csproj" />
+    <ProjectReference Include="..\LibraryAtHomeRepositoryDriver\LibraryAtHomeRepositoryDriver.csproj" />
+  </ItemGroup>
+
+</Project>
