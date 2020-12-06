@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using BookatHomeProvider;
+using Common.Logging.Configuration;
 using LibraryAtHomeRepositoryDriver;
 
 
@@ -18,14 +19,34 @@ namespace BooksParser
     /// </summary>
     public class LibraryCataloguer
     {
-        public LibraryCataloguer(BookParserConfig configuration, IProgress<double> progress)
-        {
-            if (configuration == null)
-            {
-                throw new ArgumentNullException(nameof(configuration));
-            }
-            Progress = progress ?? throw new ArgumentNullException(nameof(progress));
 
+        private IProgress<double> Progress { get; set; }
+
+        private readonly IMongodbConnection Connection;
+
+        private readonly BooksCollectedDataMapper BooksInLibrary;
+
+        private readonly BookToBeReviewedDataMapper BookToReview;
+
+        private readonly LibraryStatisticsDataMapper LibStatistics;
+
+        private readonly IBookParserTrace _tracer;
+
+        private ConcurrentQueue<Exception> _exceptions;
+
+        private readonly Dictionary<String, Delegate> GetMetadataFromFileDictionaryDelegate;
+       
+        private IList<string> Files { get; set; }
+
+        private BookParserConfig Configuration { get; set; }
+
+
+        public LibraryCataloguer(BookParserConfig configuration, ConcurrentQueue<Exception> exceptions, 
+            IBookParserTrace tracer, IProgress<double> progress)
+        {
+            Progress = progress ?? throw new ArgumentNullException(nameof(progress));
+            
+            Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
 
             GetMetadataFromFileDictionaryDelegate = new Dictionary<String, Delegate>() {
                             {".pdf",  new Func<string, BookatHome>(new PdfTextReaderFileInfoExtractor().GetPocoBook) },
@@ -36,7 +57,6 @@ namespace BooksParser
                              {".doc", new Func<string, BookatHome>(new FileInfoExtractor().GetPocoBook) }};
 
 
-
             Connection = new MongodbConnection();
 
             BooksInLibrary = new BooksCollectedDataMapper(Connection);
@@ -45,75 +65,58 @@ namespace BooksParser
 
             LibStatistics = new LibraryStatisticsDataMapper(Connection);
 
-            Configuration = configuration;
+            _tracer = tracer;
+
+            _exceptions = exceptions;
+
+            Init();
 
         }
 
-        IProgress<double> Progress { get; set; }
+        public async Task CatalogBooksAsync()
+        {
+            _tracer.TraceInfo("Start CatalogBooksAsync");
 
-        private readonly IMongodbConnection Connection;
+            var (collectedBooks, discardedBooks) = CollectBooks();
 
-        private readonly BooksCollectedDataMapper BooksInLibrary;
+            await PutBookOnDatabase(collectedBooks, discardedBooks);
 
-        private readonly BookToBeReviewedDataMapper BookToReview;
+            DeleteAlreadyCatalogedBooks();
 
-        private readonly LibraryStatisticsDataMapper LibStatistics;
+            _tracer.TraceInfo("End CatalogBooksAsync");
+        }
 
-        private bool _configured;
+        public void CreateStatistics(TimeSpan elapsedTime)
+        {
+            LibStatistics.Write(new LibraryStatistics(BookToReview.Count() + BooksInLibrary.Count(), BooksInLibrary.Count(), elapsedTime, Configuration.ebookdirectory));
+        }
 
-
-
-        public void ConfigureFilesToSearch()
+        private void Init()
         {
             Regex reSearchPattern = new Regex(string.Join("|", Configuration.ebookformat.ToArray()), RegexOptions.IgnoreCase);
 
-
             IList<string> fileintofolder = Directory.EnumerateFiles(Configuration.ebookdirectory, "*.*", SearchOption.AllDirectories)
                 .Where(x => reSearchPattern.IsMatch(Path.GetExtension(x).ToLowerInvariant())).ToList<string>();
-
 
             var filesCataloged = from cataloged in BooksInLibrary.Read()
                                  select cataloged.File;
 
             Files = fileintofolder.Except<string>(filesCataloged).ToList();
 
-            _configured = true;
         }
 
-        private readonly Dictionary<String, Delegate> GetMetadataFromFileDictionaryDelegate;
-
-        private IList<string> Files { get; set; }
-
-        BookParserConfig Configuration { get; set; }
-
-        public async Task CatalogBooksAsync(ConcurrentQueue<Exception> exceptions, IBookParserTrace tracer)
+        private BookatHome SearchBookInfoOfFile(string file)
         {
-            tracer.TraceInfo("Start CatalogBooksAsync");
-
-            if (!_configured)
-                throw new ArgumentException("Library is not configured.");
-
-            var (collectedBooks, discardedBooks) = CollectBooks(exceptions, tracer);
-
-            await PutBookOnDatabase(collectedBooks, discardedBooks);
-
-            DeleteAlreadyCatalogedBooks();
-
-            tracer.TraceInfo("End CatalogBooksAsync");
-        }
-
-        private BookatHome SearchBook(string file, IBookParserTrace trace)
-        {
-            trace.TraceInfo("SearchBook start for file {0}", file);
-            string fileextension = Path.GetExtension(file).ToLowerInvariant();
+            _tracer.TraceInfo("SearchBookInfoOfFile start for file {0}", file);
+            
             try
             {
-                PocoBook minimalbookinfo = GetMetadataFromFileDictionaryDelegate[fileextension].DynamicInvoke(file) as PocoBook;
+                PocoBook minimalbookinfo = GetMetadataFromFileDictionaryDelegate[Utils.GetExtension(file)].DynamicInvoke(file) as PocoBook;
 
-                BooksProvider google = new GoogleBookProvider();
-                var booksFromProvider = google.FetchBooksInfo(minimalbookinfo, trace);
+                BooksProvider google = new GoogleBookProvider(_tracer);
+                var booksFromProvider = google.FetchInfoOfBook(minimalbookinfo);
 
-                return FileInfoExtractor.AnalyzeResults(minimalbookinfo, booksFromProvider, trace);
+                return FileInfoExtractor.AnalyzeResults(minimalbookinfo, booksFromProvider, _tracer);
             }
 
             catch (Exception ex)
@@ -126,7 +129,8 @@ namespace BooksParser
             }
         }
 
-        private async Task PutBookOnDatabase(List<PocoBook> collectedBooks, List<BookToBeReviewed> discardedBooks)
+
+        private async Task PutBookOnDatabase(IEnumerable<PocoBook> collectedBooks, List<BookToBeReviewed> discardedBooks)
         {
             var result = await BooksInLibrary.BulkAsync(collectedBooks).ConfigureAwait(true);
 
@@ -136,7 +140,8 @@ namespace BooksParser
             await BookToReview.BulkAsync(discardedBooks).ConfigureAwait(true);
         }
 
-        private (List<PocoBook> collectedBooks, List<BookToBeReviewed> discardedBooks) CollectBooks(ConcurrentQueue<Exception> exceptions, IBookParserTrace tracer)
+
+        private (List<PocoBook> collectedBooks, List<BookToBeReviewed> discardedBooks) CollectBooks()
         {
             double progressCounter = 0;
             var collectedBooks = new List<PocoBook>();
@@ -149,14 +154,14 @@ namespace BooksParser
                 {
                     Progress.Report(progressCounter++ / Files.Count);
 
-                    var book = SearchBook(file, tracer);
+                    var book = SearchBookInfoOfFile(file);
 
                     AddToCollections(book, collectedBooks, discardedBooks);
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
-                    exceptions.Enqueue(e);
+                    _exceptions.Enqueue(e);
                 }
             });
 
@@ -179,10 +184,7 @@ namespace BooksParser
             }
         }
 
-        public void CreateStatistics(TimeSpan elapsedTime)
-        {
-            LibStatistics.Write(new LibraryStatistics(BookToReview.Count() + BooksInLibrary.Count(), BooksInLibrary.Count(), elapsedTime, Configuration.ebookdirectory));
-        }
+       
 
         private void DeleteAlreadyCatalogedBooks()
         {
@@ -198,12 +200,7 @@ namespace BooksParser
                 BookToReview.Delete(filenowcataloged);
             }
         }
-
-        
     }
-
-
-
 }
 
 

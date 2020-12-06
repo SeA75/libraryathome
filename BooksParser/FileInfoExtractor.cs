@@ -15,7 +15,7 @@ namespace BooksParser
         {
             string maybetitle;
             
-            maybetitle = Path.GetFileNameWithoutExtension(filepath).Replace("_", " ").Replace("ebook", "");
+            maybetitle = Path.GetFileNameWithoutExtension(filepath).Replace("_", " ").Replace("ebook", "").Replace("'", "");
 
             return new PocoBook(filepath, string.Empty, null, string.Empty, maybetitle);
         }

@@ -11,7 +11,6 @@ namespace LibraryAtHomeRepositoryDriver
 
         public MongodbConnection()
         {
-
             var mongoUrl = MongoUrl.Create(ConfigurationManager.ConnectionStrings["DefaultMongoConnection"].ConnectionString);
 
             Client = new MongoClient(mongoUrl);

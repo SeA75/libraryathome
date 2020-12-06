@@ -6,6 +6,6 @@ namespace BookatHomeProvider
 {
     public abstract class BooksProvider
     {
-        public abstract List<PocoBook> FetchBooksInfo(PocoBook book, IBookParserTrace trace);
+        public abstract List<PocoBook> FetchInfoOfBook(PocoBook book);
     }
 }

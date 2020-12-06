@@ -7,8 +7,6 @@ using System.Text.RegularExpressions;
 namespace LibraryAtHomeRepositoryDriver
 {
 
-    
- 
     public class PocoBook : BookatHome
     {
         public PocoBook()
@@ -23,7 +21,6 @@ namespace LibraryAtHomeRepositoryDriver
             File = file;
         }
 
-   //     public Guid Id { get; set; }
 
         public PocoBook(string file, string title, string[] authors, string isbn, string searchTitle)
         {
@@ -64,6 +61,8 @@ namespace LibraryAtHomeRepositoryDriver
         public string Language { get; set; }
 
         public string Format { get; set; }
+
+        public string ImageLink { get; set; }
 
         public override string ToString()
         {

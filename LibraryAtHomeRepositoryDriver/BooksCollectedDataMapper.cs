@@ -1,15 +1,10 @@
 ﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Sockets;
 using System.Threading.Tasks;
-using MongoDB.Bson.Serialization;
-using MongoDB.Bson.Serialization.Conventions;
-using MongoDB.Bson.Serialization.IdGenerators;
-using LibraryAtHomeRepositoryDriver;
-using MongoDB.Bson.Serialization.Serializers;
 
 namespace LibraryAtHomeRepositoryDriver
 {

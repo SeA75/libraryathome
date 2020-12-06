@@ -9,6 +9,7 @@ namespace LibraryAtHomeRepositoryDriver
         string File { get; set; }
     }
 
+    //TODO elimanare la dipendenza
     [BsonIgnoreExtraElements]
     public class BookatHome : IBookatHome
     {

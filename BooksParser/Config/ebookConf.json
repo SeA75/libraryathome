@@ -10,7 +10,7 @@
   //  "ebookdirectory": "\\192.168.1.173\\homes\\andrea\\ebooks",
   // "ebookdirectory": "Z:\\",
   "statisticdirectory": "C:\\temp\\",
-  //  "ebookdirectory": "C:\\Temp\\eee",
+ //   "ebookdirectory": "C:\\Temp\\eee",
 
   "libraryContext": {
     "jsonlibraryfile": "C:\\temp\\mylibrary.json",

@@ -5,7 +5,7 @@ using LibraryAtHomeRepositoryDriver;
 
 namespace LibraryAtHomeRepositoryDriver
 {
-
+    //TODO elimanare la dipendenza
     [BsonIgnoreExtraElements]
     public class BookToBeReviewed : BookatHome
     {
