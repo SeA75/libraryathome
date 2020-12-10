@@ -1,15 +1,17 @@
-﻿using BooksParser;
-using LibraryAtHomeRepositoryDriver;
+﻿using LibraryAtHomeRepositoryDriver;
 using Newtonsoft.Json;
 using RestSharp;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Security.Cryptography;
+using System.Text;
 using System.Threading;
+using LibraryAtHomeTracer;
 
 
-namespace BookatHomeProvider
+namespace LibraryAtHomeProvider
 {
     public class GoogleBookProvider : BooksProvider
     {
@@ -42,9 +44,11 @@ namespace BookatHomeProvider
         }
         public static string BytesToString(byte[] bytes)
         {
-            string result = "";
-            foreach (byte b in bytes) result += b.ToString("x2");
-            return result;
+            StringBuilder result = new StringBuilder();
+            foreach (byte b in bytes)
+                result.Append(b.ToString("x2"));
+           
+            return result.ToString();
         }
 
         private Rootobject ExecuteGoogleRequest()
@@ -76,18 +80,22 @@ namespace BookatHomeProvider
 
             for (int i = 0;  i < root.items.Length; i++)
             {
+                Collection<string> authors = new Collection<string>();
+               
+                Array.ForEach(root.items[i].volumeInfo.authors ?? Array.Empty<string>(), str => authors.Add(str));
+
                 PocoBook abook = new PocoBook(_requestedBook.File, root.items[i].volumeInfo.title,
-                    root.items[i].volumeInfo.authors, string.Empty, string.Empty)
+                    authors , string.Empty, string.Empty)
                 {
-                    Categories = root.items[i].volumeInfo.categories,
                     Description = root.items[i].volumeInfo.description,
                     Language = root.items[i].volumeInfo.language,
                     Publisher = root.items[i].volumeInfo.publisher,
                     ImageLink = root.items[i].volumeInfo.imageLinks?.smallThumbnail,
                     PublishedDate = root.items[i].volumeInfo.publishedDate.ToDateTime(),
-                    Isbn = root.items[i].ToIsbn() ?? Extensions.GenerateUniqueFileId(_requestedBook.File)
+                    Isbn = root.items[i].ToIsbn() ?? Extensions.GenerateUniqueFileId(_requestedBook.File),
+                    Authors = authors
                 };
-
+                Array.ForEach(root.items[i].volumeInfo.categories?? Array.Empty<string>(), str => abook.Categories.Add(str));
                 retval.Add(abook);
             }
 
@@ -127,7 +135,7 @@ namespace BookatHomeProvider
             }
             else
             {
-                if (_requestedBook.Authors == null || _requestedBook.Authors.Length == 0)
+                if (_requestedBook.Authors == null || _requestedBook.Authors.Count == 0)
                 {
                     query = string.Format("intitle:{0}", _requestedBook.SearchTitle);
                 }

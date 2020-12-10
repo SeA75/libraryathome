@@ -1,5 +1,4 @@
 ﻿using System;
-using LibraryAtHomeRepositoryDriver;
 
 namespace LibraryAtHomeRepositoryDriver
 {
@@ -34,10 +33,10 @@ namespace LibraryAtHomeRepositoryDriver
 
         public double BooksPerSeconds { get; set; }
 
-        public override bool Equals(object obj)
-        {
-            return this.Equals(obj as BookatHome);
-        }
+        //public override bool Equals(object obj)
+        //{
+        //    return this.Equals(obj as BookatHome);
+        //}
 
 
         public override string ToString()

@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using LibraryAtHomeRepositoryDriver;
+using LibraryAtHomeTracer;
 
-namespace BooksParser
+namespace LibraryAtHomeTracerFileMetadataExtractor
 {
     public abstract class FileExtractor
     {
@@ -35,12 +36,12 @@ namespace BooksParser
         private static BookatHome FindTheBookInfoFromCollection(string fileunderanalysis, List<PocoBook> booksFromProvider,
             string maytitle, IBookParserTrace trace)
         {
-            var titlecomparer = new TitleCompareBookFinder();
-            var levenshteincomparer = new LevenshteinBookFinder();
+            var titlecomparer = new TitleCompareBookFinder(fileunderanalysis, trace);
+            var levenshteincomparer = new LevenshteinBookFinder(fileunderanalysis, trace);
 
             titlecomparer.SetNext(levenshteincomparer);
 
-            return titlecomparer.HandleTheBook(fileunderanalysis, booksFromProvider, maytitle, trace);
+            return titlecomparer.HandleTheBookFromList(maytitle, booksFromProvider);
         }
     }
 }

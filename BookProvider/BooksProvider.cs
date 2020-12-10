@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-using BooksParser;
-using LibraryAtHomeRepositoryDriver;
+﻿using LibraryAtHomeRepositoryDriver;
+using System.Collections.Generic;
 
-namespace BookatHomeProvider
+namespace LibraryAtHomeProvider
 {
     public abstract class BooksProvider
     {

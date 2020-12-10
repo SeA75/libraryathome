@@ -1,16 +1,14 @@
-﻿using PdfSharp.Pdf.IO;
+﻿using LibraryAtHomeProvider;
+using LibraryAtHomeRepositoryDriver;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using BookatHomeProvider;
-using Common.Logging.Configuration;
-using LibraryAtHomeRepositoryDriver;
-
+using LibraryAtHomeTracerFileMetadataExtractor;
+using LibraryAtHomeTracer;
 
 namespace BooksParser
 {
@@ -79,7 +77,7 @@ namespace BooksParser
 
             var (collectedBooks, discardedBooks) = CollectBooks();
 
-            await PutBookOnDatabase(collectedBooks, discardedBooks);
+            await PutBookOnDatabase(collectedBooks, discardedBooks).ConfigureAwait(false);
 
             DeleteAlreadyCatalogedBooks();
 
@@ -121,7 +119,7 @@ namespace BooksParser
 
             catch (Exception ex)
             {
-                if (ex is KeyNotFoundException || ex is PdfReaderException || ex is InvalidOperationException || ex is ArgumentNullException || ex is System.Reflection.TargetInvocationException)
+                if (ex is KeyNotFoundException || ex is InvalidOperationException || ex is ArgumentNullException || ex is System.Reflection.TargetInvocationException)
                 {
                     return new BookToBeReviewed(file, ex.Message);
                 }

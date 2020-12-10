@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <Platforms>AnyCPU;x64</Platforms>
     <ApplicationIcon />
     <StartupObject />
@@ -21,25 +21,37 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="AbstractBookFinderHandlerr.cs" />
     <Compile Remove="BookatHome.cs" />
     <Compile Remove="BooksCollectedDataMapper.cs" />
     <Compile Remove="BooksProvider.cs" />
     <Compile Remove="BookToBeReviewed.cs" />
     <Compile Remove="BookToBeReviewedDataMapper.cs" />
     <Compile Remove="ConsoleBookParserTrace.cs" />
+    <Compile Remove="EpubFileInfoExtractor.cs" />
     <Compile Remove="FileBookParserTrace.cs" />
+    <Compile Remove="FileExtractor.cs" />
+    <Compile Remove="FileInfoExtractor.cs" />
     <Compile Remove="GoogleBookProvider.cs" />
     <Compile Remove="GoogleBookToJsonDeserilization.cs" />
     <Compile Remove="IBookDataMapper.cs" />
+    <Compile Remove="IBookFinderHandler.cs" />
     <Compile Remove="IBookParserTrace.cs" />
     <Compile Remove="IMongodbConnection.cs" />
+    <Compile Remove="LevenshteinBookFinder.cs" />
+    <Compile Remove="LevenshteinDistance.cs" />
     <Compile Remove="LibraryStatistics.cs" />
     <Compile Remove="LibraryStatisticsDataMapper.cs" />
+    <Compile Remove="LitFileInfoExtractor.cs" />
     <Compile Remove="MongodbConnection.cs" />
     <Compile Remove="MongodbDataMapper.cs" />
     <Compile Remove="MongodbDataMapperException.cs" />
     <Compile Remove="ParserStatistics.cs" />
+    <Compile Remove="PdfFileInfoExtractor.cs" />
+    <Compile Remove="PdfTextReaderFileInfoExtractor.cs" />
     <Compile Remove="PocoBook.cs" />
+    <Compile Remove="RtfFileInfoExtractor.cs" />
+    <Compile Remove="TitleCompareBookFinder.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -58,10 +70,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="EpubSharp.dll" Version="1.1.5" />
     <PackageReference Include="Google.Apis.Books.v1" Version="1.49.0.2094" />
     <PackageReference Include="Google.Apis.Discovery.v1" Version="1.49.0" />
-    <PackageReference Include="itext7" Version="7.1.12" />
     <PackageReference Include="Microsoft.CodeQuality.Analyzers" Version="3.3.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -74,13 +84,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="nrtftree-library" Version="0.4.0" />
-    <PackageReference Include="PdfSharp" Version="1.50.5147" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BookAtHomeTracer\BookAtHomeTracer.csproj" />
-    <ProjectReference Include="..\BookProvider\BookatHomeProvider.csproj" />
+    <ProjectReference Include="..\BookAtHomeTracer\LibraryAtHomeTracer.csproj" />
+    <ProjectReference Include="..\BookProvider\LibraryAtHomeProvider.csproj" />
+    <ProjectReference Include="..\FileMetadataExtractor\LibraryAtHomeFileMetadataExtractor.csproj" />
     <ProjectReference Include="..\LibraryAtHomeRepositoryDriver\LibraryAtHomeRepositoryDriver.csproj" />
   </ItemGroup>
 

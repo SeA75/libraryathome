@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace BookatHomeProvider
+namespace LibraryAtHomeProvider
 {
     public static class Extensions
     {

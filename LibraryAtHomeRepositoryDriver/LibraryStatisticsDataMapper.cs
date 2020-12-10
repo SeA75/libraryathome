@@ -70,7 +70,7 @@ namespace LibraryAtHomeRepositoryDriver
                 await Statistics.InsertManyAsync(instances,
                        new InsertManyOptions() { IsOrdered = false, BypassDocumentValidation = false }).ConfigureAwait(false);
             }
-            catch(MongoBulkWriteException<LibraryStatistics> e)
+            catch(MongoBulkWriteException<LibraryStatistics>)
             {
 
             }
@@ -99,19 +99,22 @@ namespace LibraryAtHomeRepositoryDriver
         }
 
 
-        public override bool Equals(LibraryStatistics b1, LibraryStatistics b2)
+        public override bool Equals(LibraryStatistics x, LibraryStatistics y)
         {
-            if (b1 == null && b2 == null)
+            if (x == null && y == null)
                 return true;
-            else if (b1 == null || b2 == null)
+            else if (x == null || y == null)
                 return false;
 
-            return (b1 == b2);
+            return (x == y);
         }
 
-        public override int GetHashCode(LibraryStatistics bx)
+        public override int GetHashCode(LibraryStatistics obj)
         {
-            return bx.GetHashCode();
+           if(obj == null)
+               throw new ArgumentNullException(nameof(obj), "Library statistics cannot be null.");
+
+           return obj.GetHashCode();
         }
     }
 }

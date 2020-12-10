@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace BooksParser
+namespace LibraryAtHomeTracer
 {
     public class ConsoleBookParserTrace : IBookParserTrace
     {

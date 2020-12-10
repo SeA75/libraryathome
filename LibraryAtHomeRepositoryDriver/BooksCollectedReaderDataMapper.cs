@@ -45,7 +45,7 @@ namespace LibraryAtHomeRepositoryDriver
         {
             if (PocoBook.IsNullOrEmpty(instance))
             {
-                throw new ArgumentNullException("Book cannot be null or empty."); ;
+                throw new ArgumentNullException(nameof(instance), "Book cannot be null or empty."); 
             }
 
 
@@ -82,17 +82,17 @@ namespace LibraryAtHomeRepositoryDriver
                 return GetBookBy("Language", instance.Language);
             }
 
-            if (instance.Categories != null && instance.Categories.Length > 0)
+            if (instance.Categories != null && instance.Categories.Count > 0)
             {
                 return GetBookBy("Categories", string.Join(", ", instance.Categories));
             }
 
-            if (instance.Authors != null && instance.Authors.Length > 0)
+            if (instance.Authors != null && instance.Authors.Count > 0)
             {
                 return GetBookBy("Authors", string.Join(", ", instance.Authors));
             }
 
-            if (instance.BookReliability != PocoBook.Reliability.Empty) //TODO da configurare nel ctor
+            if (instance.BookReliability != PocoBook.Reliability.Empty) 
             {
                 return GetBookBy("BookReliability", instance.BookReliability.ToString());
             }

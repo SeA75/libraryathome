@@ -1,4 +1,4 @@
-﻿namespace BooksParser
+﻿namespace LibraryAtHomeTracer
 {
     public interface IBookParserTrace
     {

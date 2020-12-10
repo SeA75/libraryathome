@@ -12,13 +12,13 @@ namespace LibraryAtHomeRepositoryDriver
     {
         static readonly object _object = new object();
 
-        private const string collectionname = "books";
+        private const string CollectionName = "books";
 
         public IMongoCollection<PocoBook> Books
         {
             get
             {
-                return Connection.Database.GetCollection<PocoBook>(collectionname);
+                return Connection.Database.GetCollection<PocoBook>(CollectionName);
             }
         }
 
@@ -41,7 +41,7 @@ namespace LibraryAtHomeRepositoryDriver
 
             if (Books == null)
             {
-                Connection.Database.CreateCollection(collectionname);
+                Connection.Database.CreateCollection(CollectionName);
             }
 
             CreateIndexes();
@@ -57,7 +57,8 @@ namespace LibraryAtHomeRepositoryDriver
         {
             if (PocoBook.IsNullOrEmpty(instance))
             {
-                throw new ArgumentNullException("Book cannot be null or empty."); ;
+                throw new ArgumentNullException(nameof(instance), "Book cannot be null or empty.");
+
             } 
                         
 
@@ -69,7 +70,7 @@ namespace LibraryAtHomeRepositoryDriver
                 {
                     return Books.Find<PocoBook>(filter).ToList<PocoBook>();
                 }
-                catch (InvalidOperationException e)
+                catch (InvalidOperationException)
                 {
                     return new List<PocoBook>();
                 }
@@ -94,12 +95,12 @@ namespace LibraryAtHomeRepositoryDriver
                 return GetBookBy("Language", instance.Language);
             }
 
-            if (instance.Categories != null && instance.Categories.Length > 0)
+            if (instance.Categories != null && instance.Categories.Count > 0)
             {
                 return GetBookBy("Categories", string.Join(", ", instance.Categories));
             }
 
-            if (instance.Authors != null && instance.Authors.Length > 0)
+            if (instance.Authors != null && instance.Authors.Count > 0)
             {
                 return GetBookBy("Authors",  string.Join(", ", instance.Authors));
             }
@@ -115,7 +116,6 @@ namespace LibraryAtHomeRepositoryDriver
 
         public override void Write(PocoBook instance)
         {
-            List<PocoBook> notWrittenBooks = new List<PocoBook>();
             try
             {
                 lock (_object)
@@ -160,34 +160,34 @@ namespace LibraryAtHomeRepositoryDriver
             return notcataloged;
         }
 
-        public override PocoBook Update(PocoBook newBook)
+        public override PocoBook Update(PocoBook instance)
         {
-            if (newBook == null || string.IsNullOrEmpty(newBook.Isbn))
+            if (instance == null || string.IsNullOrEmpty(instance.Isbn))
             {
-                throw new ArgumentNullException(nameof(newBook), "Book or Isbn cannot be null or empty.");
+                throw new ArgumentNullException(nameof(instance), "Book or Isbn cannot be null or empty.");
             }
 
-            FilterDefinition<PocoBook> filter = Builders<PocoBook>.Filter.Eq("Isbn", newBook.Isbn);
+            FilterDefinition<PocoBook> filter = Builders<PocoBook>.Filter.Eq("Isbn", instance.Isbn);
 
             UpdateDefinition<PocoBook> update = null;
 
             PocoBook queryBook = new PocoBook
             {
-                Isbn = newBook.Isbn
+                Isbn = instance.Isbn
             };
 
-            PocoBook oldBook = Read(queryBook).First();
+            var oldBook = Read(queryBook).First();
 
-            update = UpdateValue(newBook.Title, oldBook.Title, "Title", update);
-            update = UpdateValue(newBook.Language, oldBook.Language, "Language", update);
-            update = UpdateValue(newBook.PageCount, oldBook.PageCount, "PageCount", update);
-            update = UpdateVectorValue(newBook.Authors, oldBook.Authors, "Authors", update);
-            update = UpdateValue(newBook.BookReliability, oldBook.BookReliability, "BookReliability", update);
-            update = UpdateVectorValue(newBook.Categories, oldBook.Categories, "Categories", update);
-            update = UpdateValue(newBook.Description, oldBook.Description, "Description", update);
-            update = UpdateValue(newBook.File, oldBook.File, "File", update);
-            update = UpdateValue(newBook.PublishedDate, oldBook.PublishedDate, "PublishedDate", update);
-            update = UpdateValue(newBook.Publisher, oldBook.Publisher, "Publisher", update);
+            update = UpdateValue(instance.Title, oldBook.Title, "Title", update);
+            update = UpdateValue(instance.Language, oldBook.Language, "Language", update);
+            update = UpdateValue(instance.PageCount, oldBook.PageCount, "PageCount", update);
+            update = UpdateVectorValue(instance.Authors, oldBook.Authors, "Authors", update);
+            update = UpdateValue(instance.BookReliability, oldBook.BookReliability, "BookReliability", update);
+            update = UpdateVectorValue(instance.Categories, oldBook.Categories, "Categories", update);
+            update = UpdateValue(instance.Description, oldBook.Description, "Description", update);
+            update = UpdateValue(instance.File, oldBook.File, "File", update);
+            update = UpdateValue(instance.PublishedDate, oldBook.PublishedDate, "PublishedDate", update);
+            update = UpdateValue(instance.Publisher, oldBook.Publisher, "Publisher", update);
 
             var opts = new FindOneAndUpdateOptions<PocoBook>()
             {
@@ -210,7 +210,7 @@ namespace LibraryAtHomeRepositoryDriver
 
         public override void Drop()
         {
-            Connection.Database.DropCollection(collectionname);
+            Connection.Database.DropCollection(CollectionName);
         }
 
         public override long Count()
@@ -280,19 +280,24 @@ namespace LibraryAtHomeRepositoryDriver
             });
         }
 
-        public override bool Equals(PocoBook b1, PocoBook b2)
+        public override bool Equals(PocoBook x, PocoBook y)
         {
-            if (b1 == null && b2 == null)
+            if (x == null && y == null)
                 return true;
-            else if (b1 == null || b2 == null)
+            else if (x == null || y == null)
                 return false;
 
-            return (b1 == b2);
+            return (x == y);
         }
 
-        public override int GetHashCode(PocoBook bx)
-        {            
-            return bx.GetHashCode();
+        public override int GetHashCode(PocoBook obj)
+        {
+            if (obj == null)
+            {
+                throw new ArgumentNullException(nameof(obj), "book cannot be null.");
+            }
+
+            return obj.GetHashCode();
         }
     }
 }

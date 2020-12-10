@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using LibraryAtHomeRepositoryDriver;
 
-namespace BooksParser
+namespace LibraryAtHomeTracerFileMetadataExtractor
 {
     public class PdfTextReaderFileInfoExtractor : PdfFileInfoExtractor
     {

@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Threading;
 
-namespace BooksParser
+namespace LibraryAtHomeTracer
 {
     public class FileBookParserTrace : IBookParserTrace
     {

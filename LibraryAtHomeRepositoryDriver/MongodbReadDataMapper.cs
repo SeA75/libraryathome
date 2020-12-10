@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using MongoDB.Bson;
-using MongoDB.Driver;
 
 namespace LibraryAtHomeRepositoryDriver
 {
@@ -25,7 +23,7 @@ namespace LibraryAtHomeRepositoryDriver
         protected MongodbReadDataMapper(IMongodbConnection connection)
         {
             if (connection == null)
-                throw new ArgumentNullException("Database connection cannot be null.");
+                throw new ArgumentNullException(nameof(connection), "Database connection cannot be null.");
 
             this.Connection = connection;
         }

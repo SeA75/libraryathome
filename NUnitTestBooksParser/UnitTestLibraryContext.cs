@@ -1,14 +1,15 @@
 using BooksParser;
+using LibraryAtHomeRepositoryDriver;
 using MongoDB.Driver;
 using NUnit.Framework;
 using System;
+using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
-using LibraryAtHomeRepositoryDriver;
 
 namespace NUnitTestBooksParser
 {
@@ -110,15 +111,15 @@ namespace NUnitTestBooksParser
         public void TestReadBookByAuthor_CorrectAuthor_ReturnBooks()
         {
             PocoBook book = new PocoBook();
-            book.Authors = new []{ "Asimov" };
+            book.Authors = new Collection<string>{ "Asimov" };
 
             var result = mybooks.Read(book);
 
             Assert.AreEqual(3, result.Count);
 
-            var firstbook = result.Where(p => p.Title == "Preludio alla fondazione").First();
-            var secondBook = result.Where(p => p.Title == "Fondazione e terra").First();
-            var thirdBook = result.Where(p => p.Title == "Cavalieri cosmici").First();
+            var firstbook = result.First(p => p.Title == "Preludio alla fondazione");
+            var secondBook = result.First(p => p.Title == "Fondazione e terra");
+            var thirdBook = result.First(p => p.Title == "Cavalieri cosmici");
 
             Assert.IsNotNull(firstbook);
             Assert.AreEqual("9788804401841", firstbook.Isbn);
@@ -183,9 +184,9 @@ namespace NUnitTestBooksParser
 
             Assert.AreEqual(3, result.Count);
 
-            var firstbook = result.Where(p => p.Isbn == "PSU:000054186286").First();
-            var secondBook = result.Where(p => p.Isbn == "UCSD:31822028759850").First();
-            var thirdBook = result.Where(p => p.Isbn == "9780470512579").First();
+            var firstbook = result.First(p => p.Isbn == "PSU:000054186286");
+            var secondBook = result.First(p => p.Isbn == "UCSD:31822028759850");
+            var thirdBook = result.First(p => p.Isbn == "9780470512579");
 
             Assert.IsNotNull(firstbook);
             Assert.AreEqual("Pattern-Oriented Software Architecture, A System of Patterns", firstbook.Title);
@@ -270,20 +271,18 @@ namespace NUnitTestBooksParser
             query.Isbn = isbn;
 
             var book = mybooks.Read(query).First();
-
-            string[] expAuthors = book.Authors.Append("Peppino");
-
-
-            book.Authors = book.Authors.Append<string>("Peppino");
+            book.Authors.Add("Peppino");
+            Collection<string> expAuthors = book.Authors;
+            
 
             var updatedBook = mybooks.Update(book);
 
             Assert.AreEqual(isbn, updatedBook.Isbn);
-            Assert.AreEqual(expAuthors.Length, updatedBook.Authors.Length);
+            Assert.AreEqual(expAuthors.Count, updatedBook.Authors.Count);
             Assert.AreEqual(expAuthors, updatedBook.Authors);
 
             //Clean
-            book.Authors = book.Authors.Remove<string>("Peppino");
+            book.Authors.Remove("Peppino");
             mybooks.Update(book);
         }
 
@@ -292,7 +291,7 @@ namespace NUnitTestBooksParser
         public void TestReadBookbyCategory_GetComputers_ReturnBooks()
         {
             var query = new PocoBook();
-            query.Categories = new[] { "Computers" };
+            query.Categories = new Collection<string> { "Computers" };
            
             var books = mybooks.Read(query);
 
@@ -303,7 +302,6 @@ namespace NUnitTestBooksParser
         [Test]
         public void TestReadBookbyReliability_GetLow_ReturnBooks()
         {
-            string rel = "Low";
             var query = new PocoBook();
             query.BookReliability = PocoBook.Reliability.Low;
 
@@ -355,12 +353,12 @@ namespace NUnitTestBooksParser
             string[] newAuthors = { "Frank Buschmann", "Douglas C. Schmidt", "Regine Meunier", "Hans Rohnert", "Michael Stal" };
 
 
-            book.Authors = book.Authors.Remove<string>("Peter Sommerlad");
+            book.Authors.Remove("Peter Sommerlad");
 
             var updatedBook = mybooks.Update(book);
 
             Assert.AreEqual(isbn, updatedBook.Isbn);
-            Assert.AreEqual(5, updatedBook.Authors.Length);
+            Assert.AreEqual(5, updatedBook.Authors.Count);
             Assert.AreEqual(newAuthors, updatedBook.Authors);
         }
 
@@ -373,14 +371,14 @@ namespace NUnitTestBooksParser
 
             var book = mybooks.Read(query).First();
 
-            string[] category = { "Computers", "Science" };
+            Collection<string> category = new Collection<string>(){ "Computers", "Science" };
 
-            book.Categories = book.Categories.Append<string>("Science");
+            book.Categories.Add("Science");
 
             var updatedBook = mybooks.Update(book);
 
             Assert.AreEqual(isbn, updatedBook.Isbn);
-            Assert.AreEqual(2, updatedBook.Categories.Length);
+            Assert.AreEqual(2, updatedBook.Categories.Count);
             Assert.AreEqual(category, updatedBook.Categories);
         }
 

@@ -24,7 +24,7 @@ namespace LibraryAtHomeRepositoryDriver
         {
             if (instance == null || string.IsNullOrEmpty(instance.File))
             {
-                throw new ArgumentNullException();
+                throw new ArgumentNullException(nameof(instance), "Book to be review cannot be null or empty.");
             }
             
             BooksToReviewList.DeleteOne(x => x.File == instance.File);
@@ -40,7 +40,7 @@ namespace LibraryAtHomeRepositoryDriver
         {
             if (instance == null || string.IsNullOrEmpty(instance.File))
             {
-                throw new ArgumentNullException();
+                throw new ArgumentNullException(nameof(instance), "Book to be reviewed cannot be null or empty.");
             }
 
             FilterDefinition<BookToBeReviewed> filter = Builders<BookToBeReviewed>.Filter.Eq("File", instance.File);
@@ -49,7 +49,7 @@ namespace LibraryAtHomeRepositoryDriver
             {
                 return BooksToReviewList.Find<BookToBeReviewed>(filter).ToList<BookToBeReviewed>();
             }
-            catch (InvalidOperationException e)
+            catch (InvalidOperationException)
             {
                 return new List<BookToBeReviewed>();
             }
@@ -63,7 +63,7 @@ namespace LibraryAtHomeRepositoryDriver
             {
                 if (instance == null || string.IsNullOrEmpty(instance.File))
                 {
-                    throw new ArgumentNullException();
+                    throw new ArgumentNullException(nameof(instance), "Book cannot be null or empty.");
                 }
 
                 BooksToReviewList.InsertOne(instance);
@@ -78,7 +78,7 @@ namespace LibraryAtHomeRepositoryDriver
                     await BooksToReviewList.InsertManyAsync(instances,
                         new InsertManyOptions() { IsOrdered = false, BypassDocumentValidation = false }).ConfigureAwait(false);
             }
-            catch (MongoBulkWriteException<BookToBeReviewed> e)
+            catch (MongoBulkWriteException<BookToBeReviewed>)
             {
             }
             return new List<BookToBeReviewed>();
@@ -88,7 +88,7 @@ namespace LibraryAtHomeRepositoryDriver
         {
             if (instance == null || string.IsNullOrEmpty(instance.File))
             {
-                throw new ArgumentNullException();
+                throw new ArgumentNullException(nameof(instance), "Book cannot be null or empty.");
             }
 
             FilterDefinition<BookToBeReviewed> filter = Builders<BookToBeReviewed>.Filter.Eq("File", instance.File);
@@ -138,19 +138,23 @@ namespace LibraryAtHomeRepositoryDriver
                 new CreateIndexOptions { Unique = true }));
         }
 
-        public override bool Equals(BookToBeReviewed b1, BookToBeReviewed b2)
+        public override bool Equals(BookToBeReviewed x, BookToBeReviewed y)
         {
-            if (b1 == null && b2 == null)
+            if (x == null && y == null)
                 return true;
-            else if (b1 == null || b2 == null)
+            else if (x == null || y == null)
                 return false;
 
-            return (b1 == b2);
+            return (x == y);
         }
 
-        public override int GetHashCode(BookToBeReviewed bx)
+        public override int GetHashCode(BookToBeReviewed obj)
         {
-            return bx.GetHashCode();
+            if(obj == null)
+            {
+                throw new ArgumentNullException(nameof(obj), "Book to be reviewed cannot be null.");
+            }
+            return obj.GetHashCode();
         }
     }
 }

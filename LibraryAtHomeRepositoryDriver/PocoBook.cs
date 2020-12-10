@@ -1,17 +1,20 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-using System;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.RegularExpressions;
 
 namespace LibraryAtHomeRepositoryDriver
 {
 
-    public class PocoBook : BookatHome
+    public sealed class PocoBook : BookatHome
     {
+
+        private Collection<string> _authors;
+
         public PocoBook()
         {
-
+            Categories = new Collection<string>();
+            Authors = new Collection<string>();
         }
 
 
@@ -19,10 +22,12 @@ namespace LibraryAtHomeRepositoryDriver
         {
             BookReliability = Reliability.Discarded;
             File = file;
+            Categories = new Collection<string>();
+            Authors = new Collection<string>();
         }
 
 
-        public PocoBook(string file, string title, string[] authors, string isbn, string searchTitle)
+        public PocoBook(string file, string title, Collection<string> authors, string isbn, string searchTitle)
         {
             if (searchTitle != null)
             {
@@ -34,14 +39,22 @@ namespace LibraryAtHomeRepositoryDriver
             Isbnsearch = isbn;
             Format = Path.GetExtension(file).Replace(".", string.Empty);
             BookReliability = Reliability.High;
+            Categories = new Collection<string>();
+            Authors = new Collection<string>();
         }
+
+
 
 
         public string Title { get; set; }
 
         public string SearchTitle { get; set; }
 
-        public string[] Authors { get; set; }
+        public Collection<string> Authors
+        {
+            get => _authors;
+            set => _authors = value;
+        }
 
         public string Publisher { get; set; }
 
@@ -56,7 +69,7 @@ namespace LibraryAtHomeRepositoryDriver
 
         public int PageCount { get; set; }
 
-        public string[] Categories { get; set; }
+        public Collection<string> Categories { get; set; }
 
         public string Language { get; set; }
 

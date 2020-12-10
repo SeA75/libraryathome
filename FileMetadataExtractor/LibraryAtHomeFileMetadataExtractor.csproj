@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>LibraryAtHomeTracerFileMetadataExtractor</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EpubSharp.dll" Version="1.1.5" />
+    <PackageReference Include="itext7" Version="7.1.12" />
+    <PackageReference Include="PDFsharp" Version="1.50.5147" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BookAtHomeTracer\LibraryAtHomeTracer.csproj" />
+    <ProjectReference Include="..\LibraryAtHomeRepositoryDriver\LibraryAtHomeRepositoryDriver.csproj" />
+  </ItemGroup>
+
+</Project>

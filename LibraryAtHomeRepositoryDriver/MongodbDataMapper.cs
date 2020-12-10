@@ -1,6 +1,7 @@
 ﻿using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -22,7 +23,7 @@ namespace LibraryAtHomeRepositoryDriver
         /// <param name="connection">A .net connection that implements IDbConnection</param>
         protected MongodbDataMapper(IMongodbConnection connection)
         {
-            this.Connection = connection ?? throw new ArgumentNullException("Database connection cannot be null.");
+            this.Connection = connection ?? throw new ArgumentNullException(nameof(connection), "Database connection cannot be null.");
         }
 
         /// <summary>
@@ -78,7 +79,7 @@ namespace LibraryAtHomeRepositoryDriver
 
         public abstract void Drop();
 
-        internal static bool CheckEquality<T>(T[] first, T[] second)
+        internal static bool CheckEquality<T>(Collection<T> first, Collection<T> second)
         {
             if (first.SequenceEqual<T>(second))
                 return true;
@@ -92,7 +93,7 @@ namespace LibraryAtHomeRepositoryDriver
             return update;
         }
 
-        internal static UpdateDefinition<TCOLL> UpdateVectorValue<T>(T[] newValue, T[] oldValue, string fieldname, UpdateDefinition<TCOLL> update)
+        internal static UpdateDefinition<TCOLL> UpdateVectorValue<T>(Collection<T> newValue, Collection<T> oldValue, string fieldname, UpdateDefinition<TCOLL> update)
         {
             if (!CheckEquality<T>(oldValue, newValue))
                 update = Builders<TCOLL>.Update.Set(fieldname, newValue);

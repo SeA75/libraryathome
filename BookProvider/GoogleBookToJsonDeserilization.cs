@@ -1,4 +1,4 @@
-﻿namespace BookatHomeProvider
+﻿namespace LibraryAtHomeProvider
 {
     public class Rootobject
     {

@@ -1,14 +1,22 @@
 ﻿using System.Collections.Generic;
 using LibraryAtHomeRepositoryDriver;
+using LibraryAtHomeTracer;
 
-namespace BooksParser
+namespace LibraryAtHomeTracerFileMetadataExtractor
 {
     public class LevenshteinBookFinder : AbstractBookFinderHandlerr
     {
         const int Levenshteinthreshold = 12;
-        public override BookatHome HandleTheBook(string fileunderanalysis, List<PocoBook> booklist, string maybetitle, IBookParserTrace trace)
+
+        private readonly IBookParserTrace _trace;
+        public LevenshteinBookFinder(string fileunderanalysis, IBookParserTrace trace) : base(fileunderanalysis)
         {
-            trace.TraceInfo("LevenshteinBookFinder --> HandleTheBook start");
+            _trace = trace;
+        }
+
+        public override BookatHome HandleTheBookFromList(string maybetitle, List<PocoBook> booklist)
+        {
+            _trace.TraceInfo("LevenshteinBookFinder --> HandleTheBook start");
 
             int bookindex = -1;
             int lddistance = int.MaxValue;
@@ -45,7 +53,7 @@ namespace BooksParser
 
                 return booklist[bookindex];
             }            
-            return base.HandleTheBook(fileunderanalysis, booklist, maybetitle, trace);
+            return base.HandleTheBookFromList(maybetitle, booklist);
         }
 
     }
