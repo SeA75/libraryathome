@@ -12,15 +12,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace LibraryAtHomeUI
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for LibraryConfiguration.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class LibraryConfiguration : Window
     {
-        public MainWindow()
+        public LibraryConfiguration()
         {
             InitializeComponent();
         }
@@ -34,6 +35,15 @@ namespace LibraryAtHomeUI
                 newForm.Show(); //show the new form.
                // this.Close(); //only if you want to close the current form.
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new CommonOpenFileDialog();
+            dialog.IsFolderPicker = true;
+            CommonFileDialogResult result = dialog.ShowDialog();
+            if(result == CommonFileDialogResult.Ok)
+                tbEbooksFolder.Text = dialog.FileName;
         }
     }
 }

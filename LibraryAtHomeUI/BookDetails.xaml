@@ -71,7 +71,7 @@
                                 <RichTextBox x:Name="rtbBookDetailsPublicationDate" HorizontalAlignment="Left" Width="100" Height="15" BorderThickness="0">
                                     <FlowDocument>
                                         <Paragraph FontSize="10">
-                                            <Run Text="Author1"/>
+                                            <Run Text="PublicationDate"/>
                                         </Paragraph>
                                     </FlowDocument>
                                 </RichTextBox>

@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace LibraryAtHomeUI
 {
     /// <summary>
-    /// Interaction logic for LibraryMain.xaml
+    /// Interaction logic for MainWindows.xaml
     /// </summary>
-    public partial class LibraryMain : Window
+    public partial class MainWindows : Window
     {
-        public LibraryMain()
+        public MainWindows()
         {
             InitializeComponent();
         }

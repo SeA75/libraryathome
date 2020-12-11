@@ -11,6 +11,8 @@ namespace LibraryAtHomeRepositoryDriver
 
         private Collection<string> _authors;
 
+        private const uint MaxRate = 5;
+
         public PocoBook()
         {
             Categories = new Collection<string>();
@@ -77,6 +79,17 @@ namespace LibraryAtHomeRepositoryDriver
 
         public string ImageLink { get; set; }
 
+
+
+
+        public BookRate BookRating { get; set; }
+
+        public Reliability BookReliability { get; set; }
+
+
+        public string ReaderNotes { get; set; }
+
+
         public override string ToString()
         {
             string authorstr = string.Empty;
@@ -95,8 +108,15 @@ namespace LibraryAtHomeRepositoryDriver
                  " Language: " + Language + " Categories: " + catstr + "Format: " + Format + "Page Count: " + PageCount + "Reliability: " + BookReliability;
         }
 
-        public Reliability BookReliability { get; set; }
 
+        public enum BookRate
+        {
+            OneStar = 1,
+            TwoStars,
+            ThreeStars,
+            FourStars,
+            FiveStars
+        }
 
         public enum Reliability
         {
