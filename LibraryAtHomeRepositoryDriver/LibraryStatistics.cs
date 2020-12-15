@@ -7,8 +7,7 @@ namespace LibraryAtHomeRepositoryDriver
         public LibraryStatistics(long totbooks, long bookscollected, TimeSpan elapsedTime, string folder)
         {
             TotalBooks = totbooks;
-            NumberOfCollectedBook = bookscollected;        
-
+            NumberOfCollectedBook = bookscollected;
 
             ElapsedTime = string.Format("{0:00}:{1:00}:{2:00}.{3:00}", elapsedTime.Hours, elapsedTime.Minutes,
                     elapsedTime.Seconds, elapsedTime.Milliseconds / 10); 
@@ -17,13 +16,13 @@ namespace LibraryAtHomeRepositoryDriver
             Timestamp = DateTime.Now.ToString();
             long successratio = (100 * NumberOfCollectedBook) / (TotalBooks);
             SuccessRatio = successratio.ToString() + "%";
-            BooksPerSeconds = Convert.ToDouble(TotalBooks) / Convert.ToDouble(elapsedTime.Seconds);
+            BooksPerSeconds = Convert.ToDouble(TotalBooks) / elapsedTime.TotalSeconds;
         }
         public long TotalBooks { get; set; }
 
         public long NumberOfCollectedBook { get; set; }
 
-        public string ElapsedTime { get; set; } //TODO da convertire in ISODate
+        public string ElapsedTime { get; set; } //TODO da convertire in ISODate?
 
         public string LibraryDirectory { get; set; }
 

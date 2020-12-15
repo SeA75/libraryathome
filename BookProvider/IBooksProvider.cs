@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 namespace LibraryAtHomeProvider
 {
-    public abstract class BooksProvider
+    public interface IBooksProvider
     {
-        public abstract List<PocoBook> FetchInfoOfBook(PocoBook book);
+        List<PocoBook> FetchInfoOfBook(PocoBook book);
     }
 }

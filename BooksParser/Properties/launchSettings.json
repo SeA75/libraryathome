@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "BooksParser": {
+      "commandName": "Project",
+      "commandLineArgs": "-configfile C:\\Users\\vgh8no\\source\\repos\\BooksParser\\BooksParser\\config\\ebookConf.json"
+    }
+  }
+}

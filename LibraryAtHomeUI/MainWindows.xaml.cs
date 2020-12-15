@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace LibraryAtHomeUI
 {
@@ -24,9 +25,13 @@ namespace LibraryAtHomeUI
             InitializeComponent();
         }
 
-        private void BookPreviewUserControl_Loaded()
-        {
+      
 
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            var dialog = new CommonOpenFileDialog();
+            dialog.IsFolderPicker = true;
+            CommonFileDialogResult result = dialog.ShowDialog();
         }
     }
 }

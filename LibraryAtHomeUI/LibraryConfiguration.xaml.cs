@@ -39,11 +39,8 @@ namespace LibraryAtHomeUI
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new CommonOpenFileDialog();
-            dialog.IsFolderPicker = true;
-            CommonFileDialogResult result = dialog.ShowDialog();
-            if(result == CommonFileDialogResult.Ok)
-                tbEbooksFolder.Text = dialog.FileName;
+           
         }
+
     }
 }

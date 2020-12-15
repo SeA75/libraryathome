@@ -7,8 +7,6 @@ namespace BooksParser
 {
     public partial class BookParserConfig
     {
-
-
         [JsonProperty("ebookformat")]
         public List<string> ebookformat { get; set; }
 
@@ -26,6 +24,9 @@ namespace BooksParser
 
         [JsonProperty("libraryContext")]
         public LibraryContextConfig libraryContext { get; set; }
+
+        [JsonProperty("bookProviderPlugin")]
+        public BookProviderPlugin providerPlugin { get; set; }
     }
 
     public partial class LibraryContextConfig
@@ -37,10 +38,18 @@ namespace BooksParser
         [JsonProperty("databasename")]
         public string databasename { get; set; }
 
-
         [JsonProperty("connectionstring")]
         public string connectionstring { get; set; }
 
+    }
+
+    public partial class BookProviderPlugin
+    {
+        [JsonProperty("pluginfolder")]
+        public string pluginfolder { get; set; }
+
+        [JsonProperty("pluginassemblyname")]
+        public string pluginassemblyname { get; set; }
     }
 
     public partial class BookParserConfig
@@ -62,7 +71,7 @@ namespace BooksParser
             Converters =
             {
                 new IsoDateTimeConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
-            },
+            }
         };
     }
 

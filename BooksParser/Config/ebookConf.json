@@ -9,8 +9,8 @@
   "ebookdirectory": "C:\\Personal\\library\\books\\ebooks",
   //  "ebookdirectory": "\\192.168.1.173\\homes\\andrea\\ebooks",
   // "ebookdirectory": "Z:\\",
- // "statisticdirectory": "C:\\temp\\",
-//    "ebookdirectory": "C:\\Temp\\eee",
+  // "statisticdirectory": "C:\\temp\\",
+  //    "ebookdirectory": "C:\\Temp\\eee",
 
   "libraryContext": {
     "jsonlibraryfile": "C:\\temp\\mylibrary.json",
@@ -19,6 +19,11 @@
   },
 
   "tracefile": "C:\\temp\\traceout.txt",
-  "tracelevel": "None"
+  "tracelevel": "None",
+
+  "bookProviderPlugin": {
+    "pluginfolder": "C:\\Users\\vgh8no\\source\\repos\\BooksParser\\BooksParser\\bin\\Debug\\net5.0",
+    "pluginassemblyname": "LibraryAtHomeProvider.dll"
+  }
 
 }

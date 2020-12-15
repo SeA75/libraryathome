@@ -101,6 +101,8 @@ namespace BooksParser
 
             Files = fileintofolder.Except<string>(filesCataloged).ToList();
 
+            
+
         }
 
         private BookatHome SearchBookInfoOfFile(string file)
@@ -110,11 +112,13 @@ namespace BooksParser
             try
             {
                 PocoBook minimalbookinfo = GetMetadataFromFileDictionaryDelegate[Utils.GetExtension(file)].DynamicInvoke(file) as PocoBook;
+               
+                IBooksProvider libraryBookProvider = 
+                    PluginLoader.GetPluginFromFolder(Configuration.providerPlugin.pluginassemblyname, Configuration.providerPlugin.pluginfolder); //TODO: performace improvments
 
-                BooksProvider google = new GoogleBookProvider(_tracer);
-                var booksFromProvider = google.FetchInfoOfBook(minimalbookinfo);
+                List<PocoBook> booksFromProvider = libraryBookProvider.FetchInfoOfBook(minimalbookinfo);
 
-                return FileInfoExtractor.AnalyzeResults(minimalbookinfo, booksFromProvider, _tracer);
+                return FileExtractor.AnalyzeResults(minimalbookinfo, booksFromProvider, _tracer);
             }
 
             catch (Exception ex)

@@ -29,10 +29,10 @@
                     <Button Command="Copy" ToolTip="Copy selection to Windows Clipboard.">
                         <Image Source="/WpfTutorialSamples;component/Images/copy.png" />
                     </Button>-->
-                    <Button HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Add Library Folder">
+                    <Button HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Add Library Folder" Click="ButtonBase_OnClick">
                         <Button.Content>
                             <fa5:FontAwesome Icon="Solid_Book"
-                                            Name="Library"
+                                            Name="AddLibrary"
                                             FontSize="25" />
                         </Button.Content>
                     </Button>

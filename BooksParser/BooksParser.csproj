@@ -6,6 +6,7 @@
     <Platforms>AnyCPU;x64</Platforms>
     <ApplicationIcon />
     <StartupObject />
+    <LangVersion>8</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -84,6 +85,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="NDesk.Options.Core" Version="1.2.5" />
   </ItemGroup>
 
   <ItemGroup>

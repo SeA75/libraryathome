@@ -4,13 +4,20 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LibraryAtHomeUI"
+        xmlns:fa5="http://schemas.fontawesome.com/icons/"
         mc:Ignorable="d"
         Title="BookDetails" Height="376" Width="800" >
     <Grid Margin="0,0,0,0" >
         <StackPanel VerticalAlignment="Center" Height="287">
             <DockPanel Height="118">
                 <Image x:Name="imgBook"  Source="Images/google.png" Width="100" Height="100" HorizontalAlignment="Right"/>
-                <Button x:Name="btnBookDetailsEditBook"  Width="90" Height="90" Content="Edit Book"/>
+                <Button x:Name="btnBookDetailsEditBook"  Width="90" Height="90" >
+                    <Button.Content>
+                        <fa5:FontAwesome Icon="Solid_PencilAlt"
+                                         Name="EditBook"
+                                         FontSize="60" />
+                    </Button.Content>
+                </Button>
 
                 <StackPanel Width="500">
                     <RichTextBox x:Name="rtbBookDetailsTitle" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0">
@@ -84,7 +91,13 @@
 
 
                 </StackPanel>
-                <Button x:Name="btnBookDdetailRead" Width="90" Height="90" Content="Read Book"/>
+                <Button x:Name="btnBookDdetailRead" Width="90" Height="90">
+                    <Button.Content>
+                        <fa5:FontAwesome Icon="Solid_BookReader"
+                                         Name="ReadBook"
+                                         FontSize="60" />
+                    </Button.Content>
+                </Button>
 
             </DockPanel>
             <Separator Height="10" Background="Black"/>

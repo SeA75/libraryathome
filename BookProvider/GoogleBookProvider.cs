@@ -13,20 +13,14 @@ using LibraryAtHomeTracer;
 
 namespace LibraryAtHomeProvider
 {
-    public class GoogleBookProvider : BooksProvider
+    public class GoogleBookProvider : IBooksProvider
     {
         private static readonly SHA256 Sha256 = SHA256.Create();
 
-        private readonly IBookParserTrace _trace;
-
         private PocoBook _requestedBook;
 
-        public GoogleBookProvider(IBookParserTrace trace)
-        {
-            _trace = trace;
-        }
 
-        public override List<PocoBook> FetchInfoOfBook(PocoBook book)
+        public List<PocoBook> FetchInfoOfBook(PocoBook book)
         {
             _requestedBook = book;
 
@@ -37,6 +31,7 @@ namespace LibraryAtHomeProvider
 
         public static byte[] GetHashSha256(string filename)
         {
+            
             using (FileStream stream = File.OpenRead(filename))
             {
                 return Sha256.ComputeHash(stream);
@@ -53,8 +48,6 @@ namespace LibraryAtHomeProvider
 
         private Rootobject ExecuteGoogleRequest()
         {
-            _trace.TraceInfo("FetchInfoOfBook start for book {0}", _requestedBook.Title);
-            
             string url = String.Format("https://www.googleapis.com/books/v1/volumes?q={0}&maxResults=40&country=IT", BuildQuery());
 
             Rootobject root = ExecuteGoogleRequestWithRetry(url);
@@ -71,7 +64,7 @@ namespace LibraryAtHomeProvider
 
         private List<PocoBook> FetchBooksInfoFromResponse(Rootobject root)
         {
-            if(root == null || root.items == null)
+            if (root == null || root.items == null)
             {
                 return new List<PocoBook>();
             }
