@@ -6,8 +6,7 @@ namespace LibraryAtHomeProvider
     {
         public static DateTime ToDateTime(this String dateString)
         {
-            DateTime pubDate;
-            if (!DateTime.TryParse(dateString, out pubDate))
+            if (!DateTime.TryParse(dateString, out var pubDate))
             {
                 string[] formats = { "yyyy" };
 

@@ -50,49 +50,71 @@
 
 
         <DockPanel HorizontalAlignment="Left" Margin="0,50">
-            <StackPanel Margin="5,0">
+            <StackPanel Name="spActiveFilters" Margin="5,0">
                 <!--Filter area-->
-                <GroupBox Header="Active Filters" Width="200" Height="200" >
+                <GroupBox Name="gbActiveFilter"  Header="Active Filters" Width="200" Height="200" >
+                    <StackPanel Name="sbFilterInsedeGroupFilter"></StackPanel>
 
                 </GroupBox>
 
-                <Label HorizontalAlignment="Center" Content="FILTERS"/>
-                <ComboBox  x:Name="cbPublishers"  Text="Publishers" IsEditable="True" IsReadOnly="True"/>
+                <Label HorizontalAlignment="Center" Content="Filters"/>
+                <ComboBox  x:Name="cbPublishers"  Text="Publishers" IsEditable="True" IsReadOnly="True" DropDownClosed="CbPublishers_OnDropDownClosed" SelectionChanged="cbPublishers_SelectionChanged" Foreground="Brown">
+                    <ComboBoxItem Content="mondadori"/>
+                    <ComboBoxItem Content="feltrinelli"/>
+                </ComboBox>
                 <Separator Width="20" Background="Transparent"/>
-                <ComboBox  x:Name="cbAuthors"  Text="Authors" IsEditable="True" IsReadOnly="True">
+                <ComboBox  x:Name="cbAuthors"  Text="Authors" IsEditable="True" IsReadOnly="True" DropDownClosed="CbAuthors_OnDropDownClosed" SelectionChanged="CbAuthors_OnSelectionChanged" Foreground="DarkGreen">
                     <ComboBoxItem Content="Asimov"/>
                     <ComboBoxItem Content="Dante"/>
                 </ComboBox>
                 <Separator Width="20" Background="Transparent"/>
-                <ComboBox  x:Name="cbLanguages"  Text="Languages" IsEditable="True" IsReadOnly="True">
+                <ComboBox  x:Name="cbLanguages"  Text="Languages" IsEditable="True" IsReadOnly="True" Foreground="Orange" DropDownClosed="CbLanguages_OnDropDownClosed" SelectionChanged="CbLanguages_OnSelectionChanged">
                     <ComboBoxItem Content="Eng"/>
                     <ComboBoxItem Content="Ita"/>
                 </ComboBox>
 
                 <Separator Width="20" Background="Transparent"/>
-                <ComboBox  x:Name="cbReliability"  Text="Reliability" IsEditable="True" IsReadOnly="True"/>
+                <ComboBox  x:Name="cbReliability"  Text="Reliability" IsEditable="True" IsReadOnly="True" Foreground="SlateBlue"/>
                 <Separator Width="20" Background="Transparent"/>
-                <ComboBox  x:Name="cbSubjects"  Text="Subjects" IsEditable="True" IsReadOnly="True"/>
+                <ComboBox  x:Name="cbSubjects"  Text="Subjects" IsEditable="True" IsReadOnly="True" Foreground="YellowGreen"/>
+                <Separator Width="20" Background="Transparent"/>
+                <ComboBox  x:Name="cbPublicationDate"  Text="Publication Date" IsEditable="True" IsReadOnly="True" Foreground="DarkSlateGray" SelectionChanged="CbPublicationDate_OnSelectionChanged" DropDownClosed="CbPublicationDate_OnDropDownClosed">
+                    <ComboBoxItem Content="1900"/>
+                    <ComboBoxItem Content="1901"/>
+                    <ComboBoxItem Content="1902"/>
+                    <ComboBoxItem Content="1903"/>
+                    <ComboBoxItem Content="458"/>
+                    <ComboBoxItem Content="558"/>
+                    <ComboBoxItem Content="4234"/>
+                    <ComboBoxItem Content="444"/>
+                    <ComboBoxItem Content="5235"/>
+                    <ComboBoxItem Content="23424"/>
+
+                </ComboBox>
 
             </StackPanel>
         </DockPanel >
 
         <DockPanel HorizontalAlignment="Right"  Margin="0,50">
             <StackPanel Width="988" >
-
-                <TextBox x:Name="tbFilters" Text="Filters" IsEnabled="True" IsReadOnly="False" HorizontalAlignment="Center" BorderThickness="3" Width="388"/>
-                <DockPanel HorizontalAlignment="Right">
+                <DockPanel HorizontalAlignment="Center">
+                    <Label >Filter</Label>
+                    <TextBox x:Name="tbFilters" IsEnabled="True" IsReadOnly="False" HorizontalAlignment="Center" BorderThickness="3" Width="388"/>
+                </DockPanel>
+             
+                <!--<DockPanel HorizontalAlignment="Right">
                     <Button x:Name="btnGallery" Width="50" HorizontalAlignment="Center" Content="Gallery" />
                     <Button x:Name="btnList" Width="50" HorizontalAlignment="Right" Content="List"/>
-                </DockPanel>
+                </DockPanel>-->
 
                 <ListView ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="true" Margin="10,0" BorderThickness="0">
-                    <ListView  Name="lvBooks">
+                    <ListView  Name="lvBooks" Width= "939" BorderThickness="0">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="Title" Width="450" DisplayMemberBinding="{Binding Name}" />
-                                <GridViewColumn Header="Authors" Width="200" DisplayMemberBinding="{Binding Age}" />
-                                <GridViewColumn Header="Subjects" Width="100" DisplayMemberBinding="{Binding Mail}" />
+                                <GridViewColumn Header="Title" Width="300" DisplayMemberBinding="{Binding Name}" />
+                                <GridViewColumn Header="File" Width="200" DisplayMemberBinding="{Binding Name}" />
+                                <GridViewColumn Header="Authors" Width="150" DisplayMemberBinding="{Binding Age}" />
+                                <GridViewColumn Header="Subjects" Width="80" DisplayMemberBinding="{Binding Mail}" />
                                 <GridViewColumn Header="Language" Width="80" DisplayMemberBinding="{Binding Mail}" />
                                 <GridViewColumn Header="Publisher" Width="80" DisplayMemberBinding="{Binding Mail}" />
                             </GridView>

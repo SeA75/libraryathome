@@ -58,7 +58,7 @@ namespace BooksParser
         private static string GetConfigFileFromCommandLine(string[] args)
         {
             bool show_help = false;
-            string configFile = string.Empty; //@"C:\Users\vgh8no\source\repos\BooksParser\BooksParser\config\ebookConf.json";
+            string configFile = string.Empty;
             int repeat = 1;
 
             var p = new OptionSet()
