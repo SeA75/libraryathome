@@ -18,13 +18,18 @@ namespace BooksParser
     public class LibraryCataloguer
     {
 
-        private IProgress<double> Progress { get; set; }
+        public int FileCount
+        {
+            get { return Files.Count; }
+        }
+
+        private Action<int> Progress { get; set; }
 
         private readonly IMongodbConnection Connection;
 
-        private readonly BooksCollectedDataMapper BooksInLibrary;
+        public readonly BooksCollectedDataMapper BooksInLibrary;
 
-        private readonly BookToBeReviewedDataMapper BookToReview;
+        public readonly BookToBeReviewedDataMapper BookToReview;
 
         private readonly LibraryStatisticsDataMapper LibStatistics;
 
@@ -40,7 +45,7 @@ namespace BooksParser
 
 
         public LibraryCataloguer(BookParserConfig configuration, ConcurrentQueue<Exception> exceptions, 
-            IBookParserTrace tracer, IProgress<double> progress)
+            IBookParserTrace tracer, Action<int> progress)
         {
             Progress = progress ?? throw new ArgumentNullException(nameof(progress));
             
@@ -55,7 +60,7 @@ namespace BooksParser
                              {".doc", new Func<string, BookatHome>(new FileInfoExtractor().GetPocoBook) }};
 
 
-            Connection = new MongodbConnection(configuration.libraryContext.connectionstring, configuration.libraryContext.databasename);
+            Connection = new MongodbConnection(Configuration.libraryContext.connectionstring, Configuration.libraryContext.databasename);
 
             BooksInLibrary = new BooksCollectedDataMapper(Connection);
 
@@ -100,7 +105,6 @@ namespace BooksParser
                                  select cataloged.File;
 
             Files = fileintofolder.Except<string>(filesCataloged).ToList();
-
         }
 
         private BookatHome SearchBookInfoOfFile(string file)
@@ -143,7 +147,7 @@ namespace BooksParser
 
         private (List<PocoBook> collectedBooks, List<BookToBeReviewed> discardedBooks) CollectBooks()
         {
-            double progressCounter = 0;
+            int progressCounter = 0;
             var collectedBooks = new List<PocoBook>();
             var discardedBooks = new List<BookToBeReviewed>();
 
@@ -152,7 +156,8 @@ namespace BooksParser
             {
                 try
                 {
-                    Progress.Report(progressCounter++ / Files.Count);
+               //     Progress.Report(progressCounter++ / Files.Count);
+                     Progress(progressCounter++);
 
                     var book = SearchBookInfoOfFile(file);
 

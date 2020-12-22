@@ -9,13 +9,13 @@ namespace LibraryAtHomeRepositoryDriver
 
         public MongoClient Client { get; private set; }
 
-        public MongodbConnection()
+        public MongodbConnection(string connectionstring, string databasename)
         {
-            var mongoUrl = MongoUrl.Create(ConfigurationManager.ConnectionStrings["DefaultMongoConnection"].ConnectionString);
+            var mongoUrl = MongoUrl.Create(connectionstring);
 
             Client = new MongoClient(mongoUrl);
           
-            Database = Client.GetDatabase(ConfigurationManager.AppSettings.Get("MongoDbName"));
+            Database = Client.GetDatabase(databasename);
         }
 
     }

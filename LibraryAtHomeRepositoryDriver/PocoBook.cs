@@ -79,13 +79,9 @@ namespace LibraryAtHomeRepositoryDriver
 
         public string ImageLink { get; set; }
 
-
-
-
         public BookRate BookRating { get; set; }
 
         public Reliability BookReliability { get; set; }
-
 
         public string ReaderNotes { get; set; }
 

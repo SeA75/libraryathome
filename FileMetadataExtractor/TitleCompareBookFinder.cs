@@ -17,7 +17,7 @@ namespace LibraryAtHomeTracerFileMetadataExtractor
 
         public override BookatHome HandleTheBookFromList(string maybetitle, List<PocoBook> booklist)
         {
-            _trace.TraceInfo("TitleCompareBookFinder --> HandleTheBook start");
+            _trace?.TraceInfo("TitleCompareBookFinder --> HandleTheBook start");
             foreach (var book in booklist)
             {
                 if (book.Title.Contains(maybetitle, StringComparison.OrdinalIgnoreCase))

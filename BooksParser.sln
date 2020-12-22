@@ -19,11 +19,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryAtHomeProvider", "Bo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryAtHomeTracer", "BookAtHomeTracer\LibraryAtHomeTracer.csproj", "{F2B16DBC-327E-43EE-990B-B512C255B82F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryAtHomeFileMetadataExtractor", "FileMetadataExtractor\LibraryAtHomeFileMetadataExtractor.csproj", "{456BB879-9BED-4706-AF74-FACAD42C0203}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryAtHomeFileMetadataExtractor", "FileMetadataExtractor\LibraryAtHomeFileMetadataExtractor.csproj", "{456BB879-9BED-4706-AF74-FACAD42C0203}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryAtHomeUI", "LibraryAtHomeUI\LibraryAtHomeUI.csproj", "{98F097A7-4C81-46FF-AC84-35F1D1BA8D12}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryAtHomeControlLibrary", "LibraryAtHomeControlLibrary\LibraryAtHomeControlLibrary.csproj", "{4E9C4844-AD75-4517-AE25-D84FDA00C1B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryAtHomeControlLibrary", "LibraryAtHomeControlLibrary\LibraryAtHomeControlLibrary.csproj", "{4E9C4844-AD75-4517-AE25-D84FDA00C1B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

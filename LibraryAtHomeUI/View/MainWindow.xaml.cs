@@ -1,42 +1,34 @@
-﻿using System;
+﻿using FontAwesome5;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using FontAwesome5;
-using Microsoft.WindowsAPICodePack.Dialogs;
-using Color = System.Drawing.Color;
+using LibraryAtHomeRepositoryDriver;
 
 namespace LibraryAtHomeUI
 {
     /// <summary>
-    /// Interaction logic for MainWindows.xaml
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindows : Window
+    public partial class MainWindow : Window
     {
-        public MainWindows()
+        public MainWindow()
         {
             InitializeComponent();
         }
 
-      
-
+        private LibraryConfigurationWindow _configWindow;
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-            var dialog = new CommonOpenFileDialog();
-            dialog.IsFolderPicker = true;
-            CommonFileDialogResult result = dialog.ShowDialog();
+
+            _configWindow = new LibraryConfigurationWindow();
+            _configWindow.ShowDialog();
+           
         }
 
         private bool _handle = true;
+        
 
         private void cbPublishers_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -137,11 +129,12 @@ namespace LibraryAtHomeUI
             _handle = true;
         }
 
-        //private Action<string, object, object> EventCaller = (methodName, sender, callerevent) => typeof(MainWindows).GetMethod(methodName).Invoke(null, new[] { sender, callerevent });
+        //private Action<string, object, object> EventCaller = (methodName, sender, callerevent) => typeof(MainWindow).GetMethod(methodName).Invoke(null, new[] { sender, callerevent });
 
         //private void FacadeHandler(object sender, EventArgs e)
         //{
             
         //}
+       
     }
 }

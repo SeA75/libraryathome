@@ -5,15 +5,22 @@
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <StartupObject></StartupObject>
+    <LangVersion>8</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="FontAwesome5" Version="2.0.8" />
+    <PackageReference Include="MvvmLight" Version="5.4.1.1" />
+    <PackageReference Include="MvvmLightLibs" Version="5.4.1.1" />
     <PackageReference Include="WindowsAPICodePack-Shell" Version="1.1.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BookAtHomeTracer\LibraryAtHomeTracer.csproj" />
+    <ProjectReference Include="..\BookProvider\LibraryAtHomeProvider.csproj" />
+    <ProjectReference Include="..\FileMetadataExtractor\LibraryAtHomeFileMetadataExtractor.csproj" />
     <ProjectReference Include="..\LibraryAtHomeControlLibrary\LibraryAtHomeControlLibrary.csproj" />
+    <ProjectReference Include="..\LibraryAtHomeRepositoryDriver\LibraryAtHomeRepositoryDriver.csproj" />
   </ItemGroup>
 
 </Project>

@@ -37,7 +37,7 @@ namespace NUnitTestBooksParser
             var configLocation = Assembly.GetEntryAssembly().Location;
             string configFile = @"C:\Users\vgh8no\source\repos\BooksParser\NUnitTestBooksParser\testConf.json";
             configuration = Newtonsoft.Json.JsonConvert.DeserializeObject<BookParserConfig>(File.ReadAllText(configFile));
-            IMongodbConnection connection = new MongodbConnection();
+            IMongodbConnection connection = new MongodbConnection(configuration.libraryContext.connectionstring, configuration.libraryContext.databasename);
 
             mybooks = new BooksCollectedDataMapper(connection);
             ImportJsonTestDatabase();

@@ -16,7 +16,7 @@ namespace LibraryAtHomeTracerFileMetadataExtractor
 
         public override BookatHome HandleTheBookFromList(string maybetitle, List<PocoBook> booklist)
         {
-            _trace.TraceInfo("LevenshteinBookFinder --> HandleTheBook start");
+            _trace?.TraceInfo("LevenshteinBookFinder --> HandleTheBook start");
 
             int bookindex = -1;
             int lddistance = int.MaxValue;
