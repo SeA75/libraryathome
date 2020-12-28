@@ -1,5 +1,7 @@
 ﻿using LibraryAtHomeProvider;
 using LibraryAtHomeRepositoryDriver;
+using LibraryAtHomeTracer;
+using LibraryAtHomeTracerFileMetadataExtractor;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -7,8 +9,6 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using LibraryAtHomeTracerFileMetadataExtractor;
-using LibraryAtHomeTracer;
 
 namespace BooksParser
 {
@@ -23,9 +23,9 @@ namespace BooksParser
             get { return Files.Count; }
         }
 
-        private Action<int> Progress { get; set; }
+        private Action<int> Progress { get; set; }       
 
-        private readonly IMongodbConnection Connection;
+        private readonly IMongodbServerManager _mongoServerManager;
 
         public readonly BooksCollectedDataMapper BooksInLibrary;
 
@@ -52,21 +52,21 @@ namespace BooksParser
             Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
 
             GetMetadataFromFileDictionaryDelegate = new Dictionary<String, Delegate>() {
-                            {".pdf",  new Func<string, BookatHome>(new PdfTextReaderFileInfoExtractor().GetPocoBook) },
-                            {".txt",  new Func<string, BookatHome>(new FileInfoExtractor().GetPocoBook )},
-                            {".rtf",  new Func<string, BookatHome>(new RtfFileInfoExtractor().GetPocoBook )},
-                            {".epub", new Func<string, BookatHome>(new EpubFileInfoExtractor().GetPocoBook )  },
-                            {".lit", new Func<string, BookatHome>(new LitFileInfoExtractor().GetPocoBook ) },
-                             {".doc", new Func<string, BookatHome>(new FileInfoExtractor().GetPocoBook) }};
+                            {".pdf",  new Func<string, BookAtHome>(new PdfTextReaderFileInfoExtractor().GetPocoBook) },
+                            {".txt",  new Func<string, BookAtHome>(new FileInfoExtractor().GetPocoBook )},
+                            {".rtf",  new Func<string, BookAtHome>(new RtfFileInfoExtractor().GetPocoBook )},
+                            {".epub", new Func<string, BookAtHome>(new EpubFileInfoExtractor().GetPocoBook )  },
+                            {".lit", new Func<string, BookAtHome>(new LitFileInfoExtractor().GetPocoBook ) },
+                             {".doc", new Func<string, BookAtHome>(new FileInfoExtractor().GetPocoBook) }};
 
 
-            Connection = new MongodbConnection(Configuration.libraryContext.connectionstring, Configuration.libraryContext.databasename);
+            _mongoServerManager = new MongodbServerManager(Configuration.libraryContext.hostname);
 
-            BooksInLibrary = new BooksCollectedDataMapper(Connection);
+            BooksInLibrary = new BooksCollectedDataMapper(Configuration.libraryContext.hostname, Configuration.libraryContext.databasename);
 
-            BookToReview = new BookToBeReviewedDataMapper(Connection);
+            BookToReview = new BookToBeReviewedDataMapper(Configuration.libraryContext.hostname, Configuration.libraryContext.databasename);
 
-            LibStatistics = new LibraryStatisticsDataMapper(Connection);
+            LibStatistics = new LibraryStatisticsDataMapper(Configuration.libraryContext.hostname, Configuration.libraryContext.databasename);
 
             _tracer = tracer;
 
@@ -94,6 +94,12 @@ namespace BooksParser
             LibStatistics.Write(new LibraryStatistics(BookToReview.Count() + BooksInLibrary.Count(), BooksInLibrary.Count(), elapsedTime, Configuration.ebookdirectory));
         }
 
+
+        public void DropDatabase()
+        {
+            _mongoServerManager.DropDatabase(Configuration.libraryContext.databasename);
+        }
+
         private void Init()
         {
             Regex reSearchPattern = new Regex(string.Join("|", Configuration.ebookformat.ToArray()), RegexOptions.IgnoreCase);
@@ -107,7 +113,9 @@ namespace BooksParser
             Files = fileintofolder.Except<string>(filesCataloged).ToList();
         }
 
-        private BookatHome SearchBookInfoOfFile(string file)
+
+
+        private BookAtHome SearchBookInfoOfFile(string file)
         {
             _tracer?.TraceInfo("SearchBookInfoOfFile start for file {0}", file);
             
@@ -173,7 +181,7 @@ namespace BooksParser
             return (collectedBooks, discardedBooks);
         }
 
-        private static void AddToCollections(BookatHome book, List<PocoBook> collectedBooks, List<BookToBeReviewed> discardedBooks)
+        private static void AddToCollections(BookAtHome book, List<PocoBook> collectedBooks, List<BookToBeReviewed> discardedBooks)
         {
             if (book != null)
             {

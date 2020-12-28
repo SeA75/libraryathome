@@ -13,20 +13,6 @@ namespace LibraryAtHomeRepositoryDriver
     public abstract class MongodbDataMapper<TCOLL> : EqualityComparer<TCOLL>, IMongoDataMapper<TCOLL>/*, IBsonSerializationProvider*/
     {
         /// <summary>
-        /// A .Net database connection (SQL Server, MySql, Oracle, etc.... )
-        /// </summary>
-        public IMongodbConnection Connection { get; private set; }
-
-        /// <summary>
-        /// Reads configuration from the app.config and initializes the data mapper
-        /// </summary>
-        /// <param name="connection">A .net connection that implements IDbConnection</param>
-        protected MongodbDataMapper(IMongodbConnection connection)
-        {
-            this.Connection = connection ?? throw new ArgumentNullException(nameof(connection), "Database connection cannot be null.");
-        }
-
-        /// <summary>
         /// Default select method for type T
         /// </summary>
         /// <param name="exError">Out exception object</param>

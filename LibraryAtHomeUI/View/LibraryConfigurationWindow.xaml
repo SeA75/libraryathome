@@ -20,17 +20,72 @@
     <Grid>
 
         <StackPanel>
+
+            <DockPanel>
+                <GroupBox Header="Database Info">
+                    <StackPanel>
+                        <DockPanel>
+                            <Label>Database Host</Label>
+                            <TextBox Name="tbDatabaseHostName" 
+                                     Width="315" 
+                                     Height="20"
+                                     HorizontalAlignment="Right" 
+                                     Text="{Binding TxtDatabaseServer}"/>
+                        </DockPanel>
+                        <DockPanel>
+                            <Label>Library Name</Label>
+                            <Separator Width="5" Background="Transparent"></Separator>
+                            <ComboBox  x:Name="cbLibraryName" 
+                                       IsEditable="True" 
+                                       IsReadOnly="True"
+                                       ItemsSource="{Binding Libraries}"
+                                       SelectedItem="{Binding SelectedLibrary}"
+                                       Width="120" Height="20"/>
+                            <Separator Width="5" Background="Transparent"></Separator>
+                            <CheckBox Name="cbNewLib" 
+                                      Content="New Library"
+                                      VerticalAlignment="Center" 
+                                      Unchecked="CbNewLib_OnUnchecked" 
+                                      Checked="CbNewLib_OnChecked"/>
+                            <Separator Width="5" Background="Transparent"></Separator>
+                            <TextBox Name="tbNewLibrary" 
+                                     Width="110" 
+                                     Height="20" 
+                                     Text="{Binding NewLibrary}" 
+                                     IsEnabled="False"></TextBox>
+                        </DockPanel>
+                    </StackPanel>
+
+                </GroupBox>
+            </DockPanel>
+
             <DockPanel>
                 <GroupBox Name="gbEbookCong" Header="EBook Configuration">
                     <StackPanel>
                         <DockPanel Margin="0,10" Height="25">
                             <Label>Ebook Folder</Label>
-                            <TextBox Name="tbEbookFolder" Height="20" VerticalAlignment="Center" Width="300" Text="{Binding TxtEbookFolder}"></TextBox>
-                            <Button VerticalAlignment="Top" HorizontalAlignment="Right" VerticalContentAlignment="Center" ToolTip="Add Library Folder" Height="25" Width="25" Command="{Binding ChooseFolderStringCommand}" CommandParameter="{Binding ElementName=LibraryConfigurationWindows}">
+                            <TextBox Name="tbEbookFolder" 
+                                     Height="20" 
+                                     Width="300"
+                                     VerticalAlignment="Center"
+                                     Text="{Binding TxtEbookFolder}" 
+                                     IsEnabled="False"/>
+
+                            <Button VerticalAlignment="Top" 
+                                    HorizontalAlignment="Right" 
+                                    VerticalContentAlignment="Center"
+                                    ToolTip="Add Library Folder" 
+                                    Name="btnAddLibrary"
+                                    Height="25"
+                                    Width="25" 
+                                    IsEnabled="False"
+                                    Command="{Binding ChooseFolderStringCommand}" 
+                                    CommandParameter="{Binding ElementName=LibraryConfigurationWindows}">
                                 <Button.Content>
                                     <fa5:FontAwesome Icon="Solid_FolderOpen"
                                                      Name="AddLibrary"
-                                                     FontSize="20" />
+                                                     FontSize="20" 
+                                                     IsEnabled="False" />
                                 </Button.Content>
                             </Button>
                         </DockPanel>
@@ -49,7 +104,13 @@
                                     <ColumnDefinition Width="50"/>
                             </Grid.ColumnDefinitions>
                                 <Label Content="Formats"></Label>
-                                <CheckBox Name="pdf" Content="pdf" VerticalAlignment="Center" Grid.Column="2" HorizontalAlignment="Center" Command="{Binding ManageEbookFormatsCommand}">
+                                <CheckBox Name="pdf" 
+                                          Content="pdf"
+                                          VerticalAlignment="Center" 
+                                          Grid.Column="2"
+                                          HorizontalAlignment="Center" 
+                                          Command="{Binding ManageEbookFormatsCommand}" 
+                                          IsChecked="True">
                                     <CheckBox.CommandParameter>
                                         <MultiBinding Converter="{StaticResource cv}">
                                             <Binding ElementName="pdf" Path="Content"/>
@@ -57,7 +118,13 @@
                                         </MultiBinding>
                                     </CheckBox.CommandParameter>
                                 </CheckBox>
-                                <CheckBox Name="epub" Content="epub" VerticalAlignment="Center" Grid.Column="3" HorizontalAlignment="Center" Command="{Binding ManageEbookFormatsCommand}">
+                                <CheckBox Name="epub" 
+                                          Content="epub" 
+                                          VerticalAlignment="Center"
+                                          Grid.Column="3"
+                                          HorizontalAlignment="Center"
+                                          Command="{Binding ManageEbookFormatsCommand}" 
+                                          IsChecked="True">
                                     <CheckBox.CommandParameter>
                                         <MultiBinding Converter="{StaticResource cv}">
                                             <Binding ElementName="epub" Path="Content"/>
@@ -65,7 +132,13 @@
                                         </MultiBinding>
                                     </CheckBox.CommandParameter>
                                 </CheckBox>
-                                <CheckBox Name="doc" Content="doc" VerticalAlignment="Center" Grid.Column="4" HorizontalAlignment="Center" Command="{Binding ManageEbookFormatsCommand}">
+                                <CheckBox Name="doc" 
+                                          Content="doc" 
+                                          VerticalAlignment="Center"
+                                          Grid.Column="4"
+                                          HorizontalAlignment="Center" 
+                                          Command="{Binding ManageEbookFormatsCommand}" 
+                                          IsChecked="True">
                                     <CheckBox.CommandParameter>
                                         <MultiBinding Converter="{StaticResource cv}">
                                             <Binding ElementName="doc" Path="Content"/>
@@ -73,7 +146,7 @@
                                         </MultiBinding>
                                     </CheckBox.CommandParameter>
                                 </CheckBox>
-                                <CheckBox Name="rtf" Content="rtf" VerticalAlignment="Center" Grid.Column="5" HorizontalAlignment="Center" Command="{Binding ManageEbookFormatsCommand}">
+                                <CheckBox Name="rtf" Content="rtf" VerticalAlignment="Center" Grid.Column="5" HorizontalAlignment="Center" Command="{Binding ManageEbookFormatsCommand}" IsChecked="True">
                                     <CheckBox.CommandParameter>
                                         <MultiBinding Converter="{StaticResource cv}">
                                             <Binding ElementName="rtf" Path="Content"/>
@@ -81,7 +154,7 @@
                                         </MultiBinding>
                                     </CheckBox.CommandParameter>
                                 </CheckBox>
-                                <CheckBox Name="txt" Content="txt" VerticalAlignment="Center" Grid.Column="6" HorizontalAlignment="Center" Command="{Binding ManageEbookFormatsCommand}">
+                                <CheckBox Name="txt" Content="txt" VerticalAlignment="Center" Grid.Column="6" HorizontalAlignment="Center" Command="{Binding ManageEbookFormatsCommand}" IsChecked="True">
                                     <CheckBox.CommandParameter>
                                         <MultiBinding Converter="{StaticResource cv}">
                                             <Binding ElementName="txt" Path="Content"/>
@@ -98,23 +171,7 @@
 
             </GroupBox>
             </DockPanel>
-            
-
-            <DockPanel>
-                <GroupBox Header="Database Info">
-                    <StackPanel>
-                    <DockPanel>
-                        <Label>Database Host</Label>
-                            <TextBox Name="tbDatabaseHostName" Width="315"  Height="20" HorizontalAlignment="Right" Text="{Binding TxtConnectionString}"></TextBox>
-                    </DockPanel>
-                    <DockPanel>
-                        <Label>Library Name</Label>
-                            <TextBox Name="tbLibraryName"  Width="315" Height="20" HorizontalAlignment="Right" Text="{Binding TxtLibraryName}"></TextBox>
-                    </DockPanel>
-                    </StackPanel>
-
-                </GroupBox>
-           </DockPanel>
+           
 
             <DockPanel>
                 <GroupBox Header="Plugin Book Provider Info" Margin="0,5">
@@ -128,7 +185,7 @@
             </DockPanel>
             <DockPanel Height="20" Margin="5,5">
                 <Separator Width="300" Background="Transparent"></Separator>
-                <Button Name="btnConfCancel" Width="50" HorizontalAlignment="Right">Cancel</Button>
+                <Button Name="btnConfCancel" Width="50" HorizontalAlignment="Right" Click="BtnConfCancel_OnClick" >Cancel</Button>
                 <Button Name="btnConfOk" Width="50" HorizontalAlignment="Right" Command="{Binding ConfigurationDoneCommand}" CommandParameter="{Binding ElementName=LibraryConfigurationWindows}">Ok</Button>
             </DockPanel>
           

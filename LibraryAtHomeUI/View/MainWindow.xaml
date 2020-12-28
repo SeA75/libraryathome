@@ -9,40 +9,41 @@
         xmlns:System="clr-namespace:System;assembly=System.Runtime"
         x:Class="LibraryAtHomeUI.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="690" Width="1200"
+        Title="MainWindow" Height="790" Width="1500"
         ResizeMode="NoResize">
     <Window.DataContext>
         <local:MainWindowsViewModel/>
     </Window.DataContext>
+    <Window.Resources>
+        <Style x:Key="ListViewStyle" TargetType="{x:Type GridViewColumnHeader}">
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontFamily" Value="Calibri" />
+            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+    </Window.Resources>
     <Grid>
-        <!--<Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition  Width="200"/>
-            <ColumnDefinition Width="600"/>
-        </Grid.ColumnDefinitions>-->
         <DockPanel>
             <ToolBarTray DockPanel.Dock="Top" >
                 <ToolBar>
-                    <!--<Button Command="Cut" ToolTip="Cut selection to Windows Clipboard." >
-                        <Image Source="/WpfTutorialSamples;component/Images/cut.png" />
-                    </Button>
-                    <Button Command="Copy" ToolTip="Copy selection to Windows Clipboard.">
-                        <Image Source="/WpfTutorialSamples;component/Images/copy.png" />
-                    </Button>-->
                     <Button HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Add Library Folder" Click="ButtonBase_OnClick">
                         <fa5:FontAwesome Icon="Solid_Tools"
                                             x:Name="AddLibrary"
                                             FontSize="25" />
                     </Button>
-                    <Separator Background="Transparent"/>
+                    <Separator Background="Transparent" Width="5"/>
                     <Button HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Add Library Folder" Command="{Binding StartCollectCommand}" Margin="5,0">
                         <fa5:FontAwesome Icon="Solid_Book"
                                              x:Name="StartParse"
                                              FontSize="25" />
+                    </Button>
+                    <Separator Background="Transparent" Width="5"/>
+                    <Button HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Add Library Folder" Command="{Binding DeleteLibraryCommand}" Margin="5,0">
+                        <fa5:FontAwesome Icon="Solid_Trash"
+                                         x:Name="DeleteLibrary"
+                                         FontSize="25" />
                     </Button>
                     <!--<Button Command="Paste" ToolTip="Paste from Windows Clipboard.">
                         <StackPanel Orientation="Horizontal">
@@ -52,13 +53,30 @@
                     </Button>-->
                 </ToolBar>
             </ToolBarTray>
-            <TextBox AcceptsReturn="True" Height="529" />
+            <TextBox AcceptsReturn="True"  />
         </DockPanel>
 
         <DockPanel HorizontalAlignment="Left" >
-            <StackPanel x:Name="spActiveFilters" Margin="5,93">
+            <StackPanel x:Name="spActiveFilters" Margin="5,50">
+                <GroupBox  Header="Library Info" >
+                    <StackPanel>
+                        <DockPanel>
+                            <Label HorizontalAlignment="Left" VerticalAlignment="Center">Name</Label>
+                            <TextBox HorizontalAlignment="Left" 
+                                     VerticalAlignment="Center" 
+                                     Width="140"
+                                     Text="{Binding LibraryName}" 
+                                     IsReadOnly="True"/>
+                        </DockPanel>
+                        <DockPanel>
+                            <Label HorizontalAlignment="Left" VerticalAlignment="Center">Folder</Label>
+                            <TextBox HorizontalAlignment="Left" Width="140" VerticalAlignment="Center" Text="{Binding BookFolder}" IsReadOnly="True"/>
+                        </DockPanel>
+                    </StackPanel>
+
+                </GroupBox>
                 <!--Filter area-->
-                <GroupBox x:Name="gbActiveFilter"  Header="Active Filters" Width="200" Height="180" >
+                <GroupBox x:Name="gbActiveFilter"  Header="Active Filters" Width="200" Height="150" >
                     <StackPanel x:Name="sbFilterInsedeGroupFilter"/>
 
                 </GroupBox>
@@ -115,48 +133,66 @@
                             <ComboBoxItem Content="444"/>
                             <ComboBoxItem Content="5235"/>
                             <ComboBoxItem Content="23424"/>
-
                         </ComboBox>
-
-
                     </StackPanel>
                 </GroupBox>
-
-
-
-
-
-
             </StackPanel>
         </DockPanel>
 
-        <DockPanel HorizontalAlignment="Right"  Margin="0,50">
-            <StackPanel Width="988" >
-                <DockPanel HorizontalAlignment="Center">
-                    <Label  >
-                        <fa5:FontAwesome Icon="Solid_Filter"
+        <DockPanel  Margin="210,50,10,50">
+            <ScrollViewer>
+                <StackPanel Width="1180" >
+                    <DockPanel HorizontalAlignment="Left">
+
+
+                        <Separator Width="300" Background="Transparent"></Separator>
+                        <Label  >
+                            <fa5:FontAwesome Icon="Solid_Filter"
                                              x:Name="Filter"
                                              FontSize="20" />
 
-                    </Label>
-                    <TextBox x:Name="tbFilters" IsEnabled="True" IsReadOnly="False" HorizontalAlignment="Center" BorderThickness="3" Width="388"/>
-                </DockPanel>
+                        </Label>
 
-                <ListView x:Name="lvBooks" BorderThickness="0"  Margin="10" ItemsSource="{Binding MyBooks}"  >
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn Header="Title" Width="300" DisplayMemberBinding="{Binding Title}" />
-                                <GridViewColumn Header="File" Width="200" DisplayMemberBinding="{Binding File}" />
-                                <GridViewColumn Header="Authors" Width="150" DisplayMemberBinding="{Binding Authors}" />
-                                <GridViewColumn Header="Subjects" Width="80" DisplayMemberBinding="{Binding Categories}" />
-                                <GridViewColumn Header="Language" Width="80" DisplayMemberBinding="{Binding Language}" />
-                                <GridViewColumn Header="Publisher" Width="80" DisplayMemberBinding="{Binding Publisher}" />
-                            </GridView>
-                        </ListView.View>
-                        <System:String>&gt;</System:String>
-                    </ListView>
-            </StackPanel>
+                        <TextBox x:Name="tbFilters" IsEnabled="True" IsReadOnly="False" HorizontalAlignment="Center" BorderThickness="3" Width="388"/>
+                    </DockPanel>
 
+
+                    <Grid ScrollViewer.VerticalScrollBarVisibility="Auto">
+                        <ListView Margin="10,10,0,10" 
+                              ItemsSource="{Binding Books}" 
+                              HorizontalAlignment="Left" 
+                              HorizontalContentAlignment="Left" 
+                              Grid.ColumnSpan="3">
+                            <ListView.View>
+                                <GridView   ScrollViewer.VerticalScrollBarVisibility="Visible">
+                                    <GridViewColumn HeaderContainerStyle="{StaticResource ListViewStyle}" Header="Title" Width="350" DisplayMemberBinding="{Binding Title}" />
+                                    <GridViewColumn HeaderContainerStyle="{StaticResource ListViewStyle}" Header="File" Width="300" DisplayMemberBinding="{Binding File}" />
+                                    <GridViewColumn HeaderContainerStyle="{StaticResource ListViewStyle}" Header="Language" Width="60" DisplayMemberBinding="{Binding Language}" />
+                                    <GridViewColumn HeaderContainerStyle="{StaticResource ListViewStyle}" Header="Publisher" Width="150" DisplayMemberBinding="{Binding Publisher}" />
+                                    <GridViewColumn HeaderContainerStyle="{StaticResource ListViewStyle}" Header="Year" Width="60" DisplayMemberBinding="{Binding PublishedDate, StringFormat='yyyy'}" />
+                                    <GridViewColumn Header="Authors" Width="150" >
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <ItemsControl ItemsSource="{Binding Authors}" Width="150" />
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Header="Subject" Width="150" >
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <ItemsControl ItemsSource="{Binding Categories}" Width="150" />
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                </GridView>
+
+                            </ListView.View>
+                        </ListView>
+                    </Grid>
+
+
+                </StackPanel>
+            </ScrollViewer>
         </DockPanel>
 
         <DockPanel VerticalAlignment="Bottom">

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace LibraryAtHomeUI
 {
@@ -28,6 +24,8 @@ namespace LibraryAtHomeUI
         public string PlugInFolder { get; set; }
 
         public string PluginAssemblyName { get; set; }
+
+        public bool LibraryExits { get; set; }
 
     }
 }

@@ -10,7 +10,7 @@ namespace LibraryAtHomeTracerFileMetadataExtractor
 {
     public class PdfTextReaderFileInfoExtractor : PdfFileInfoExtractor
     {
-        public override BookatHome GetPocoBook(string filepath)
+        public override BookAtHome GetPocoBook(string filepath)
         {
             iText.Kernel.Pdf.PdfReader reader = null;
             iText.Kernel.Pdf.PdfDocument pDoc = null;

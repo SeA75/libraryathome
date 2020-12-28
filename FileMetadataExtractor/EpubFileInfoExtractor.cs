@@ -7,7 +7,7 @@ namespace LibraryAtHomeTracerFileMetadataExtractor
 {
     public class EpubFileInfoExtractor : FileInfoExtractor
     {
-        public override BookatHome GetPocoBook(string filepath)
+        public override BookAtHome GetPocoBook(string filepath)
         {
             EpubBook book = EpubReader.Read(filepath);
 

@@ -22,7 +22,7 @@ namespace LibraryAtHomeTracerFileMetadataExtractor
             return handler;
         }
 
-        public virtual BookatHome HandleTheBookFromList(string title, List<PocoBook> booklist)
+        public virtual BookAtHome HandleTheBookFromList(string title, List<PocoBook> booklist)
         {
             if (this._nextHandler != null)
             {

@@ -8,7 +8,7 @@ namespace LibraryAtHomeTracerFileMetadataExtractor
 {
     public class PdfFileInfoExtractor : FileInfoExtractor
     {
-        public override BookatHome GetPocoBook(string filepath)
+        public override BookAtHome GetPocoBook(string filepath)
         {
             PdfDocument document = new PdfDocument();
 

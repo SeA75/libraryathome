@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
 namespace LibraryAtHomeRepositoryDriver
 {
 
-    public sealed class PocoBook : BookatHome
+    public sealed class PocoBook : BookAtHome
     {
 
         private Collection<string> _authors;
@@ -156,8 +157,7 @@ namespace LibraryAtHomeRepositoryDriver
 
         public override int GetHashCode()
         {
-            Regex rs = new Regex("", RegexOptions.IgnoreCase);
-            return Convert.ToInt32(rs.Replace(Isbn, "").Trim(new[] { '0' }));
+            return RuntimeHelpers.GetHashCode(Isbn);
         }
 
 

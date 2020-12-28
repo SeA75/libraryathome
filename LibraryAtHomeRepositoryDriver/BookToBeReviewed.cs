@@ -5,7 +5,7 @@ namespace LibraryAtHomeRepositoryDriver
 {
     //TODO elimanare la dipendenza
     [BsonIgnoreExtraElements]
-    public class BookToBeReviewed : BookatHome
+    public class BookToBeReviewed : BookAtHome
     {
         public BookToBeReviewed(string filepath, string failureReason)
         {

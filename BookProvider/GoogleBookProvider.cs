@@ -110,8 +110,9 @@ namespace LibraryAtHomeProvider
             do
             {
                 root = JsonConvert.DeserializeObject<Rootobject>(response.Content);
+                if(retry < 3)
+                    Thread.Sleep(2000);
                 retry--;
-                Thread.Sleep(2000);
             } while ((root == null || root.items == null || root.items.Length == 0 ) && retry != 0);
 
             return root;

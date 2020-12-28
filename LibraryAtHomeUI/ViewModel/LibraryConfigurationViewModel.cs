@@ -3,8 +3,11 @@ using GalaSoft.MvvmLight.Command;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Controls;
+using LibraryAtHomeRepositoryDriver;
 using MSG = GalaSoft.MvvmLight.Messaging;
 
 namespace LibraryAtHomeUI
@@ -15,6 +18,11 @@ namespace LibraryAtHomeUI
 
         public RelayCommand<LibraryConfigurationWindow> ChooseFolderStringCommand { get; set; }
 
+        public RelayCommand DropClosedCommand { get; private set; }
+
+        public RelayCommand SelectionChangedCommand { get; private set; }
+       
+
         public RelayCommand<object> ManageEbookFormatsCommand { get; private set; }
 
         public RelayCommand<LibraryConfigurationWindow> ConfigurationDoneCommand { get; private set; }
@@ -24,11 +32,71 @@ namespace LibraryAtHomeUI
             ChooseFolderStringCommand = new RelayCommand<LibraryConfigurationWindow>( o => ChooseFolder(o));
             ManageEbookFormatsCommand = new RelayCommand<object>((s) => ManageEbookFormats(s));
             ConfigurationDoneCommand = new RelayCommand<LibraryConfigurationWindow>(o => ConfigurationDone(o));
-      
             _ebookFormats = new ObservableDictionary<string, bool>();
             _configurationData = new LibraryConfigurationData();
 
+            _libraries = new List<string>();
+
+           
+            string server = string.IsNullOrEmpty(TxtDatabaseServer) ? "localhost" : TxtDatabaseServer;
+
+            _mongoServerManager = new MongodbServerManager(server);
+
         }
+      
+
+        private IMongodbServerManager _mongoServerManager;
+       
+
+        private List<string> _libraries;
+
+        private string _selectedLibrary;
+
+        public string SelectedLibrary
+        {
+            get { return _selectedLibrary; }
+            set
+            {
+                _selectedLibrary = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public string NewLibrary
+        {
+            set
+            {
+                if (!string.IsNullOrEmpty(value))
+                {
+                    _libraries.Add(value);
+                }
+            }
+        }
+
+        public List<string> Libraries
+        {
+            get
+            {
+                return GetLibraryAtHomeDatabases();
+            }
+
+            set { _libraries = value; }
+        }
+
+        private List<string> GetLibraryAtHomeDatabases()
+        {
+            List<string> retval = new List<string>();
+            foreach (var databaseName in _mongoServerManager.ListDatabases())
+            {
+                IMongodbDatabaseManager manager = new MongodbDatabaseManager(TxtDatabaseServer, databaseName);
+                if (manager.CollectionExists("books"))
+                    retval.Add(databaseName);
+            }
+
+            return retval;
+        }
+
+
         private void ChooseFolder(LibraryConfigurationWindow win)
         {
             using (var dialog = new CommonOpenFileDialog {IsFolderPicker = true})
@@ -46,6 +114,16 @@ namespace LibraryAtHomeUI
 
         private void ConfigurationDone(LibraryConfigurationWindow confWin)
         {
+            if (confWin.tbNewLibrary.IsEnabled)
+            {
+                _configurationData.DatabaseName = confWin.tbNewLibrary.Text;
+                _configurationData.LibraryExits = false;
+            }
+            else
+            {
+                _configurationData.DatabaseName = confWin.cbLibraryName.SelectedItem.ToString();
+                _configurationData.LibraryExits = true;
+            }
             MSG.Messenger.Default.Send(_configurationData);
 
             confWin?.Close();
@@ -104,7 +182,7 @@ namespace LibraryAtHomeUI
             }
         }
 
-        public string TxtConnectionString
+        public string TxtDatabaseServer
         {
             get { return _configurationData.RepositoryHost; }
             set
@@ -134,9 +212,8 @@ namespace LibraryAtHomeUI
                 NotifyPropertyChanged();
             }
         }
-       
 
-       
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")

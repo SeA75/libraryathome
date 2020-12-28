@@ -5,7 +5,7 @@ namespace LibraryAtHomeTracerFileMetadataExtractor
 {
     public interface IBookFinderHandler
     {
-        BookatHome HandleTheBookFromList(string title, List<PocoBook> booklist);
+        BookAtHome HandleTheBookFromList(string title, List<PocoBook> booklist);
 
         IBookFinderHandler SetNext(IBookFinderHandler handler);
     }

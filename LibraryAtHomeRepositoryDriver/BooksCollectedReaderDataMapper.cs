@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
@@ -9,21 +10,28 @@ namespace LibraryAtHomeRepositoryDriver
     {
         private const string collectionname = "books";
 
-        public IMongoCollection<PocoBook> Books
-        {
-            get
-            {
-                return Connection.Database.GetCollection<PocoBook>(collectionname);
-            }
-        }
 
-        public BooksCollectedReaderDataMapper(IMongodbConnection connection) : base(connection)
+        private IMongodbDatabaseManager _databaseManager;
+
+        private IMongodbServerManager _serverManager;
+
+        public BooksCollectedReaderDataMapper(string server, string database)
         {
-            if (Books == null)
-                Connection.Database.CreateCollection(collectionname);
+            _databaseManager = new MongodbDatabaseManager(server, database);
+
+            _serverManager = new MongodbServerManager(server);
+
+            if (GetBooks() == null)
+                _databaseManager.CreateCollection(collectionname);
 
             CreateIndexes();
         }
+
+        public IMongoCollection<PocoBook> GetBooks()
+        {
+            return _databaseManager.GetCollection<PocoBook>(collectionname);
+        }
+        
 
         public override bool Equals(PocoBook x, PocoBook y)
         {
@@ -38,7 +46,7 @@ namespace LibraryAtHomeRepositoryDriver
         public override List<PocoBook> Read()
         {
             FilterDefinition<PocoBook> filter = Builders<PocoBook>.Filter.Where(x => true);
-            return Books.Find<PocoBook>(filter).ToList<PocoBook>();
+            return GetBooks().Find<PocoBook>(filter).ToList<PocoBook>();
         }
 
         public override List<PocoBook> Read(PocoBook instance)
@@ -55,7 +63,7 @@ namespace LibraryAtHomeRepositoryDriver
 
                 try
                 {
-                    return Books.Find<PocoBook>(filter).ToList<PocoBook>();
+                    return GetBooks().Find<PocoBook>(filter).ToList<PocoBook>();
                 }
                 catch (InvalidOperationException e)
                 {
@@ -105,12 +113,12 @@ namespace LibraryAtHomeRepositoryDriver
         {
             FilterDefinition<PocoBook> filter = Builders<PocoBook>.Filter.Where(x => true);
 
-            return Books.CountDocuments(filter);
+            return GetBooks().CountDocuments(filter);
         }
 
         public override void CreateIndexes()
         {
-            Books.Indexes.CreateMany(new[]
+            GetBooks().Indexes.CreateMany(new[]
             {
                 new CreateIndexModel<PocoBook>(
                     Builders<PocoBook>.IndexKeys.Ascending(x => x.Isbn),
@@ -162,7 +170,7 @@ namespace LibraryAtHomeRepositoryDriver
                 throw new ArgumentException("Field value cannot be null or empty", nameof(fieldvalue));
             }
             var filter = Builders<PocoBook>.Filter.Regex(fieldname, new BsonRegularExpression(fieldvalue));
-            var result = Books.Find(filter).ToList();
+            var result = GetBooks().Find(filter).ToList();
 
             if (result != null)
                 return result;

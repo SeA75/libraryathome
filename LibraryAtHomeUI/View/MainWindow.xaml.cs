@@ -16,6 +16,16 @@ namespace LibraryAtHomeUI
         public MainWindow()
         {
             InitializeComponent();
+
+            if (LibraryAtHomeMain.Default.LibraryExists)
+            {
+                LibraryConfigurationData confData = new LibraryConfigurationData();
+                confData.DatabaseName = LibraryAtHomeMain.Default.LastLibraryOpened;
+                confData.EbookFolder = LibraryAtHomeMain.Default.EbookFolder;
+                confData.RepositoryHost = LibraryAtHomeMain.Default.RepositoryHost;
+                confData.LibraryExits = LibraryAtHomeMain.Default.LibraryExists;
+                GalaSoft.MvvmLight.Messaging.Messenger.Default.Send(confData);
+            }
         }
 
         private LibraryConfigurationWindow _configWindow;
@@ -128,13 +138,6 @@ namespace LibraryAtHomeUI
             if (_handle) HandleEvent(sender as ComboBox);
             _handle = true;
         }
-
-        //private Action<string, object, object> EventCaller = (methodName, sender, callerevent) => typeof(MainWindow).GetMethod(methodName).Invoke(null, new[] { sender, callerevent });
-
-        //private void FacadeHandler(object sender, EventArgs e)
-        //{
-            
-        //}
        
     }
 }

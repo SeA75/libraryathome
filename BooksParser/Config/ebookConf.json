@@ -1,10 +1,10 @@
 {
   "ebookformat": [
-    "rtf",
-    "pdf",
-    "doc",
-    "epub",
-    "txt"
+    //"rtf",
+    "pdf"//,
+//    "doc",
+ //   "epub",
+ //   "txt"
   ],
   "ebookdirectory": "C:\\Personal\\library\\books\\ebooks",
   //  "ebookdirectory": "\\192.168.1.173\\homes\\andrea\\ebooks",
@@ -14,8 +14,8 @@
 
   "libraryContext": {
     "jsonlibraryfile": "C:\\temp\\mylibrary.json",
-    "databasename": "libraryathome",
-    "connectionstring": "mongodb://localhost:27017/"
+    "databasename": "libraryathome2",
+    "hostname": "localhost"
   },
 
   "tracefile": "C:\\temp\\traceout.txt",

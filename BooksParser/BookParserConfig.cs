@@ -38,8 +38,8 @@ namespace BooksParser
         [JsonProperty("databasename")]
         public string databasename { get; set; }
 
-        [JsonProperty("connectionstring")]
-        public string connectionstring { get; set; }
+        [JsonProperty("hostname")]
+        public string hostname { get; set; }
 
     }
 

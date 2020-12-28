@@ -1,0 +1,48 @@
+﻿<Window x:Class="DummyWpfApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DummyWpfApp"
+        xmlns:system="clr-namespace:System;assembly=System.Runtime"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.DataContext>
+        <local:MainWindowViewModel/>
+    </Window.DataContext>
+    <Window.Resources>
+        <Style x:Key="ListViewStyle" TargetType="{x:Type GridViewColumnHeader}">
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+        </Style>
+    </Window.Resources>
+    <ScrollViewer>
+    <Grid>
+        <Grid ScrollViewer.VerticalScrollBarVisibility="Auto">
+            
+            <Button  Name="loaddata" Command="{Binding StartLoadCommand}">Load Data</Button>
+            <Separator Height="50"></Separator>
+            <Grid>
+                <ListView   Margin="10" ItemsSource="{Binding Items}" HorizontalAlignment="Left" HorizontalContentAlignment="Left" ScrollViewer.VerticalScrollBarVisibility="Auto">
+
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn HeaderContainerStyle="{StaticResource ListViewStyle}" Header="Name" Width="320" DisplayMemberBinding="{Binding Name}" />
+                            <GridViewColumn HeaderContainerStyle="{StaticResource ListViewStyle}" Header="Matches" Width="80" DisplayMemberBinding="{Binding Matches}" />
+
+                            <GridViewColumn Header="Authors" Width="150" >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ItemsControl ItemsSource="{Binding Authors}" Width="150" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
+        </Grid>
+    </Grid>
+    </ScrollViewer>
+</Window>

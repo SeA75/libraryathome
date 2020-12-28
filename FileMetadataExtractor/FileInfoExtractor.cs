@@ -10,7 +10,7 @@ namespace LibraryAtHomeTracerFileMetadataExtractor
 {
     public class FileInfoExtractor : FileExtractor
     {
-        public override BookatHome GetPocoBook(string filepath)
+        public override BookAtHome GetPocoBook(string filepath)
         {
             string maybetitle;
             

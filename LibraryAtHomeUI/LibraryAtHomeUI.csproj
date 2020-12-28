@@ -6,6 +6,9 @@
     <UseWPF>true</UseWPF>
     <StartupObject></StartupObject>
     <LangVersion>8</LangVersion>
+    <EnforceCodeStyleInBuild>false</EnforceCodeStyleInBuild>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisLevel>5.0</AnalysisLevel>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,6 +24,21 @@
     <ProjectReference Include="..\FileMetadataExtractor\LibraryAtHomeFileMetadataExtractor.csproj" />
     <ProjectReference Include="..\LibraryAtHomeControlLibrary\LibraryAtHomeControlLibrary.csproj" />
     <ProjectReference Include="..\LibraryAtHomeRepositoryDriver\LibraryAtHomeRepositoryDriver.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="LibraryAtHomeMain.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>LibraryAtHomeMain.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="LibraryAtHomeMain.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>LibraryAtHomeMain.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 
 </Project>

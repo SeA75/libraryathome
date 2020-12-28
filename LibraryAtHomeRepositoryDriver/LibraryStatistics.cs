@@ -1,7 +1,10 @@
 ﻿using System;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace LibraryAtHomeRepositoryDriver
 {
+    //TODO remove this 
+    [BsonIgnoreExtraElements]
     public class LibraryStatistics
     {
         public LibraryStatistics(long totbooks, long bookscollected, TimeSpan elapsedTime, string folder)
@@ -34,7 +37,7 @@ namespace LibraryAtHomeRepositoryDriver
 
         //public override bool Equals(object obj)
         //{
-        //    return this.Equals(obj as BookatHome);
+        //    return this.Equals(obj as BookAtHome);
         //}
 
 

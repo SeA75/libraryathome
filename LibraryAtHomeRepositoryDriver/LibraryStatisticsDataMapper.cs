@@ -12,19 +12,30 @@ namespace LibraryAtHomeRepositoryDriver
 
         private const string collectionname = "statistics";
 
-        public LibraryStatisticsDataMapper(IMongodbConnection connection) : base(connection)
+        private IMongodbServerManager _serverManager;
+        private IMongodbDatabaseManager _dbManager;
+
+        private string _databaseServer;
+
+        private string _databaseName;
+
+        public LibraryStatisticsDataMapper(string servername, string database)
         {
-            if (Statistics == null)
-               Connection. Database.CreateCollection(collectionname);
-            
+            _databaseServer = servername;
+            _databaseName = database;
+            _serverManager = new MongodbServerManager(servername);
+            _dbManager = new MongodbDatabaseManager(servername, database);
         }
 
-        public IMongoCollection<LibraryStatistics> Statistics
+        public void CreateStatistics()
         {
-            get
-            {
-                return Connection.Database.GetCollection<LibraryStatistics>(collectionname);
-            }
+            if (GetStatistics() == null)
+                _dbManager.CreateCollection(collectionname);
+        }
+
+        public IMongoCollection<LibraryStatistics> GetStatistics()
+        {
+            return _dbManager.GetCollection<LibraryStatistics>(collectionname);
         }
 
         public override void Delete(LibraryStatistics instance)
@@ -34,19 +45,19 @@ namespace LibraryAtHomeRepositoryDriver
                 throw new ArgumentNullException(nameof(instance), "Statistics cannot be null.");
             }
 
-            Statistics.DeleteOne(x => x.Timestamp == instance.Timestamp);
+            GetStatistics().DeleteOne(x => x.Timestamp == instance.Timestamp);
         }
 
         public override List<LibraryStatistics> Read()
         {
             FilterDefinition<LibraryStatistics> filter = Builders<LibraryStatistics>.Filter.Where(x => true);
-            return Statistics.Find(filter).ToList();
+            return GetStatistics().Find(filter).ToList();
         }
 
         public override List<LibraryStatistics> Read(LibraryStatistics instance)
         {
             FilterDefinition<LibraryStatistics> filter = Builders<LibraryStatistics>.Filter.Where(x => true);
-            return Statistics.Find(filter).ToList();
+            return GetStatistics().Find(filter).ToList();
         }
 
         public override void Write(LibraryStatistics instance)
@@ -58,7 +69,7 @@ namespace LibraryAtHomeRepositoryDriver
                     throw new ArgumentNullException(nameof(instance));
                 }
                 
-                Statistics.InsertOne(instance);                
+                GetStatistics().InsertOne(instance);                
             }
         }
 
@@ -67,7 +78,7 @@ namespace LibraryAtHomeRepositoryDriver
         {
             try
             {
-                await Statistics.InsertManyAsync(instances,
+                await GetStatistics().InsertManyAsync(instances,
                        new InsertManyOptions() { IsOrdered = false, BypassDocumentValidation = false }).ConfigureAwait(false);
             }
             catch(MongoBulkWriteException<LibraryStatistics>)
@@ -90,12 +101,12 @@ namespace LibraryAtHomeRepositoryDriver
         {
             FilterDefinition<LibraryStatistics> filter = Builders<LibraryStatistics>.Filter.Where(x => true);
 
-            return Statistics.CountDocuments(filter);
+            return GetStatistics().CountDocuments(filter);
         }
 
         public override void Drop()
         {
-            Connection.Database.DropCollection(collectionname);
+            _dbManager.DropCollection(collectionname);
         }
 
 

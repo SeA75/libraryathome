@@ -12,10 +12,18 @@ namespace LibraryAtHomeRepositoryDriver
 
         private const string collectionname = "booktobereviewed";
 
-        public BookToBeReviewedDataMapper(IMongodbConnection connection) : base(connection)
+        private IMongodbDatabaseManager _databaseManager;
+
+        private IMongodbServerManager _serverManager;
+
+        public BookToBeReviewedDataMapper(string server, string database) 
         {
-            if (BooksToReviewList == null)
-                Connection.Database.CreateCollection(collectionname);
+            _databaseManager = new MongodbDatabaseManager(server, database);
+
+            _serverManager = new MongodbServerManager(server);
+
+            if (GetBooks() == null)
+                _databaseManager.CreateCollection(collectionname);
 
             CreateIndexes();
         }
@@ -27,13 +35,13 @@ namespace LibraryAtHomeRepositoryDriver
                 throw new ArgumentNullException(nameof(instance), "Book to be review cannot be null or empty.");
             }
             
-            BooksToReviewList.DeleteOne(x => x.File == instance.File);
+            GetBooks().DeleteOne(x => x.File == instance.File);
         }
 
         public override List<BookToBeReviewed> Read()
         {
             FilterDefinition<BookToBeReviewed> filter = Builders<BookToBeReviewed>.Filter.Where(x => true);
-            return BooksToReviewList.Find<BookToBeReviewed>(filter).ToList<BookToBeReviewed>();
+            return GetBooks().Find<BookToBeReviewed>(filter).ToList<BookToBeReviewed>();
         }
 
         public override List<BookToBeReviewed> Read(BookToBeReviewed instance)
@@ -47,7 +55,7 @@ namespace LibraryAtHomeRepositoryDriver
 
             try
             {
-                return BooksToReviewList.Find<BookToBeReviewed>(filter).ToList<BookToBeReviewed>();
+                return GetBooks().Find<BookToBeReviewed>(filter).ToList<BookToBeReviewed>();
             }
             catch (InvalidOperationException)
             {
@@ -66,7 +74,7 @@ namespace LibraryAtHomeRepositoryDriver
                     throw new ArgumentNullException(nameof(instance), "Book cannot be null or empty.");
                 }
 
-                BooksToReviewList.InsertOne(instance);
+                GetBooks().InsertOne(instance);
             }
         }
 
@@ -75,11 +83,12 @@ namespace LibraryAtHomeRepositoryDriver
             try
             {
                 if(instances.Any())
-                    await BooksToReviewList.InsertManyAsync(instances,
+                    await GetBooks().InsertManyAsync(instances,
                         new InsertManyOptions() { IsOrdered = false, BypassDocumentValidation = false }).ConfigureAwait(false);
             }
             catch (MongoBulkWriteException<BookToBeReviewed>)
             {
+                // TODO da valutare
             }
             return new List<BookToBeReviewed>();
         }
@@ -108,32 +117,29 @@ namespace LibraryAtHomeRepositoryDriver
                 ReturnDocument = ReturnDocument.After
             };
 
-            return BooksToReviewList.FindOneAndUpdate<BookToBeReviewed>(filter, update, opts);
+            return GetBooks().FindOneAndUpdate<BookToBeReviewed>(filter, update, opts);
         }
 
         public override void Drop()
         {
-            Connection.Database.DropCollection(collectionname);
+            _databaseManager.DropCollection(collectionname);
         }
 
         public override long Count()
         {
             FilterDefinition<BookToBeReviewed> filter = Builders<BookToBeReviewed>.Filter.Where(x => true);
 
-            return BooksToReviewList.CountDocuments(filter);
+            return GetBooks().CountDocuments(filter);
         }
 
-        public IMongoCollection<BookToBeReviewed> BooksToReviewList
+        public IMongoCollection<BookToBeReviewed> GetBooks()
         {
-            get
-            {
-                return Connection.Database.GetCollection<BookToBeReviewed>(collectionname);
-            }
+            return _databaseManager.GetCollection<BookToBeReviewed>(collectionname);
         }
 
         public override void CreateIndexes()
         {
-            BooksToReviewList.Indexes.CreateOne(
+            GetBooks().Indexes.CreateOne(
                 new CreateIndexModel<BookToBeReviewed>(Builders<BookToBeReviewed>.IndexKeys.Ascending(x => x.File),
                 new CreateIndexOptions { Unique = true }));
         }

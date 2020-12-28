@@ -7,7 +7,7 @@ namespace LibraryAtHomeTracerFileMetadataExtractor
 {
     public class RtfFileInfoExtractor : FileInfoExtractor
     {
-        public override BookatHome GetPocoBook(string filepath)
+        public override BookAtHome GetPocoBook(string filepath)
         {
             //RtfTree tree = new RtfTree();
             //tree.LoadRtfFile(filepath);

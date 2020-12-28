@@ -14,34 +14,20 @@ namespace LibraryAtHomeRepositoryDriver
 
         private const string CollectionName = "books";
 
-        public IMongoCollection<PocoBook> Books
-        {
-            get
-            {
-                return Connection.Database.GetCollection<PocoBook>(CollectionName);
-            }
-        }
+        private IMongodbServerManager _serverManager;
 
-        private static void MyRegisterClassMapHelper()
-        {
-            if (!BsonClassMap.IsClassMapRegistered(typeof(PocoBook)))
-            {
-                BsonClassMap.RegisterClassMap<PocoBook>(cm =>
-                {
-                    cm.AutoMap();
-                    cm.SetIgnoreExtraElements(true);
-                    cm.MapMember(c => c.BookReliability).SetSerializer(new CustomEnumSerializer<PocoBook.Reliability>());
-                });
-            }
-        }
+        private IMongodbDatabaseManager _dbManager;
 
-        public BooksCollectedDataMapper(IMongodbConnection connection) : base(connection)
+        public BooksCollectedDataMapper(string server, string database)
         {
             MyRegisterClassMapHelper();
 
-            if (Books == null)
+            _serverManager = new MongodbServerManager(server);
+            _dbManager = new MongodbDatabaseManager(server, database);
+
+            if (GetBookCollection() == null)
             {
-                Connection.Database.CreateCollection(CollectionName);
+                _dbManager.CreateCollection(CollectionName);
             }
 
             CreateIndexes();
@@ -50,7 +36,7 @@ namespace LibraryAtHomeRepositoryDriver
         public override List<PocoBook> Read()
         {
             FilterDefinition<PocoBook> filter = Builders<PocoBook>.Filter.Where(x => true);
-            return Books.Find<PocoBook>(filter).ToList<PocoBook>();
+            return GetBookCollection().Find<PocoBook>(filter).ToList<PocoBook>();
         }
 
         public override List<PocoBook> Read(PocoBook instance)
@@ -58,9 +44,8 @@ namespace LibraryAtHomeRepositoryDriver
             if (PocoBook.IsNullOrEmpty(instance))
             {
                 throw new ArgumentNullException(nameof(instance), "Book cannot be null or empty.");
-
             } 
-                        
+
 
             if (!string.IsNullOrEmpty(instance.Isbn))
             {
@@ -68,7 +53,7 @@ namespace LibraryAtHomeRepositoryDriver
 
                 try
                 {
-                    return Books.Find<PocoBook>(filter).ToList<PocoBook>();
+                    return GetBookCollection().Find<PocoBook>(filter).ToList<PocoBook>();
                 }
                 catch (InvalidOperationException)
                 {
@@ -125,13 +110,11 @@ namespace LibraryAtHomeRepositoryDriver
                         throw new ArgumentNullException(nameof(instance), "Book or Isbn cannot be null or empty.");
                     }
 
-                    
-                    Books.InsertOne(instance);
+                    GetBookCollection().InsertOne(instance);
                 }
             }
             catch (MongoWriteException mwe)
             {
-                
                 throw new MongodbDataMapperException<PocoBook>(mwe.Message);
             }
         }
@@ -142,7 +125,7 @@ namespace LibraryAtHomeRepositoryDriver
             try
             {
                 if (instances.Any())
-                    await Books.InsertManyAsync(instances, new InsertManyOptions(){IsOrdered = false}).ConfigureAwait(false);
+                    await GetBookCollection().InsertManyAsync(instances, new InsertManyOptions(){IsOrdered = false}).ConfigureAwait(false);
             }
             catch (MongoBulkWriteException<PocoBook> ex)
             {
@@ -195,7 +178,7 @@ namespace LibraryAtHomeRepositoryDriver
                 ReturnDocument = ReturnDocument.After
             };
 
-            return Books.FindOneAndUpdate<PocoBook>(filter, update, opts);
+            return GetBookCollection().FindOneAndUpdate<PocoBook>(filter, update, opts);
         }
 
         public override void Delete(PocoBook instance)
@@ -205,38 +188,24 @@ namespace LibraryAtHomeRepositoryDriver
                 throw new ArgumentNullException(nameof(instance), "Book or Isbn cannot be null or empty.");
             }
 
-            Books.DeleteOne(x => x.Isbn == instance.Isbn);
+            GetBookCollection().DeleteOne(x => x.Isbn == instance.Isbn);
         }
 
         public override void Drop()
         {
-            Connection.Database.DropCollection(CollectionName);
+            _dbManager.DropCollection(CollectionName);
         }
 
         public override long Count()
         {
             FilterDefinition<PocoBook> filter = Builders<PocoBook>.Filter.Where(x => true);
 
-            return Books.CountDocuments(filter);
-        }
-
-        private List<PocoBook> GetBookBy(string fieldname, string fieldvalue)
-        {
-            if (string.IsNullOrEmpty(fieldvalue))
-            {
-                throw new ArgumentException("Field value cannot be null or empty", nameof(fieldvalue));
-            }
-            var filter = Builders<PocoBook>.Filter.Regex(fieldname, new BsonRegularExpression(fieldvalue));
-            var result = Books.Find(filter).ToList();
-
-            if (result != null)
-                return result;
-            return new List<PocoBook>();
+            return GetBookCollection().CountDocuments(filter);
         }
 
         public override void CreateIndexes()
         {
-            Books.Indexes.CreateMany(new[]
+            GetBookCollection().Indexes.CreateMany(new[]
         {
                  new CreateIndexModel<PocoBook>(
                     Builders<PocoBook>.IndexKeys.Ascending(x => x.Isbn),
@@ -298,6 +267,40 @@ namespace LibraryAtHomeRepositoryDriver
             }
 
             return obj.GetHashCode();
+        }
+
+
+        private IMongoCollection<PocoBook> GetBookCollection()
+        {
+            return _dbManager.GetCollection<PocoBook>(CollectionName);
+        }
+
+
+        private static void MyRegisterClassMapHelper()
+        {
+            if (!BsonClassMap.IsClassMapRegistered(typeof(PocoBook)))
+            {
+                BsonClassMap.RegisterClassMap<PocoBook>(cm =>
+                {
+                    cm.AutoMap();
+                    cm.SetIgnoreExtraElements(true);
+                    cm.MapMember(c => c.BookReliability).SetSerializer(new CustomEnumSerializer<PocoBook.Reliability>());
+                });
+            }
+        }
+
+        private List<PocoBook> GetBookBy(string fieldname, string fieldvalue)
+        {
+            if (string.IsNullOrEmpty(fieldvalue))
+            {
+                throw new ArgumentException("Field value cannot be null or empty", nameof(fieldvalue));
+            }
+            var filter = Builders<PocoBook>.Filter.Regex(fieldname, new BsonRegularExpression(fieldvalue));
+            var result = GetBookCollection().Find(filter).ToList();
+
+            if (result != null)
+                return result;
+            return new List<PocoBook>();
         }
     }
 }

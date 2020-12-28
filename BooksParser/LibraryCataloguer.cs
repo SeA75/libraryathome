@@ -20,8 +20,6 @@ namespace BooksParser
 
         private IProgress<double> Progress { get; set; }
 
-        private readonly IMongodbConnection Connection;
-
         private readonly BooksCollectedDataMapper BooksInLibrary;
 
         private readonly BookToBeReviewedDataMapper BookToReview;
@@ -47,21 +45,21 @@ namespace BooksParser
             Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
 
             GetMetadataFromFileDictionaryDelegate = new Dictionary<String, Delegate>() {
-                            {".pdf",  new Func<string, BookatHome>(new PdfTextReaderFileInfoExtractor().GetPocoBook) },
-                            {".txt",  new Func<string, BookatHome>(new FileInfoExtractor().GetPocoBook )},
-                            {".rtf",  new Func<string, BookatHome>(new RtfFileInfoExtractor().GetPocoBook )},
-                            {".epub", new Func<string, BookatHome>(new EpubFileInfoExtractor().GetPocoBook )  },
-                            {".lit", new Func<string, BookatHome>(new LitFileInfoExtractor().GetPocoBook ) },
-                             {".doc", new Func<string, BookatHome>(new FileInfoExtractor().GetPocoBook) }};
+                            {".pdf",  new Func<string, BookAtHome>(new PdfTextReaderFileInfoExtractor().GetPocoBook) },
+                            {".txt",  new Func<string, BookAtHome>(new FileInfoExtractor().GetPocoBook )},
+                            {".rtf",  new Func<string, BookAtHome>(new RtfFileInfoExtractor().GetPocoBook )},
+                            {".epub", new Func<string, BookAtHome>(new EpubFileInfoExtractor().GetPocoBook )  },
+                            {".lit", new Func<string, BookAtHome>(new LitFileInfoExtractor().GetPocoBook ) },
+                             {".doc", new Func<string, BookAtHome>(new FileInfoExtractor().GetPocoBook) }};
 
 
-            Connection = new MongodbConnection(configuration.libraryContext.connectionstring, configuration.libraryContext.databasename);
+            
 
-            BooksInLibrary = new BooksCollectedDataMapper(Connection);
+            BooksInLibrary = new BooksCollectedDataMapper(configuration.libraryContext.hostname, configuration.libraryContext.databasename);
 
-            BookToReview = new BookToBeReviewedDataMapper(Connection);
+            BookToReview = new BookToBeReviewedDataMapper(configuration.libraryContext.hostname, configuration.libraryContext.databasename);
 
-            LibStatistics = new LibraryStatisticsDataMapper(Connection);
+            LibStatistics = new LibraryStatisticsDataMapper(configuration.libraryContext.hostname, configuration.libraryContext.databasename);
 
             _tracer = tracer;
 
@@ -103,7 +101,7 @@ namespace BooksParser
 
         }
 
-        private BookatHome SearchBookInfoOfFile(string file)
+        private BookAtHome SearchBookInfoOfFile(string file)
         {
             _tracer?.TraceInfo("SearchBookInfoOfFile start for file {0}", file);
             
@@ -168,7 +166,7 @@ namespace BooksParser
             return (collectedBooks, discardedBooks);
         }
 
-        private static void AddToCollections(BookatHome book, List<PocoBook> collectedBooks, List<BookToBeReviewed> discardedBooks)
+        private static void AddToCollections(BookAtHome book, List<PocoBook> collectedBooks, List<BookToBeReviewed> discardedBooks)
         {
             if (book != null)
             {

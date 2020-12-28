@@ -25,6 +25,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryAtHomeUI", "LibraryA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryAtHomeControlLibrary", "LibraryAtHomeControlLibrary\LibraryAtHomeControlLibrary.csproj", "{4E9C4844-AD75-4517-AE25-D84FDA00C1B3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DummyWpfApp", "DummyWpfApp\DummyWpfApp.csproj", "{60A7DC6B-4F2A-4B7B-B8B0-FC40398E9437}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -97,6 +99,14 @@ Global
 		{4E9C4844-AD75-4517-AE25-D84FDA00C1B3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4E9C4844-AD75-4517-AE25-D84FDA00C1B3}.Release|x64.ActiveCfg = Release|Any CPU
 		{4E9C4844-AD75-4517-AE25-D84FDA00C1B3}.Release|x64.Build.0 = Release|Any CPU
+		{60A7DC6B-4F2A-4B7B-B8B0-FC40398E9437}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60A7DC6B-4F2A-4B7B-B8B0-FC40398E9437}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60A7DC6B-4F2A-4B7B-B8B0-FC40398E9437}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{60A7DC6B-4F2A-4B7B-B8B0-FC40398E9437}.Debug|x64.Build.0 = Debug|Any CPU
+		{60A7DC6B-4F2A-4B7B-B8B0-FC40398E9437}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60A7DC6B-4F2A-4B7B-B8B0-FC40398E9437}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60A7DC6B-4F2A-4B7B-B8B0-FC40398E9437}.Release|x64.ActiveCfg = Release|Any CPU
+		{60A7DC6B-4F2A-4B7B-B8B0-FC40398E9437}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

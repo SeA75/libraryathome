@@ -3,24 +3,18 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace LibraryAtHomeRepositoryDriver
 {
-
-    public interface IBookatHome
-    {
-        string File { get; set; }
-    }
-
     //TODO elimanare la dipendenza
     [BsonIgnoreExtraElements]
-    public class BookatHome : IBookatHome
+    public class BookAtHome : IBookatHome, IEquatable<BookAtHome>
     {
         public string File { get; set; }
 
         public override bool Equals(object obj)
         {
-            return this.Equals(obj as BookatHome);
+            return this.Equals(obj as BookAtHome);
         }
 
-        public bool Equals(BookatHome p)
+        public bool Equals(BookAtHome p)
         {
             // If parameter is null, return false.
             if (Object.ReferenceEquals(p, null))
@@ -53,7 +47,7 @@ namespace LibraryAtHomeRepositoryDriver
         }
 
 
-        public static bool operator ==(BookatHome lhs, BookatHome rhs)
+        public static bool operator ==(BookAtHome lhs, BookAtHome rhs)
         {
             // Check for null on left side.
             if (Object.ReferenceEquals(lhs, null))
@@ -71,7 +65,7 @@ namespace LibraryAtHomeRepositoryDriver
             return lhs.Equals(rhs);
         }
 
-        public static bool operator !=(BookatHome lhs, BookatHome rhs)
+        public static bool operator !=(BookAtHome lhs, BookAtHome rhs)
         {
             return !(lhs == rhs);
         }

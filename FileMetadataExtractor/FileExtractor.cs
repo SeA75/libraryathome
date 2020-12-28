@@ -8,9 +8,9 @@ namespace LibraryAtHomeTracerFileMetadataExtractor
 {
     public abstract class FileExtractor
     {
-        public abstract BookatHome GetPocoBook(string filepath);
+        public abstract BookAtHome GetPocoBook(string filepath);
 
-        public static BookatHome AnalyzeResults(PocoBook minimalbookinfo, List<PocoBook> booksFromProvider, IBookParserTrace trace)
+        public static BookAtHome AnalyzeResults(PocoBook minimalbookinfo, List<PocoBook> booksFromProvider, IBookParserTrace trace)
         {
             trace?.TraceInfo("AnalyzeResults start");
             if (booksFromProvider == null || booksFromProvider.Count == 0)
@@ -33,7 +33,7 @@ namespace LibraryAtHomeTracerFileMetadataExtractor
             return FindTheBookInfoFromCollection(minimalbookinfo.File, booksFromProvider, minimalbookinfo.SearchTitle, trace);
         }
 
-        private static BookatHome FindTheBookInfoFromCollection(string fileunderanalysis, List<PocoBook> booksFromProvider,
+        private static BookAtHome FindTheBookInfoFromCollection(string fileunderanalysis, List<PocoBook> booksFromProvider,
             string maytitle, IBookParserTrace trace)
         {
             var titlecomparer = new TitleCompareBookFinder(fileunderanalysis, trace);

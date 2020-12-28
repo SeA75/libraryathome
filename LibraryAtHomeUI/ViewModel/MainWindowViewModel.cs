@@ -1,22 +1,16 @@
-﻿using System;
+﻿using BooksParser;
+using GalaSoft.MvvmLight.Command;
+using LibraryAtHomeRepositoryDriver;
+using LibraryAtHomeUI.Annotations;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using GalaSoft.MvvmLight.Command;
-using LibraryAtHomeUI.Annotations;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using BooksParser;
-using iText.Layout.Element;
-using LibraryAtHomeRepositoryDriver;
-using LibraryAtHomeTracer;
 using MSG = GalaSoft.MvvmLight.Messaging;
 
 namespace LibraryAtHomeUI
@@ -27,16 +21,55 @@ namespace LibraryAtHomeUI
         {
             StartCollectCommand = new RelayCommand(ExecuteStartCollect);
             MSG.Messenger.Default.Register<LibraryConfigurationData>(this, UpdateLibraryConfigurationData);
-           
+            DeleteLibraryCommand = new RelayCommand(DeleteLibrary);
+            _pocoBookHandler = new PocoBookHandler();
         }
 
+        private void DeleteLibrary()
+        {
+            var res = MessageBox.Show($"Do you want to delete database {ConfData.DatabaseName} ?", "Libraryathome", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            if (res == MessageBoxResult.Yes)
+            {
+                _cataloger?.DropDatabase();
+                MessageBox.Show($"Database {ConfData.DatabaseName} deleted!", "Libraryathome", MessageBoxButton.OK,
+                    MessageBoxImage.Exclamation);
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private ObservableCollection<PocoBook> _MyBooks;
-       
+        private string _libraryName;
+
+        public string LibraryName
+        {
+            get { return _libraryName; }
+            set
+            {
+                _libraryName = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _bookFolder;
+
+        public string BookFolder
+        {
+            get { return _bookFolder; }
+            set
+            {
+                _bookFolder = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private PocoBookHandler _pocoBookHandler;
+
+        private LibraryCataloguer _cataloger;
+
 
         public RelayCommand StartCollectCommand { get; set; }
+
+        public RelayCommand DeleteLibraryCommand { get; set; }
 
         private LibraryConfigurationData _confData;
 
@@ -61,17 +94,12 @@ namespace LibraryAtHomeUI
             }
         }
 
-        public ObservableCollection<PocoBook> MyBooks {
-            get
-            {
-                return _MyBooks;
-            }
-            set
-            {
-                _MyBooks = value;
-                OnPropertyChanged();
-            }
+        public ObservableCollection<PocoBook> Books
+        {
+            get { return _pocoBookHandler.Items; }
         }
+
+      
 
 
         public async void ExecuteStartCollect()
@@ -82,13 +110,12 @@ namespace LibraryAtHomeUI
                 return;
             }
 
-
             var configuration = new BookParserConfig
             {
                 ebookdirectory = _confData.EbookFolder,
                 libraryContext = new LibraryContextConfig
                 {
-                    connectionstring = _confData.ConnectionString, databasename = _confData.DatabaseName
+                    hostname = _confData.ConnectionString, databasename = _confData.DatabaseName
                 }
             };
 
@@ -101,36 +128,30 @@ namespace LibraryAtHomeUI
 
             Action<int> updateProg = i => UpdateprogressBar(i);
 
-            LibraryCataloguer cataloger = new LibraryCataloguer(configuration, exceptions, null, updateProg);
+            _cataloger = new LibraryCataloguer(configuration, exceptions, null, updateProg);
 
-            TotalBookCount = cataloger.FileCount;
-
+            TotalBookCount = _cataloger.FileCount;
+            
 
             try
             {
-
                 await Task.Run(async () =>
                 {
-                    await cataloger.CatalogBooksAsync().ConfigureAwait(false);
+                    await _cataloger.CatalogBooksAsync().ConfigureAwait(false);
                 });
                 
 
-                List<PocoBook> bookCollected = cataloger.BooksInLibrary.Read();
-                List<BookToBeReviewed> booktoreview = cataloger.BookToReview.Read();
+                List<PocoBook> bookCollected = _cataloger.BooksInLibrary.Read();
+                List<BookToBeReviewed> booktoreview = _cataloger.BookToReview.Read();
 
                 TotalBookCataloged = bookCollected.Count;
                 TotalBookDiscarted = booktoreview.Count;
 
-                _MyBooks = new ObservableCollection<PocoBook>();
-
-          
-                MyBooks = new ObservableCollection<PocoBook>(bookCollected);
-                //foreach (var book in )
-                //{
-                //    MyBooks.AddAdd(book);
-                //}
-            
-
+                foreach (var book in bookCollected)
+                {
+                    if (!Books.Contains(book))
+                        Books.Add(book);
+                }
             }
             catch (AggregateException ae)
             {
@@ -145,7 +166,33 @@ namespace LibraryAtHomeUI
 
         public void UpdateLibraryConfigurationData(LibraryConfigurationData message)
         {
+            Books.Clear();
+
             ConfData = message;
+            LibraryName = message.DatabaseName;
+            BookFolder = message.EbookFolder;
+
+            if (message.LibraryExits)
+            {
+                BooksCollectedDataMapper mapper = new BooksCollectedDataMapper(message.RepositoryHost, message.DatabaseName) ;
+                LibraryStatisticsDataMapper stat = new LibraryStatisticsDataMapper(message.RepositoryHost, message.DatabaseName);
+
+                BookFolder = stat.Read().FirstOrDefault().LibraryDirectory;
+
+
+                foreach (var book in mapper.Read())
+                {
+                    if (!Books.Contains(book))
+                        Books.Add(book);
+                }
+            }
+
+            LibraryAtHomeMain.Default.EbookFolder = message.EbookFolder;
+            LibraryAtHomeMain.Default.LastLibraryOpened = message.DatabaseName;
+            LibraryAtHomeMain.Default.LibraryExists = true;
+            LibraryAtHomeMain.Default.RepositoryHost = message.RepositoryHost;
+            LibraryAtHomeMain.Default.Save();
+
         }
 
         public void UpdateprogressBar(int value)

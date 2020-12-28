@@ -44,7 +44,7 @@ namespace BooksParser
         public string databasename { get; set; }
 
       
-        public string connectionstring { get; set; }
+        public string hostname { get; set; }
 
     }
 

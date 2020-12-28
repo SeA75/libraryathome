@@ -12,6 +12,6 @@
   "libraryContext": {
     "jsonlibraryfile": "C:\\Users\\vgh8no\\source\\repos\\BooksParser\\TestResults\\mylibrary.json",
     "databasename": "testlibraryathome",
-    "connectionstring": "mongodb://localhost:27017/"
+    "hostname": "localhost"
   },
 }
