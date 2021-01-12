@@ -5,6 +5,8 @@
         public string kind { get; set; }
         public int totalItems { get; set; }
         public Item[] items { get; set; }
+
+        public string File { get; set; }
     }
 
     public class Item

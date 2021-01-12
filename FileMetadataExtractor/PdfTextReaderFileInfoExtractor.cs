@@ -14,6 +14,7 @@ namespace LibraryAtHomeTracerFileMetadataExtractor
         {
             iText.Kernel.Pdf.PdfReader reader = null;
             iText.Kernel.Pdf.PdfDocument pDoc = null;
+            const int extracted_phrase_len = 50;
             try
             {
 
@@ -23,10 +24,11 @@ namespace LibraryAtHomeTracerFileMetadataExtractor
                     pDoc = new iText.Kernel.Pdf.PdfDocument(reader);
                     int nPages = pDoc.GetNumberOfPages();
                     int maxsearch = nPages < 15 ? nPages : 10;
+                    string currentText = string.Empty;
                     for (int i = 1; i <= maxsearch; i++)
                     {
                         ITextExtractionStrategy strategy = new SimpleTextExtractionStrategy();
-                        string currentText = PdfTextExtractor.GetTextFromPage(pDoc.GetPage(i), strategy);
+                        currentText = PdfTextExtractor.GetTextFromPage(pDoc.GetPage(i), strategy);
 
                         currentText = Encoding.UTF8.GetString(ASCIIEncoding.Convert(Encoding.Default, Encoding.UTF8, Encoding.Default.GetBytes(currentText)));
 
@@ -44,7 +46,12 @@ namespace LibraryAtHomeTracerFileMetadataExtractor
                             }
                         }
                     }
-                    reader.Close();
+                    PocoBook abook = base.GetPocoBook(filepath) as PocoBook;
+                    int len = currentText.Length < extracted_phrase_len ? currentText.Length : extracted_phrase_len;
+                    abook.SearchPhrase = currentText.Substring(0, len);
+
+                    return abook;
+
                 }
 
             }
@@ -56,6 +63,7 @@ namespace LibraryAtHomeTracerFileMetadataExtractor
             {
                 ((IDisposable)reader)?.Dispose();
                 ((IDisposable)pDoc)?.Dispose();
+                reader?.Close();
             }
             
             return base.GetPocoBook(filepath);

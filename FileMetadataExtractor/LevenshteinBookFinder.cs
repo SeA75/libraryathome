@@ -23,7 +23,13 @@ namespace LibraryAtHomeTracerFileMetadataExtractor
             int i = 0;
             foreach (var book in booklist)
             {
-                if (string.Compare(book.Title, maybetitle, true) != 0)
+                if (string.Compare(book.Title, maybetitle, true) == 0)
+                {
+                    lddistance = 0;
+                    bookindex = i;
+                    break;
+                }
+                else
                 {
                     // non trovato il libro
                     int retval = LevenshteinDistance.Compute(book.Title, maybetitle);
@@ -32,13 +38,6 @@ namespace LibraryAtHomeTracerFileMetadataExtractor
                         lddistance = retval;
                         bookindex = i;
                     }
-
-                }
-                else
-                {
-                    lddistance = 0;
-                    bookindex = i;
-                    break;
                 }
                 i++;
             }
