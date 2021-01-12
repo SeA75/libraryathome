@@ -15,34 +15,27 @@
             <Setter Property="HorizontalContentAlignment" Value="Left" />
         </Style>
     </Window.Resources>
-    <ScrollViewer>
     <Grid>
-        <Grid ScrollViewer.VerticalScrollBarVisibility="Auto">
-            
-            <Button  Name="loaddata" Command="{Binding StartLoadCommand}">Load Data</Button>
-            <Separator Height="50"></Separator>
-            <Grid>
-                <ListView   Margin="10" ItemsSource="{Binding Items}" HorizontalAlignment="Left" HorizontalContentAlignment="Left" ScrollViewer.VerticalScrollBarVisibility="Auto">
+    <StackPanel>
+    <Grid>
+            <FlowDocumentScrollViewer VerticalScrollBarVisibility="Auto" 
+                                          Visibility="Visible" 
+                                          Margin="5" 
+                                          BorderBrush="Black" 
+                                          BorderThickness="1">
 
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn HeaderContainerStyle="{StaticResource ListViewStyle}" Header="Name" Width="320" DisplayMemberBinding="{Binding Name}" />
-                            <GridViewColumn HeaderContainerStyle="{StaticResource ListViewStyle}" Header="Matches" Width="80" DisplayMemberBinding="{Binding Matches}" />
+                <FlowDocument   ColumnWidth="400" 
+                                    IsOptimalParagraphEnabled="True" 
+                                    IsHyphenationEnabled="True"
+                                    >
+                    <Paragraph FontSize="15" FontStretch="Expanded">
+                        <Run Text="Lorem ipsum doSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequaSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?ur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?tur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?lor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."/>
+                    </Paragraph>
+                </FlowDocument>
+            </FlowDocumentScrollViewer>
 
-                            <GridViewColumn Header="Authors" Width="150" >
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <ItemsControl ItemsSource="{Binding Authors}" Width="150" />
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
 
-                            
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-            </Grid>
         </Grid>
+    </StackPanel>
     </Grid>
-    </ScrollViewer>
 </Window>

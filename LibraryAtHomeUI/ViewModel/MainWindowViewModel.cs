@@ -66,7 +66,6 @@ namespace LibraryAtHomeUI
 
         private LibraryCataloguer _cataloger;
 
-
         public RelayCommand StartCollectCommand { get; set; }
 
         public RelayCommand DeleteLibraryCommand { get; set; }
@@ -115,7 +114,7 @@ namespace LibraryAtHomeUI
                 ebookdirectory = _confData.EbookFolder,
                 libraryContext = new LibraryContextConfig
                 {
-                    hostname = _confData.ConnectionString, databasename = _confData.DatabaseName
+                    hostname = _confData.RepositoryHost, databasename = _confData.DatabaseName
                 }
             };
 

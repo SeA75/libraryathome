@@ -1,10 +1,10 @@
 {
   "ebookformat": [
-    //"rtf",
-    "pdf"//,
-//    "doc",
- //   "epub",
- //   "txt"
+    "rtf",
+    "pdf",
+    "doc",
+    "epub",
+    "txt"
   ],
   "ebookdirectory": "C:\\Personal\\library\\books\\ebooks",
   //  "ebookdirectory": "\\192.168.1.173\\homes\\andrea\\ebooks",
@@ -14,7 +14,7 @@
 
   "libraryContext": {
     "jsonlibraryfile": "C:\\temp\\mylibrary.json",
-    "databasename": "libraryathome2",
+    "databasename": "libraryathome36",
     "hostname": "localhost"
   },
 

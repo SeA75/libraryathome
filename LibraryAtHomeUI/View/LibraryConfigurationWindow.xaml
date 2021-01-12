@@ -14,11 +14,10 @@
     </Window.Resources>
 
     <Window.DataContext>
-        <local:LibraryConfigurationViewModel/>
-       
+        <local:LibraryConfigurationViewModel/>       
     </Window.DataContext>
+    
     <Grid>
-
         <StackPanel>
 
             <DockPanel>

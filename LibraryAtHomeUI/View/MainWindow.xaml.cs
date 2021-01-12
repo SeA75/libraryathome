@@ -6,6 +6,8 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using LibraryAtHomeRepositoryDriver;
 
+using MSG = GalaSoft.MvvmLight.Messaging;
+
 namespace LibraryAtHomeUI
 {
     /// <summary>
@@ -138,6 +140,16 @@ namespace LibraryAtHomeUI
             if (_handle) HandleEvent(sender as ComboBox);
             _handle = true;
         }
-       
+
+        private void ListView_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            BookDetailsWindow details = new BookDetailsWindow();
+            details.Show();
+
+             PocoBook selectedBook = (sender as ListView).SelectedItem as PocoBook;           
+
+            MSG.Messenger.Default.Send(selectedBook);
+
+        }
     }
 }

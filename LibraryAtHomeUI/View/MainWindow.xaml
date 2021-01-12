@@ -162,7 +162,8 @@
                               ItemsSource="{Binding Books}" 
                               HorizontalAlignment="Left" 
                               HorizontalContentAlignment="Left" 
-                              Grid.ColumnSpan="3">
+                              Grid.ColumnSpan="3"
+                                  MouseDoubleClick="ListView_MouseDoubleClick">
                             <ListView.View>
                                 <GridView   ScrollViewer.VerticalScrollBarVisibility="Visible">
                                     <GridViewColumn HeaderContainerStyle="{StaticResource ListViewStyle}" Header="Title" Width="350" DisplayMemberBinding="{Binding Title}" />

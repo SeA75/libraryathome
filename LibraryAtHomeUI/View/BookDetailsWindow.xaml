@@ -1,0 +1,178 @@
+﻿<Window x:Class="LibraryAtHomeUI.BookDetailsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LibraryAtHomeUI"
+        xmlns:fa5="http://schemas.fontawesome.com/icons/" xmlns:local1="clr-namespace:LibraryAtHomeUI.ViewModel"
+        mc:Ignorable="d"
+        Title="BookDetails" Height="450" Width="950" 
+        ResizeMode="NoResize">
+    <Window.DataContext>
+        <local1:BookDetailsViewModel/>
+    </Window.DataContext>
+
+
+    <Grid>
+        <Grid VerticalAlignment="Top" Height="390">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="3*" />
+                <RowDefinition Height="3*" />
+            </Grid.RowDefinitions>
+
+            <DockPanel Height="118" Grid.Row="0">
+                <Image x:Name="imgBook" 
+                       Source="{Binding ImageLink}" 
+                       Width="150" 
+                       Height="150" 
+                       HorizontalAlignment="Right"/>
+               
+                <Button x:Name="btnBookDetailsEditBook" 
+                        Width="110" 
+                        Height="110" >
+                    <Button.Content>
+                        <fa5:FontAwesome Icon="Solid_PencilAlt"
+                                         Name="EditBook"
+                                         FontSize="60" />
+                    </Button.Content>
+                </Button>
+
+                <StackPanel Width="500">
+                    <RichTextBox x:Name="rtbBookDetailsTitle"
+                                 HorizontalAlignment="Left" 
+                                 VerticalAlignment="Top" 
+                                 BorderThickness="0" >
+                        <FlowDocument>
+                            <Paragraph FontSize="25">
+                                <Bold>
+                                    <Run Text="{Binding Title}"/>
+                                </Bold>
+                            </Paragraph>
+                        </FlowDocument>
+                    </RichTextBox>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <DockPanel Grid.Column="0">
+                            <StackPanel>
+                                <RichTextBox x:Name="rtbBookDetailsAuthors"
+                                             HorizontalAlignment="Left" 
+                                             Width="100"
+                                             Height="15"
+                                             BorderThickness="0">
+                                    <FlowDocument>
+                                        <Paragraph FontSize="10">
+                                            <Run Text="{Binding Authors}"/>
+                                        </Paragraph>
+                                    </FlowDocument>
+                                </RichTextBox>
+
+                                <RichTextBox x:Name="rtbBookDetailsPublisher"
+                                             HorizontalAlignment="Left" 
+                                             Width="100" 
+                                             Height="15" 
+                                             BorderThickness="0">
+                                    <FlowDocument>
+                                        <Paragraph FontSize="10">
+                                            <Run Text="{Binding Publisher}"/>
+                                        </Paragraph>
+                                    </FlowDocument>
+                                </RichTextBox>
+
+
+                                <RichTextBox x:Name="rtbBookDetailsIsbn"
+                                             HorizontalAlignment="Left" 
+                                             Width="100" 
+                                             Height="15" 
+                                             BorderThickness="0">
+                                    <FlowDocument>
+                                        <Paragraph FontSize="10">
+                                            <Run Text="{Binding Isbn}"/>
+                                        </Paragraph>
+                                    </FlowDocument>
+                                </RichTextBox>
+
+                            </StackPanel>
+                        </DockPanel>
+
+                        <DockPanel Grid.Column="1" 
+                                   HorizontalAlignment="Left"
+                                   Width="100">
+
+                            <StackPanel>
+
+                                <RichTextBox x:Name="rtbBookDetailslanguage"
+                                             HorizontalAlignment="Left" 
+                                             Width="100" 
+                                             Height="15" 
+                                             BorderThickness="0">
+                                    <FlowDocument>
+                                        <Paragraph FontSize="10">
+                                            <Run Text="{Binding Language}"/>
+                                        </Paragraph>
+                                    </FlowDocument>
+                                </RichTextBox>
+
+                                <RichTextBox x:Name="rtbBookDetailsSubjects" 
+                                             HorizontalAlignment="Left" 
+                                             Width="100"
+                                             Height="15" 
+                                             BorderThickness="0">
+                                    <FlowDocument>
+                                        <Paragraph FontSize="10">
+                                            <Run Text="{Binding Subjects}"/>
+                                        </Paragraph>
+                                    </FlowDocument>
+                                </RichTextBox>
+
+                                <RichTextBox x:Name="rtbBookDetailsPublicationDate" 
+                                             HorizontalAlignment="Left"
+                                             Width="100" 
+                                             Height="15" 
+                                             BorderThickness="0">
+                                    <FlowDocument>
+                                        <Paragraph FontSize="10">
+                                            <Run Text="{Binding PublisherDate}"/>
+                                        </Paragraph>
+                                    </FlowDocument>
+                                </RichTextBox>
+                            </StackPanel>
+                        </DockPanel>
+                    </Grid>
+
+                </StackPanel>
+                <Button x:Name="btnBookDdetailRead"
+                        Width="110" 
+                        Height="110"
+                        Command="{Binding OpenFileCommand}">
+                    <Button.Content>
+                        <fa5:FontAwesome Icon="Solid_BookReader"
+                                         Name="ReadBook"
+                                         FontSize="60" />
+                    </Button.Content>
+                </Button>
+            </DockPanel>
+            
+            
+            <FlowDocumentScrollViewer VerticalScrollBarVisibility="Auto"
+                                      Visibility="Visible" 
+                                      Margin="5" 
+                                      BorderBrush="Black" 
+                                      BorderThickness="1"
+                                      Grid.Row="1">
+                    
+                    <FlowDocument   ColumnWidth="400" 
+                                    IsOptimalParagraphEnabled="True" 
+                                    IsHyphenationEnabled="True"
+                                    >
+                    <Paragraph FontSize="15" FontStretch="Expanded">
+                        <Run Text="{Binding Description}"/>
+                    </Paragraph>
+                </FlowDocument>
+            </FlowDocumentScrollViewer>
+        </Grid>
+    </Grid>
+</Window>

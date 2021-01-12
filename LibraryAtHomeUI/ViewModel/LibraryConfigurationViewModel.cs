@@ -37,13 +37,25 @@ namespace LibraryAtHomeUI
 
             _libraries = new List<string>();
 
-           
+            SetDefaultEbookFormat();
+
+
+
             string server = string.IsNullOrEmpty(TxtDatabaseServer) ? "localhost" : TxtDatabaseServer;
 
             _mongoServerManager = new MongodbServerManager(server);
+        }
+
+        private void SetDefaultEbookFormat()
+        {
+            EBookFormats["pdf"] = true;
+            EBookFormats["txt"] = true;
+            EBookFormats["rtf"] = true;
+            EBookFormats["doc"] = true;
+            EBookFormats["epub"] = true;
 
         }
-      
+
 
         private IMongodbServerManager _mongoServerManager;
        
@@ -124,6 +136,12 @@ namespace LibraryAtHomeUI
                 _configurationData.DatabaseName = confWin.cbLibraryName.SelectedItem.ToString();
                 _configurationData.LibraryExits = true;
             }
+
+            foreach (KeyValuePair<string, bool> entry in EBookFormats)
+            {
+                _configurationData.BookFormatsCheckStatus.Add(entry.Key, entry.Value);
+            }
+
             MSG.Messenger.Default.Send(_configurationData);
 
             confWin?.Close();
@@ -145,8 +163,6 @@ namespace LibraryAtHomeUI
             {
                 _configurationData.BookFormatsCheckStatus[ebookformat] = isEbookFormatSelected;
             }
-
-
         }
 
         private ObservableDictionary<string, bool> _ebookFormats { get; set; }

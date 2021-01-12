@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BookAtHomeTracer\LibraryAtHomeTracer.csproj" />
+    <ProjectReference Include="..\FileMetadataExtractor\LibraryAtHomeFileMetadataExtractor.csproj" />
     <ProjectReference Include="..\LibraryAtHomeRepositoryDriver\LibraryAtHomeRepositoryDriver.csproj" />
   </ItemGroup>
 

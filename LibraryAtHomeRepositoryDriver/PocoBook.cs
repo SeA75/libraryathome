@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Runtime.CompilerServices;
-using System.Text.RegularExpressions;
 
 namespace LibraryAtHomeRepositoryDriver
 {
@@ -29,12 +28,25 @@ namespace LibraryAtHomeRepositoryDriver
             Authors = new Collection<string>();
         }
 
+        public PocoBook(string title, Collection<string> authors, string isbn, 
+            int pagecount, string publisher, DateTime pubDate)
+        {
+            Title = title;
+            Isbnsearch = isbn;
+            BookReliability = Reliability.High;
+            Authors = authors;
+            PageCount = pagecount;
+            Publisher = publisher;
+            PublishedDate = pubDate;
+            Categories = new Collection<string>();
+            Isbn = isbn;
+        }
 
         public PocoBook(string file, string title, Collection<string> authors, string isbn, string searchTitle)
         {
             if (searchTitle != null)
             {
-                SearchTitle = searchTitle.Trim().Trim();
+                SearchTitle = searchTitle;
             }
             File = file;
             Title = title;
@@ -47,11 +59,11 @@ namespace LibraryAtHomeRepositoryDriver
         }
 
 
-
-
         public string Title { get; set; }
 
-        public string SearchTitle { get; set; }
+        public string SearchTitle { get; private set; }
+
+        public string SearchPhrase { get; set; }
 
         public Collection<string> Authors
         {
