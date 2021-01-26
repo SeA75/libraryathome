@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net5.0-windows</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
     <StartupObject></StartupObject>
     <LangVersion>8</LangVersion>
@@ -22,7 +22,6 @@
     <ProjectReference Include="..\BookAtHomeTracer\LibraryAtHomeTracer.csproj" />
     <ProjectReference Include="..\BookProvider\LibraryAtHomeProvider.csproj" />
     <ProjectReference Include="..\FileMetadataExtractor\LibraryAtHomeFileMetadataExtractor.csproj" />
-    <ProjectReference Include="..\LibraryAtHomeControlLibrary\LibraryAtHomeControlLibrary.csproj" />
     <ProjectReference Include="..\LibraryAtHomeRepositoryDriver\LibraryAtHomeRepositoryDriver.csproj" />
   </ItemGroup>
 

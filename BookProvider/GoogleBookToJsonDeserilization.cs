@@ -1,12 +1,14 @@
-﻿namespace LibraryAtHomeProvider
+﻿using System.IO;
+
+namespace LibraryAtHomeProvider
 {
     public class Rootobject
     {
         public string kind { get; set; }
         public int totalItems { get; set; }
         public Item[] items { get; set; }
+        public FileInfo File { get; set; }
 
-        public string File { get; set; }
     }
 
     public class Item

@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using LibraryAtHomeTracerFileMetadataExtractor;
 using LibraryAtHomeTracer;
+using RestSharp;
 
 namespace BooksParser
 {
@@ -109,10 +110,11 @@ namespace BooksParser
             {
                 PocoBook minimalbookinfo = GetMetadataFromFileDictionaryDelegate[Utils.GetExtension(file)].DynamicInvoke(file) as PocoBook;
                
-                IBooksProvider libraryBookProvider = 
-                    PluginLoader.GetPluginFromFolder(Configuration.providerPlugin.pluginassemblyname, Configuration.providerPlugin.pluginfolder); //TODO: performace improvments
+                IBooksProvider libraryBookProvider = PluginLoader.GetPluginFromFolder(  Configuration.providerPlugin.pluginassemblyname, 
+                                                                                        Configuration.providerPlugin.pluginfolder, 
+                                                                                        new RequestManager(new RestClient())); 
 
-                List<PocoBook> booksFromProvider = libraryBookProvider.FetchInfoOfBook(minimalbookinfo);
+                List<PocoBook> booksFromProvider = libraryBookProvider.FetchBookInfo(minimalbookinfo);
 
                 return FileExtractor.AnalyzeResults(minimalbookinfo, booksFromProvider, _tracer);
             }

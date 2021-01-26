@@ -14,7 +14,7 @@ namespace LibraryAtHomeTracerFileMetadataExtractor
         {
             iText.Kernel.Pdf.PdfReader reader = null;
             iText.Kernel.Pdf.PdfDocument pDoc = null;
-            const int extracted_phrase_len = 50;
+            const int extracted_phrase_len = 500;
             try
             {
 

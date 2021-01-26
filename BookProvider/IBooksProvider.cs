@@ -5,6 +5,6 @@ namespace LibraryAtHomeProvider
 {
     public interface IBooksProvider
     {
-        List<PocoBook> FetchInfoOfBook(PocoBook book);
+        List<PocoBook> FetchBookInfo(PocoBook book);
     }
 }

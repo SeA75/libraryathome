@@ -24,9 +24,15 @@ namespace LibraryAtHomeTracerFileMetadataExtractor
                 throw new ArgumentNullException(nameof(booksFromProvider));
             }
 
-            if (booksFromProvider.Count == 1)
+            if (booksFromProvider.Count == 1 )
             {
-                booksFromProvider[0].BookReliability = PocoBook.Reliability.High;
+                booksFromProvider.First().BookReliability = PocoBook.Reliability.High;
+                return booksFromProvider.First();
+            }
+
+            if ( !string.IsNullOrEmpty(minimalbookinfo.SearchPhrase))
+            {
+                booksFromProvider.First().BookReliability = PocoBook.Reliability.Medium;
                 return booksFromProvider.First();
             }
 

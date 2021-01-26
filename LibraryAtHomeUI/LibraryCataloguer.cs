@@ -126,7 +126,7 @@ namespace BooksParser
                 IBooksProvider libraryBookProvider = 
                     PluginLoader.GetPluginFromFolder(Configuration.providerPlugin.pluginassemblyname, Configuration.providerPlugin.pluginfolder); //TODO: performace improvments
 
-                List<PocoBook> booksFromProvider = libraryBookProvider.FetchInfoOfBook(minimalbookinfo);
+                List<PocoBook> booksFromProvider = libraryBookProvider.FetchBookInfo(minimalbookinfo);
 
                 return FileExtractor.AnalyzeResults(minimalbookinfo, booksFromProvider, _tracer);
             }

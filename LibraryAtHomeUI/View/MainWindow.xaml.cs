@@ -7,6 +7,7 @@ using System.Windows.Media;
 using LibraryAtHomeRepositoryDriver;
 
 using MSG = GalaSoft.MvvmLight.Messaging;
+using System.Windows.Input;
 
 namespace LibraryAtHomeUI
 {
@@ -36,11 +37,11 @@ namespace LibraryAtHomeUI
 
             _configWindow = new LibraryConfigurationWindow();
             _configWindow.ShowDialog();
-           
+
         }
 
         private bool _handle = true;
-        
+
 
         private void cbPublishers_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -62,8 +63,8 @@ namespace LibraryAtHomeUI
 
             DockPanel dp = new DockPanel();
             dp.Children.Add(new ImageAwesome
-                {Icon = EFontAwesomeIcon.Solid_Trash, Height = 15, Width = 15, HorizontalAlignment = HorizontalAlignment.Left});
-            dp.Children.Add(new TextBlock() {Text = buttonContent, HorizontalAlignment = HorizontalAlignment.Right});
+            { Icon = EFontAwesomeIcon.Solid_Trash, Height = 15, Width = 15, HorizontalAlignment = HorizontalAlignment.Left });
+            dp.Children.Add(new TextBlock() { Text = buttonContent, HorizontalAlignment = HorizontalAlignment.Right });
             newBtn.Content = dp;
             newBtn.Click += new RoutedEventHandler(this.buttonRemove_Click);
             return newBtn;
@@ -74,11 +75,11 @@ namespace LibraryAtHomeUI
         {
             Button button = sender as Button;
 
-            if(sbFilterInsedeGroupFilter.UiElementExistsByName(button?.Name))
+            if (sbFilterInsedeGroupFilter.UiElementExistsByName(button?.Name))
                 sbFilterInsedeGroupFilter.Children.Remove(sbFilterInsedeGroupFilter.GetUiElement(button?.Name));
         }
 
-       
+
         private void CbPublishers_OnDropDownClosed(object sender, EventArgs e)
         {
             if (_handle) HandleEvent(sender as ComboBox);
@@ -90,7 +91,7 @@ namespace LibraryAtHomeUI
         {
             if ((ComboBoxItem)comboControl.SelectedItem == null)
                 return;
-            
+
             string buttonContent = ((ComboBoxItem)(comboControl.SelectedItem)).Content.ToString();
 
             if (sbFilterInsedeGroupFilter.UiElementExistsByName("btn" + buttonContent))
@@ -146,10 +147,25 @@ namespace LibraryAtHomeUI
             BookDetailsWindow details = new BookDetailsWindow();
             details.Show();
 
-             PocoBook selectedBook = (sender as ListView).SelectedItem as PocoBook;           
+            PocoBook selectedBook = (sender as ListView).SelectedItem as PocoBook;
 
             MSG.Messenger.Default.Send(selectedBook);
 
+        }
+
+        private void tbFilters_LostFocus(object sender, RoutedEventArgs e)
+        {
+            string filter = (sender as TextBox).Text;
+            MSG.Messenger.Default.Send(filter);
+        }
+
+        private void tbFilters_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                string filter = tbFilters.Text;
+                MSG.Messenger.Default.Send(filter);
+            }
         }
     }
 }

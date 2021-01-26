@@ -3,8 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:LibraryAtHomeUI"
-        xmlns:LibraryAtHomeControlLibrary="clr-namespace:LibraryAtHomeControlLibrary;assembly=LibraryAtHomeControlLibrary"
+        xmlns:local="clr-namespace:LibraryAtHomeUI"       
         xmlns:fa5="http://schemas.fontawesome.com/icons/"
         xmlns:System="clr-namespace:System;assembly=System.Runtime"
         x:Class="LibraryAtHomeUI.MainWindow"
@@ -153,21 +152,35 @@
 
                         </Label>
 
-                        <TextBox x:Name="tbFilters" IsEnabled="True" IsReadOnly="False" HorizontalAlignment="Center" BorderThickness="3" Width="388"/>
+                        <TextBox x:Name="tbFilters"
+                                 IsEnabled="True"
+                                 IsReadOnly="False" 
+                                 HorizontalAlignment="Center" 
+                                 BorderThickness="3" 
+                                 Width="388"
+                                 LostFocus="tbFilters_LostFocus"
+                                 KeyDown="tbFilters_KeyDown"
+                                 
+                                 Text="{Binding Query}"/>
                     </DockPanel>
 
 
                     <Grid ScrollViewer.VerticalScrollBarVisibility="Auto">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="369*"/>
+                            <ColumnDefinition Width="811*"/>
+                        </Grid.ColumnDefinitions>
                         <ListView Margin="10,10,0,10" 
                               ItemsSource="{Binding Books}" 
                               HorizontalAlignment="Left" 
                               HorizontalContentAlignment="Left" 
-                              Grid.ColumnSpan="3"
+                              Grid.ColumnSpan="2"
                                   MouseDoubleClick="ListView_MouseDoubleClick">
-                            <ListView.View>
+                            <ListView.View >
                                 <GridView   ScrollViewer.VerticalScrollBarVisibility="Visible">
                                     <GridViewColumn HeaderContainerStyle="{StaticResource ListViewStyle}" Header="Title" Width="350" DisplayMemberBinding="{Binding Title}" />
                                     <GridViewColumn HeaderContainerStyle="{StaticResource ListViewStyle}" Header="File" Width="300" DisplayMemberBinding="{Binding File}" />
+                                    <GridViewColumn HeaderContainerStyle="{StaticResource ListViewStyle}" Header="Format" Width="50" DisplayMemberBinding="{Binding Format}" />
                                     <GridViewColumn HeaderContainerStyle="{StaticResource ListViewStyle}" Header="Language" Width="60" DisplayMemberBinding="{Binding Language}" />
                                     <GridViewColumn HeaderContainerStyle="{StaticResource ListViewStyle}" Header="Publisher" Width="150" DisplayMemberBinding="{Binding Publisher}" />
                                     <GridViewColumn HeaderContainerStyle="{StaticResource ListViewStyle}" Header="Year" Width="60" DisplayMemberBinding="{Binding PublishedDate, StringFormat='yyyy'}" />

@@ -21,6 +21,7 @@ namespace LibraryAtHomeUI
         {
             StartCollectCommand = new RelayCommand(ExecuteStartCollect);
             MSG.Messenger.Default.Register<LibraryConfigurationData>(this, UpdateLibraryConfigurationData);
+            MSG.Messenger.Default.Register<string>(this, OnNewQueryFilter);
             DeleteLibraryCommand = new RelayCommand(DeleteLibrary);
             _pocoBookHandler = new PocoBookHandler();
         }
@@ -30,7 +31,7 @@ namespace LibraryAtHomeUI
             var res = MessageBox.Show($"Do you want to delete database {ConfData.DatabaseName} ?", "Libraryathome", MessageBoxButton.YesNo, MessageBoxImage.Warning);
             if (res == MessageBoxResult.Yes)
             {
-                _cataloger?.DropDatabase();
+                _cataloger?.DropDatabase(); // TODO non funziona -> rifattorizzare cataloger che diventa il manager della libreria
                 MessageBox.Show($"Database {ConfData.DatabaseName} deleted!", "Libraryathome", MessageBoxButton.OK,
                     MessageBoxImage.Exclamation);
             }
@@ -80,6 +81,8 @@ namespace LibraryAtHomeUI
 
         private int _totalBookDiscarterCount;
 
+        private string _query;
+
         public LibraryConfigurationData ConfData
         {
             get
@@ -89,6 +92,20 @@ namespace LibraryAtHomeUI
             set
             {
                 _confData = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        public string Query
+        {
+            get
+            {
+                return _query;
+            }
+            set
+            {
+                _query = value;
                 OnPropertyChanged();
             }
         }
@@ -162,6 +179,38 @@ namespace LibraryAtHomeUI
             }
         }
 
+        public void OnNewQueryFilter(string message)
+        {    
+           
+            
+            BooksCollectedDataMapper mapper = new BooksCollectedDataMapper(ConfData.RepositoryHost, ConfData.DatabaseName);
+
+            if (string.IsNullOrEmpty(message))
+            {
+                foreach (var book in mapper.Read())
+                {
+                    if (!Books.Contains(book))
+                        Books.Add(book);
+                }
+                return;
+            }
+
+            PocoBook titlebook = new PocoBook("");
+            titlebook.Title = message;
+
+            var filtered = mapper.Read(titlebook);
+
+            if (filtered.Any())
+                Books.Clear();
+
+            foreach (var book in filtered)
+            {
+                Books.Add(book);
+            }
+
+
+        }
+
 
         public void UpdateLibraryConfigurationData(LibraryConfigurationData message)
         {
@@ -176,7 +225,7 @@ namespace LibraryAtHomeUI
                 BooksCollectedDataMapper mapper = new BooksCollectedDataMapper(message.RepositoryHost, message.DatabaseName) ;
                 LibraryStatisticsDataMapper stat = new LibraryStatisticsDataMapper(message.RepositoryHost, message.DatabaseName);
 
-                BookFolder = stat.Read().FirstOrDefault().LibraryDirectory;
+                BookFolder = stat?.Read().FirstOrDefault()?.LibraryDirectory;
 
 
                 foreach (var book in mapper.Read())

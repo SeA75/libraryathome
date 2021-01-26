@@ -1,4 +1,7 @@
 ﻿using System;
+using System.IO;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace LibraryAtHomeProvider
 {
@@ -46,8 +49,22 @@ namespace LibraryAtHomeProvider
         }
 
 
-        public static Func<string, string> GenerateUniqueFileId = s =>
-            $"PersonalID {GoogleBookProvider.BytesToString(GoogleBookProvider.GetHashSha256(s))}";
-       
+        public static string UniqueIdentifier(this FileInfo file)
+        {
+            SHA256 Sha256 = SHA256.Create();
+            byte[] myHash;
+
+            using (FileStream stream = File.OpenRead(file.FullName))
+            {
+                myHash = Sha256.ComputeHash(stream);
+            }
+
+            StringBuilder result = new StringBuilder();
+            foreach (byte b in myHash)
+                result.Append(b.ToString("x2"));
+
+            return result.ToString();
+        }       
+
     }
 }

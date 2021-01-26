@@ -8,10 +8,10 @@ namespace BooksParser
 {
     public static class PluginLoader
     {
-        public static IBooksProvider GetPluginFromFolder(string pluginName, string pluginFolder)
+        public static IBooksProvider GetPluginFromFolder(string pluginName, string pluginFolder, IRestRequestManager reqMngr)
         {
             var assembly = LoadPlugInAssembly(pluginName, pluginFolder);
-            return GetPlugin(assembly);
+            return GetPlugin(assembly, reqMngr);
         }
 
         private static Assembly LoadPlugInAssembly(string plugInName, string pluginFolder)
@@ -55,7 +55,7 @@ namespace BooksParser
             return toreturn;
         }
 
-        private static IBooksProvider GetPlugin(Assembly assembly)
+        private static IBooksProvider GetPlugin(Assembly assembly, IRestRequestManager reqMngr)
         {
             if (assembly == null)
             {
@@ -73,7 +73,7 @@ namespace BooksParser
 
             if (availableTypes2 != null)
             {
-                return (IBooksProvider) Activator.CreateInstance(availableTypes2);
+                return (IBooksProvider) Activator.CreateInstance(availableTypes2, reqMngr);
   //              var res = Activator.CreateInstance(availableTypes);
                 
             }
