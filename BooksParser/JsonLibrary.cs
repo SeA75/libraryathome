@@ -12,6 +12,7 @@ namespace BooksParser
 
         static readonly object _object = new object();
 
+
         public JsonLibrary()
         {
             Library = new List<PocoBook>();
