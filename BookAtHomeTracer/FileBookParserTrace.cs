@@ -7,7 +7,7 @@ namespace LibraryAtHomeTracer
 {
     public class FileBookParserTrace : IBookParserTrace
     {
-        ~FileBookParserTrace()  // finalizer
+        ~FileBookParserTrace()
         {
             Trace.Flush();
         }
@@ -27,7 +27,6 @@ namespace LibraryAtHomeTracer
 
         public void TraceError(string formatStr, params object[] arguments)
         {
-            // Do some checking and apply some logic
             string message = string.Format(formatStr, arguments);
             Trace.WriteLineIf(MessageLevel <= TraceLevel.Error, message);
         }
