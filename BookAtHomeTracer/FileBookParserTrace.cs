@@ -7,7 +7,7 @@ namespace LibraryAtHomeTracer
 {
     public class FileBookParserTrace : IBookParserTrace
     {
-        ~FileBookParserTrace()  // finalizer
+        ~FileBookParserTrace()
         {
             Trace.Flush();
         }
