@@ -14,7 +14,6 @@ namespace BooksParser
         static int verbosity;
         static async System.Threading.Tasks.Task Main(string[] args)
         {
-           
 
             var configFile = GetConfigFileFromCommandLine(args);
 
