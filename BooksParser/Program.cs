@@ -26,7 +26,6 @@ namespace BooksParser
             var exceptions = new ConcurrentQueue<Exception>();
 
             LibraryCataloguer cataloger = new LibraryCataloguer(configuration, exceptions, trace, progress);
-            
 
             try
             {
